@@ -1,0 +1,1 @@
+for i in *; do pushd "$i"; for j in *; do pushd "$j"; find -type l|sed "s_\\./__" |sed "s/'/'\\\''/g"| sed "s/(\|)/&/g"|sed -n "s/.*${i/[, ]*}[^:]*:[[:space:]]*\(.*\)/mv '&' '\1'/Ip"|bash -sx; popd; done; popd; done

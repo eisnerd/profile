@@ -1,0 +1,1 @@
+find -name \*.mp4|while read i; do d="${i%/*}"; f="${i##*/}"; f="${f%.mp4}"; echo $(echo `stat -c%s "$i"` - `grep --color=none '< Content-Length:' "$d/.$f.log"|grep -o '[0-9]*'` |bc -l) $i; done

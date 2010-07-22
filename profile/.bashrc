@@ -105,5 +105,5 @@ if [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
 fi
 
-export PATH=~/bin:~/.cabal/bin:/opt/pvs:/opt/pvs/bin:/usr/local/arm-elf/bin:$PATH
+export PATH=~/bin/nax:~/bin:~/.cabal/bin:/opt/pvs:/opt/pvs/bin:/usr/local/arm-elf/bin:$PATH
 export FDRHOME=~/fdr-2.83-linux-academic

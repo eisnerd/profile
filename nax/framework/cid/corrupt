@@ -1,0 +1,3 @@
+source ${HOME}/bin/nax/autocurling
+grep FileException: cpl2tag.log -A 6|grep mp4$ |while read i; do recooktrack "$i"; done
+

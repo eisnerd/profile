@@ -1,0 +1,1 @@
+grep active log.*|sed 's_.*active/\([^ ]*\) .*_\1_'|while read l; do find "cid/$l" -name '*.mp4'|grep -q . || mkdir -p "queue/$l"; done

@@ -1,0 +1,102 @@
+source "$HOME/bin/mutex/wait/mutex-wait"
+
+cleanup() {
+	rm -f "$tmp"
+	trap - INT TERM EXIT
+}
+trap cleanup INT TERM EXIT
+
+tmp=`mktmp`
+
+cookraw() {
+	getLock cookies
+	[ -f /tmp/cookies.out ] && mv -f /tmp/cookies.out /tmp/cookies.in
+	curl -s -A "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.1.9) Gecko/20100315 Firefox/3.5.9 (.NET CLR 1.1.4322; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C; .NET4.0E)" -H "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8" -H "Accept-Language: en-gb,en;q=0.5" -H "Accept-Encoding: gzip,deflate" -H "Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7" -b /tmp/cookies.in -c /tmp/cookies.out "$@" > $tmp
+	[ \! -s $tmp -o grep -q libraryentry\\.asp $tmp ] && login && cook "$@"
+}
+
+cook() {
+	getLock cookies
+	[ -f /tmp/cookies.out ] && mv -f /tmp/cookies.out /tmp/cookies.in
+	cookraw "$@" > $tmp
+	[ \! -s $tmp -o grep -q libraryentry\\.asp $tmp ] && login && cook "$@"
+}
+
+login() {
+rm -f /tmp/cookies.out /tmp/cookies.in
+
+curl -s -A "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.1.9) Gecko/20100315 Firefox/3.5.9 (.NET CLR 1.1.4322; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C; .NET4.0E)" -b cookies.in -c cookies.out -H "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8" -H "Accept-Language: en-gb,en;q=0.5" -H "Accept-Encoding: gzip,deflate" -H "Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7" $root
+
+mv -f cookies.out cookies.in
+
+curl -s -A "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.1.9) Gecko/20100315 Firefox/3.5.9 (.NET CLR 1.1.4322; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C; .NET4.0E)" -b cookies.in -c cookies.out -H "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8" -H "Accept-Language: en-gb,en;q=0.5" -H "Accept-Encoding: gzip,deflate" -H "Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7" "$root/libraryentry.asp?mid=101977&subid=OFN0005187&cno=ManchesLibNML03"
+
+mv -f cookies.out cookies.in
+
+curl -s -A "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.1.9) Gecko/20100315 Firefox/3.5.9 (.NET CLR 1.1.4322; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C; .NET4.0E)" -b cookies.in -c cookies.out -H "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8" -H "Accept-Language: en-gb,en;q=0.5" -H "Accept-Encoding: gzip,deflate" -H "Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7" -e "$root/libraryentry.asp?mid=101977&subid=OFN0005187&cno=ManchesLibNML03" -d "Admin_Login=FALSE&CertNo=ManchesLibNML03&MemID=101977&Member_Login=TRUE&SubID=0005187&can_Search=TRUE&non_login=TRUE&referurl=" $root/page.library_cardno.asp
+
+mv -f cookies.out cookies.in
+
+curl -s -A "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.1.9) Gecko/20100315 Firefox/3.5.9 (.NET CLR 1.1.4322; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C; .NET4.0E)" -b cookies.in -c cookies.out -H "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8" -H "Accept-Language: en-gb,en;q=0.5" -H "Accept-Encoding: gzip,deflate" -H "Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7"  -H "Content-Type: application/x-www-form-urlencoded" -H "Content-Length: 259" -d "mins15_preview=&subid=OFN0005187&memid=101977&certno=ManchesLibNML03&non_login=TRUE&Admin_Login=FALSE&Member_Login=TRUE&can_Search=TRUE&referurl=&referto=&LG=&USERNAME=MAND9999010254187&PASSWORD=&L_Code=&item_code2=&newQuery=New&MemberFull=&link2=&forgotpass=" -e $root/page.library_cardno.asp $root/action.login_confirm.asp
+
+check "$root"
+}
+
+cook $root
+cook -d "Admin_Login=FALSE&LG=&L_Code=&MemberFull=&Member_Login=TRUE&PASSWORD=&USERNAME=MAN9999010254187&can_Search=TRUE&certno=ManchesLibNML&forgotpass=&item_code2=&link2=&memid=101977&mins15_preview=&newQuery=New&login=TRUE&referto=&referurl=&subid=OFN0005187" -e $root/page.library_cardno.asp $root/action.login_confirm.asp
+
+curl -s -A "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.1.9) Gecko/20100315 Firefox/3.5.9 (.NET CLR 1.1.4322; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C; .NET4.0E)" -L -b cookies.in -c cookies.out -H "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8" -H "Accept-Language: en-gb,en;q=0.5" -H "Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7" -e "$root/libraryentry.asp?mid=101977&subid=OFN0005187&cno=ManchesLibNML03" -d "Admin_Login=FALSE&CertNo=ManchesLibNML03&MemID=101977&Member_Login=TRUE&SubID=0005187&can_Search=TRUE&non_login=TRUE&referurl=" $root/page.library_cardno.asp
+
+
+
+
+rm -f cookies.out cookies.in
+
+curl -s -A "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.1.9) Gecko/20100315 Firefox/3.5.9 (.NET CLR 1.1.4322; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C; .NET4.0E)" -L -b cookies.in -c cookies.out -H "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8" -H "Accept-Language: en-gb,en;q=0.5" -H "Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7" $root
+
+mv -f cookies.out cookies.in
+
+curl -s -A "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.1.9) Gecko/20100315 Firefox/3.5.9 (.NET CLR 1.1.4322; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C; .NET4.0E)" -L -b cookies.in -c cookies.out -H "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8" -H "Accept-Language: en-gb,en;q=0.5" -H "Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7" -e "$root/libraryentry.asp?mid=101977&subid=OFN0005187&cno=ManchesLibNML03" -d "Admin_Login=FALSE&CertNo=ManchesLibNML03&MemID=101977&Member_Login=TRUE&SubID=0005187&can_Search=TRUE&non_login=TRUE&referurl=" $root/page.library_cardno.asp
+
+mv -f cookies.out cookies.in
+
+curl -s -A "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.1.9) Gecko/20100315 Firefox/3.5.9 (.NET CLR 1.1.4322; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C; .NET4.0E)" -L -b cookies.in -c cookies.out -H "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8" -H "Accept-Language: en-gb,en;q=0.5" -H "Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7"  -d "Admin_Login=FALSE&LG=&L_Code=&MemberFull=&Member_Login=TRUE&PASSWORD=&USERNAME=MAN9999010254187&can_Search=TRUE&certno=ManchesLibNML03&forgotpass=&item_code2=&link2=&memid=101977&mins15_preview=&newQuery=New&non_login=TRUE&referto=&referurl=&subid=OFN0005187" -e $root/page.library_cardno.asp $root/action.login_confirm.asp
+
+mv -f cookies.out cookies.in
+
+curl -s -A "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.1.9) Gecko/20100315 Firefox/3.5.9 (.NET CLR 1.1.4322; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C; .NET4.0E)" -b cookies.in -c cookies.out -H "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8" -H "Accept-Language: en-gb,en;q=0.5" -H "Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7"  -d "subid=OFN0005187&=memid=101977&certno=&non_login=&Admin_Login=FALSE&Member_Login=TRUE&can_Search=TRUE&referurl=&referto=&LG=&newQuery=" -e $root/action.login_confirm.asp $root/page.library_cardno.asp
+
+#####
+
+rm -f cookies.out cookies.in
+
+curl -s -A "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.1.9) Gecko/20100315 Firefox/3.5.9 (.NET CLR 1.1.4322; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C; .NET4.0E)" -b cookies.in -c cookies.out -H "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8" -H "Accept-Language: en-gb,en;q=0.5" -H "Accept-Encoding: gzip,deflate" -H "Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7" $root
+
+mv -f cookies.out cookies.in
+
+curl -s -A "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.1.9) Gecko/20100315 Firefox/3.5.9 (.NET CLR 1.1.4322; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C; .NET4.0E)" -b cookies.in -c cookies.out -H "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8" -H "Accept-Language: en-gb,en;q=0.5" -H "Accept-Encoding: gzip,deflate" -H "Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7" "$root/libraryentry.asp?mid=101977&subid=OFN0005187&cno=ManchesLibNML03"
+
+mv -f cookies.out cookies.in
+
+curl -s -A "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.1.9) Gecko/20100315 Firefox/3.5.9 (.NET CLR 1.1.4322; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C; .NET4.0E)" -b cookies.in -c cookies.out -H "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8" -H "Accept-Language: en-gb,en;q=0.5" -H "Accept-Encoding: gzip,deflate" -H "Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7" -e "$root/libraryentry.asp?mid=101977&subid=OFN0005187&cno=ManchesLibNML03" -d "Admin_Login=FALSE&CertNo=ManchesLibNML03&MemID=101977&Member_Login=TRUE&SubID=0005187&can_Search=TRUE&non_login=TRUE&referurl=" $root/page.library_cardno.asp
+
+mv -f cookies.out cookies.in
+
+curl -s -A "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.1.9) Gecko/20100315 Firefox/3.5.9 (.NET CLR 1.1.4322; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C; .NET4.0E)" -b cookies.in -c cookies.out -H "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8" -H "Accept-Language: en-gb,en;q=0.5" -H "Accept-Encoding: gzip,deflate" -H "Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7"  -H "Content-Type: application/x-www-form-urlencoded" -H "Content-Length: 259" -d "mins15_preview=&subid=OFN0005187&memid=101977&certno=ManchesLibNML03&non_login=TRUE&Admin_Login=FALSE&Member_Login=TRUE&can_Search=TRUE&referurl=&referto=&LG=&USERNAME=MAND9999010254187&PASSWORD=&L_Code=&item_code2=&newQuery=New&MemberFull=&link2=&forgotpass=" -e $root/page.library_cardno.asp $root/action.login_confirm.asp
+
+cpid=26290
+
+biog=cpid/$cpid/biog.html
+
+mv -f cookies.out cookies.in
+
+curl -s -A "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.1.9) Gecko/20100315 Firefox/3.5.9 (.NET CLR 1.1.4322; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C; .NET4.0E)" -L -b cookies.in -c cookies.out -H "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8" -H "Accept-Language: en-gb,en;q=0.5" -H "Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7" "$root/composer/btm.asp?composerid=$cpid"> $biog
+
+composer=grep '<tr><td align="left" valign="top">[^b]*<b>[^</>]*</b>' -o cpid/$cpid/biog.html|sed 's_.*<b>\([^</>]*\)</b>.*_\1_'
+
+sed 's_FilterWork_\r\nFilterWork_g' btm.26290|grep 'FilterWorkCategory('\''[^'\'']*'\'','\''[^'\'']*'\'','\''[^'\'']*'\'','\''[^'\'']*'\'');">[^<]*</'|sed 's_.*FilterWorkCategory('\''\([^'\'']*\)'\'','\''\([^'\'']*\)'\'','\''\([^'\'']*\)'\'','\''\([^'\'']*\)'\'');">\([^<]*\)</.*_/composer/showdiscography.asp?pg=\1\&pid=\2\&wc=\3\&i=\4 \5_g'|while read i j; do echo $j; done
+
+mv -f cookies.out cookies.in
+
+sed 's_FilterWork_\r\nFilterWork_g' btm.26290|grep 'FilterWorkCategory('\''[^'\'']*'\'','\''[^'\'']*'\'','\''[^'\'']*'\'','\''[^'\'']*'\'');">[^<]*</'|sed 's_.*FilterWorkCategory('\''\([^'\'']*\)'\'','\''\([^'\'']*\)'\'','\''\([^'\'']*\)'\'','\''\([^'\'']*\)'\'');">\([^<]*\)</.*_/composer/showdiscography.asp?pg=\1\&pid=\2\&wc=\3\&i=\4 \5_g'|while read i j; do echo $j; curl -s -A "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.1.9) Gecko/20100315 Firefox/3.5.9 (.NET CLR 1.1.4322; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C; .NET4.0E)" -b cookies.in -c cookies.out -H "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8" -H "Accept-Language: en-gb,en;q=0.5" -H "Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7" -H "Content-Type: application/x-www-form-urlencoded; charset=UTF-8" -H "Content-Length: ${#i}" -e "http://manchesterlib.naxosmusiclibrary.com/composer/btm.asp?composerid=26290" -d "$i" "$root$i">"btm.26290.$j"; break; done
+

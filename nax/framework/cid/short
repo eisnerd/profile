@@ -1,0 +1,1 @@
+ls -1|while read d; do [ -e "$d/item.asp" ] && n=`ls -1 "$d"|grep mp4$|wc -l` && [ $n -gt 0 -a $n -lt `grep -c stream\\.asp "$d/item.asp"` ] && echo "$d"; done 2>&1 |tee short.log

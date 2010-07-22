@@ -1,3 +1,4 @@
-p=.
-while [ -d "$p" -a \! -d "$p/queue" ]; do p=../$p; done
-while read i; do l="`readlink \"$i\"`"; l="${l#*cid/}"; [ ! -d "$p/cid/$l" ] || find "$p/cid/$l" -name '*.mp4'|grep -q . || mkdir -p "$p/queue/$l"; done
+#!/bin/bash
+#audacious2 -i gtkui -e "$@"
+#if [ ${#*} -gt 0 ]; then for i in "$@"; do echo "$i"; done; else cat; fi| sed 's/^/add\ "/;s/$/"/'|nyxmms2
+if [ ${#*} -gt 0 ]; then xmms2 add "$@"; else xargs -d\\n xmms2 add; fi

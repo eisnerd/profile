@@ -1,0 +1,1 @@
+xmodmap -e "clear Lock"

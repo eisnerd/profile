@@ -1,0 +1,20 @@
+if mount |grep -q eisd; then umount /green/eisd; else mount /green/eisd; fi
+exit
+set -E
+set -u
+tmp=`mktemp`
+cleanup()
+{
+	rm -f $tmp
+}
+err()
+{
+	grep -q . $tmp && zenity --error --text="`cat $tmp`"
+	cleanup
+}
+
+trap err EXIT
+(
+if mount |grep -q eisd; then sed 's/^sshfs#eisd/eisd/;s/fuse\b/fuse.sshfs/' /etc/fstab>/tmp/fstab && cat /tmp/fstab > /etc/fstab && umount /green/eisd; else sed 's/^eisd/sshfs#eisd/;s/fuse.sshfs/fuse/' /etc/fstab > /tmp/fstab && cat /tmp/fstab > /etc/fstab && mount /green/eisd; fi
+) > $tmp 2>&1
+#trap cleanup EXIT

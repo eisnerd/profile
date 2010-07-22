@@ -1,0 +1,4 @@
+tri &
+until lsof -i|grep localhost:2022 -q; do echo -n; done
+#ssh eisd@localhost -p 2022 -Y terminal
+(echo -n gnome-terminal --tab;ssh eisd@localhost -p 2022 bin/screens.xfterm n|sed 's_/usr/bin/_ssh eisd@localhost -p 2022 -t -Y _g')|sh -s

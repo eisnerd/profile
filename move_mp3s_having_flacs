@@ -1,0 +1,1 @@
+find . -name \*.mp3 -a \! -type d|while read name; do orig="`echo $name |sed s/mp3$/flac/`"; [ -e "$orig" ] && (mkdir -vp "../Music-mp3/`dirname \"$name\"`" && mv "$name" "../Music-mp3/$name"); done

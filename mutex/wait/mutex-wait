@@ -1,0 +1,138 @@
+#!/bin/bash
+#
+# Fernando Ipar - 2002 -  fipar@acm.org
+# file-system based mutual exclusion lock 
+# for shell scripts
+# this script is released under the GNU GPL. 
+# see the file COPYING for more info, 
+# or lynx to http://www.gnu.org
+
+#
+# mutex-wait
+# this version has active wait
+#
+
+# known failure points and other issues: 
+# -if  you don't have create permission on the directory of the lock
+#   you're trying to use 
+# 
+
+LOCKD="/tmp"
+MAXCNT=5000 #the most times we loop before we decide it's a deadlock
+#and we give up on the lock
+
+# mnemonic return codes (for easy verification in client scripts)
+export LOCK_FREE=4 #the lock is free, that is, the file does not exist
+export LOCK_BUSY=3 #the lock is busy, that is, the file exists and the owner is running
+export LOCK_ORPHAN=0 #the lock is busy, but the owner is no longer on the system
+
+#remove path from the lock's file name, in case the caller mistakenly included it
+#and adds $LOCKD as the root for all locks
+sanitizeLockName()
+{
+lock=$1
+lock=$(basename $lock)
+lock=${lock#lock.}
+echo $LOCKD/lock.$lock
+}
+
+# attempts to obtain the file lock
+# __with active wait__
+# i write my pid to the file to make
+# sure i'm the owner of the lock
+# returns 0 on success or 1 on dealock detection
+getLock()
+{
+
+lock=$(sanitizeLockName $1 2>/dev/null)
+
+[ -z "$1" ] && {
+	echo "usage: getLock <name>">&2
+	return 1
+}
+
+
+maxcnt=${2:-$MAXCNT}
+gotlock=1
+cnt=0
+
+(
+flock -x 200 || echo Error getting lock|tee /dev/stderr
+while [ $gotlock -ne 0 ]; do
+	while read pid < $lock && [ -n "$pid" ] && [ $pid -ne $$ ]; do
+		[ $cnt -eq 0 ] && echo Waiting for lock on $1
+		#echo waiting
+		isOrphan $lock && rm -f $lock #&& echo detected orphan
+		flock -u 200 || echo Error getting lock|tee /dev/stderr
+		sleep 0.0${RANDOM}
+		flock -x 200 || echo Error getting lock|tee /dev/stderr
+		cnt=$((cnt+1))
+		[ $cnt -ge $maxcnt ] && return 1
+	done 2>/dev/null
+	#echo locking
+	unset i
+	[ -f "$lock" ] && i=$(tail -1 $lock 2>/dev/null)
+	[ -z "$i" ] && i=-1
+	(echo $$;echo $((i+1)))>$lock
+	sleep 0.00${RANDOM}
+	[ $(head -1 $lock 2>/dev/null) -eq $$ ] && gotlock=0
+	#echo $gotlock
+done
+
+) 200>/tmp/lock
+}
+
+
+# releases the lock
+# returns non-zero exit code if the client is not the
+# owner of the lock
+release()
+{
+
+  lock=$(sanitizeLockName $1 2>/dev/null)
+
+  [ -z "$1" ] && {
+	echo "usage: release <name>">&2
+	return 1
+  }
+  (
+	flock -x 200 || echo Error getting lock|tee /dev/stderr
+	#echo release
+	exec 3<$lock &&
+	read -u 3 pid &&
+	read -u 3 i &&
+	exec 3<&- &&
+	#echo held $pid $i $((i - 1)) &&
+	#echo im $$ &&
+	{
+		[ $pid -eq $$ ] &&
+		{
+			[ $i -eq 0 ] && rm -f $lock || echo -e $pid\\n$((i - 1))>$lock
+		} || return 1
+	}
+  ) 2>/dev/null 200>/tmp/lock
+}
+
+
+# verifies if the given lock exists, and if so, 
+# if it is an orphan lock (if the process that acquired
+# it is no longer on the system)
+isOrphan()
+{
+
+lock=$(sanitizeLockName $1)
+
+[ -f $lock ] || return $LOCK_FREE
+[ -d /proc/$(head -1 $lock 2>/dev/null) ] && return $LOCK_BUSY || return $LOCK_ORPHAN
+}
+
+
+# returns the pid of the owner of the given lock (stdout)
+# or a non-zero exit code if the lock does not exist
+getOwnerPid()
+{
+
+lock=$(sanitizeLockName $1)
+
+[ -f $lock ] && echo $(head -1 $lock 2>/dev/null) || return 1
+}

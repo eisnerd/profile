@@ -1,0 +1,10 @@
+_midview()
+{
+	COMPREPLY=()
+	cmd=${COMP_WORDS[0]}
+	cur=`_get_cword`
+	prev=${COMP_WORDS[COMP_CWORD-1]}
+
+	_filedir '@(mid?(i)|MID?(I))'
+}
+complete $filenames -F _midview midview

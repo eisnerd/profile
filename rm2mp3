@@ -1,0 +1,1 @@
+sh ~/bin/rmconv/mp3.sh $*

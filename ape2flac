@@ -1,0 +1,1 @@
+for i in *.ape; do mac "$i" - -d|flac -o "${%*.ape}.flac" -; done

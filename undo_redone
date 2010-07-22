@@ -1,0 +1,4 @@
+cat redo_fat_test.uniq |while read d; do pushd "$d";
+	sed 's/"\([^$][^"]*\.wma\)"/"`echo \\"\1\\"|sed_fat`"/' get|grep "\(file=\|  mv\)" |sed "s_\./dl_../nodl_;s_mv_vm_"|bash -sx
+	sed 's/"\([^$][^"]*\.wma\)"/"`echo \\"\1\\"|sed_fat`"/' get |sed 's#_64k/_#_@[[:alnum:]]*64k/_@nml#;s_@128k/_@nml128k/_'|sed "s_\./dl_../dl_"|bash -sx
+popd; done

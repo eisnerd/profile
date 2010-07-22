@@ -1,0 +1,352 @@
+root=http://manchesterlib.naxosmusiclibrary.com
+stream=80audiostream.naxosmusiclibrary.com
+getbiog="$root/composer/btm.asp?composerid="
+getdisc="$root/catalogue/item.asp?cid="
+
+getall()
+{
+	echo "/composer/showdiscography.asp?pg=C&pid=$1&wc=0&i= All"
+}
+getcategory()
+{
+	sed -n "s_.*FilterWorkCategory('\([^']*\)','\([^']*\)','\([^']*\)','\([^']*\)');\">\([^<]*\)</.*_/composer/showdiscography.asp?pg=\1\&pid=\2\&wc=\3\&i=\4 \5_p"
+}
+foreach()
+{
+	while read; do "$@" "$REPLY"; done
+}
+foreachI()
+{
+	xargs -n1 -d \\n -iI "$@"
+}
+rmempty()
+{
+	ls -1 "$1"|grep -q . || rm -rf "$1"
+}
+source "$HOME/bin/mutex/wait/mutex-wait"
+
+cleanup() {
+	rm -f "$tmp"
+	release cookies
+	release cookies
+	release cookies
+	release cookies
+	release cookies
+	trap - INT TERM EXIT
+	exit
+}
+trap cleanup INT TERM EXIT
+
+tmp=`mktemp`
+
+#set -x
+dbg() {
+	return
+#	echo "$@" 1>&2
+}
+log() {
+	echo "$@" 1>&2
+}
+
+refresh=0
+resume=0
+
+valid()
+{
+	[ -s "$1" ] && ! grep -q '/subscriber/sessionexpired\|Your session has already expired\|Session timeout\|libraryentry\.asp' "$1"
+}
+got()
+{
+	dbg got "$@"
+	([ $refresh -gt 0 ] || valid "$1") && dbg have got
+	[ $refresh -gt 0 ] || valid "$1"
+}
+
+cookraw() {
+	dbg cookraw "$@"
+	getLock cookies 1>&2
+	dbg locked
+	[ -f /tmp/cookies.out ] && (grep -v __CJ_MPlayer /tmp/cookies.out; echo -e "manchesterlib.naxosmusiclibrary.com\tFALSE\t/\tFALSE\t0\t__CJ_MPlayer\t%7B%22Type%22%3A%20%22fmp_http%22%2C%20%22Url%22%3A%20%22/mediaplayer/flash/http-fplayer.asp%22%7D") > /tmp/cookies.in
+	#mv -f /tmp/cookies.out /tmp/cookies.in
+	dbg curl
+	curl -s -A "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.1.9) Gecko/20100315 Firefox/3.5.9 (.NET CLR 1.1.4322; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C; .NET4.0E)" -H "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8" -H "Accept-Language: en-gb,en;q=0.5" -H "Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7" --compress -b /tmp/cookies.in -c /tmp/cookies.out "$@"
+	dbg curled
+	release cookies 1>&2
+	dbg released
+}
+
+cook() {
+	dbg cook
+	cookraw "$@" > $tmp
+	if valid $tmp
+	then
+		cat $tmp
+	else
+	dbg logging in
+		login
+	dbg recur
+		cook "$@"
+	fi
+}
+
+cooknew()
+{
+	dst="$1"
+	shift
+	got "$dst" || (cook "$@" > "$dst")
+}
+
+cooknewfalible()
+{
+	dst="$1"
+	shift
+	got "$dst" || (cookfalible "$dst" "$@")
+}
+
+cooknewfalible()
+{
+	dst="$1"
+	shift
+	
+	cookraw "$@" > $tmp
+	if valid $tmp
+	then
+		cp $tmp "$dst"
+	else
+		# single retry
+		dbg logging in
+			login
+		dbg recur
+			cook "$@"
+		dbg cook
+		cookraw "$@" > $tmp
+		if valid $tmp
+		then
+			cp $tmp "$dst"
+		fi
+	fi
+}
+
+cookalbum()
+{
+  cid=$1
+  #cook "http://manchesterlib.naxosmusiclibrary.com/catalogue/item.asp?cid=$cid" > item.asp
+  [ -z "$cid" ] && cid=`grep -o cid=[[:alnum:].-]* item.asp|head -1|sed 's/cid=//;s_/_--_g'`
+  sed -n '/stream\.asp/s/.*staticurl_\([^"]*\)".*/\1/p' item.asp|foreach cooktrack "$cid"
+}
+
+tracktitle()
+{
+	sed -n 's/.*trackno="\([^"]*\)".*longtracktitle="\([^"]*\)".*/ \2/p' "$1"|sed_fat_from_xml
+}
+
+recooktrack()
+{
+  cid="${1%/*}"
+  track="${1#*/}"
+  track="${track%.mp4}"
+  cpl="$cid/.$track.cpl"
+  cp "$cpl"{,.`date +%Y-%m-%d.%T`} &&
+  [ -e "$cpl" ] && tl=`sed -n 's/.*trackid="\([^"]*\)".*/\1/p' "$cpl"` && [ -n "$tl" ] &&
+  tok=`cook -e "$getdisc${cid//--/\/}" "$root/mediaplayer/flash/http-fplayer.asp?br=64&tl=$tl" | grep ^[^[:alnum:]]*renderPlayer |sed -n "s/.*'\([A-F0-9]\{8\}-[^']*\)'.*/\1/p"` &&
+  [ -n "$tok" ] && (
+	cookraw "$root/mediaplayer/flash/config.asp?token=http|$tok" > /dev/null &&
+	cookraw "$root/mediaplayer/genericpl.asp?tl=$tl&br=64" > "$cpl" &&
+	fms="`sed -n 's/.*fms="\([^"]*\)".*/\1/p' \"$cpl\"|sed 's/64k/128k/;s/\(.*\)_064/\1_128/'`" &&
+	echo "$fms" &&
+	pushd "$cid" &&
+	 (curl -H "Host: $stream" -H "User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.1.9) Gecko/20100315 Firefox/3.5.9 (.NET CLR 1.1.4322; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C; .NET4.0E)" -H "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8" -H "Accept-Language: en-gb,en;q=0.5" -H "Accept-Encoding: gzip,deflate" -H "Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7" -H "Keep-Alive: 300" -H "Connection: keep-alive" "http://$stream$fms?`curl -i -H "User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.1.9) Gecko/20100315 Firefox/3.5.9 (.NET CLR 1.1.4322; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C; .NET4.0E)" -H "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8" -H "Accept-Language: en-gb,en;q=0.5" -H "Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7" -H "Keep-Alive: 300" -b /tmp/cookies.in "$root/utilities/encryption/genhttptoken.asp?tid=$tok&url=$fms"|grep ROOT|sed 's_.*<ROOT>\([^<]*\).*_\1_'`" -S -v 2> ".$track.log" > "$track.mp4" &&
+	popd &&
+	 [ "$resume" = "1" ] || sleep `shuf -i7-50 -n1`)
+	)
+}
+
+cooktrack()
+{
+  cid=$1
+  tl=$2
+  tok=`cook -e "$getdisc${cid//--/\/}" "$root/mediaplayer/flash/http-fplayer.asp?br=64&tl=$tl" | grep ^[^[:alnum:]]*renderPlayer |sed -n "s/.*'\([A-F0-9]\{8\}-[^']*\)'.*/\1/p"`
+  [ -n "$tok" ] && (
+	cookraw "$root/mediaplayer/flash/config.asp?token=http|$tok" > /dev/null &&
+	cookraw "$root/mediaplayer/genericpl.asp?tl=$tl&br=64" > cpl &&
+	#track="`sed -n 's/.*trackno="\([^"]\)".*longtracktitle="\([^"]*\)".*/\1 \2/p' cpl|sed_fat_from_xml`" &&
+	title="`tracktitle cpl`" &&
+	track="`sed -n 's/.*fmsfilename="\([^"]*\)".*/\1/p' cpl`" &&
+	fms="`sed -n 's/.*fms="\([^"]*\)".*/\1/p' cpl|sed 's/64k/128k/;s/_064/_128/'`" &&
+	echo "$fms" &&
+	( ( [ -n "$title" -a -n "$fms"  ] && ! grep -q 'VBScript runtime' cpl ) || exit ) &&
+	mv cpl ".$track.cpl" &&
+	( [ "$resume" = "0" -o \! -e "$track.mp4" -a \! -e [0-9]*"$title" ] &&
+	 (curl -H "Host: $stream" -H "User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.1.9) Gecko/20100315 Firefox/3.5.9 (.NET CLR 1.1.4322; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C; .NET4.0E)" -H "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8" -H "Accept-Language: en-gb,en;q=0.5" -H "Accept-Encoding: gzip,deflate" -H "Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7" -H "Keep-Alive: 300" -H "Connection: keep-alive" "http://$stream$fms?`curl -i -H "User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.1.9) Gecko/20100315 Firefox/3.5.9 (.NET CLR 1.1.4322; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C; .NET4.0E)" -H "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8" -H "Accept-Language: en-gb,en;q=0.5" -H "Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7" -H "Keep-Alive: 300" -b /tmp/cookies.in "$root/utilities/encryption/genhttptoken.asp?tid=$tok&url=$fms"|grep ROOT|sed 's_.*<ROOT>\([^<]*\).*_\1_'`" -S -v 2> ".$track.log" > "$track.mp4" &&
+	 [ "$resume" = "1" ] || sleep `shuf -i7-50 -n1`)
+	)
+  )
+}
+
+nametracks()
+{
+	ls -v -1|cat -n|while read i fms; do
+		fms="${fms%.mp4}"
+		[ -e ".$fms.cpl" ] && (
+			track="`tracktitle \".$fms.cpl\"`" &&
+			[ -n "$track" ] && (
+				track="$i$track" &&
+				export f &&
+				find -regex ".*$fms.*" |while read f; do mv -v "$f" "`ved f \"s/\(.*\)$fms\(.*\)/\1$track\2/\"`" || return false; done
+			)
+		) || true
+	done
+}
+
+login() {
+	dbg login
+	getLock cookies 1>&2
+#	rm -f /tmp/cookies.out /tmp/cookies.in
+	cp /tmp/cookies.in{,.`date +%s`}
+	cp /tmp/cookies.out{,.`date +%s`}
+	
+	cookraw "$root"
+
+	valid $tmp || {
+
+	cookraw "$root/libraryentry.asp?mid=101977&subid=OFN0005187&cno=ManchesLibNML03" |tee /dev/stderr > /tmp/lastlogin
+
+	cookraw -e "$root/libraryentry.asp?mid=101977&subid=OFN0005187&cno=ManchesLibNML03" -d "Admin_Login=FALSE&CertNo=ManchesLibNML03&MemID=101977&Member_Login=TRUE&SubID=0005187&can_Search=TRUE&non_login=TRUE&referurl=" $root/page.library_cardno.asp |tee /dev/stderr >> /tmp/lastlogin
+
+	cookraw -H "Content-Type: application/x-www-form-urlencoded" -H "Content-Length: 259" -d "mins15_preview=&subid=OFN0005187&memid=101977&certno=ManchesLibNML03&non_login=TRUE&Admin_Login=FALSE&Member_Login=TRUE&can_Search=TRUE&referurl=&referto=&LG=&USERNAME=MAND9999010254187&PASSWORD=&L_Code=&item_code2=&newQuery=New&MemberFull=&link2=&forgotpass=" -e $root/page.library_cardno.asp $root/action.login_confirm.asp |tee /dev/stderr >> /tmp/lastlogin
+
+	}
+	#cook "$root"
+	release cookies 1>&2
+}
+
+listings()
+{
+	export cpid=$1
+	mkdir -p cpid/$cpid
+
+	export biog=cpid/$cpid/biog.html
+	got $biog || (cook "$getbiog$cpid" > $biog)
+
+	export composer=`grep '<tr><td align="left" valign="top">[^b]*<b>[^</>]*</b>' -o $biog|sed 's_.*<b>\([^</>]*\)</b>.*_\1_'`
+	log $composer
+	mkdir -p Composer
+	if [ -n "$2" ]; then
+	  ln -sfT ../cpid/$cpid "Composer/$composer $2"
+	else
+	  ln -sfT ../cpid/$cpid "Composer/$composer"
+	fi
+
+	(grep FilterWorkCategory $biog|sed 's_FilterWork_\r\nFilterWork_g'|getcategory; getall $cpid)|while read i j; do
+		log -e \\t$j
+		j=${j//\//-}
+		mkdir -p "cpid/$cpid/$j"
+		lst="cpid/$cpid/$j/listing.html"
+		got "$lst" || (cook -H "Content-length: ${#i}" -H "Content-Type: application/x-www-form-urlencoded; charset=UTF-8" -d "$i" "$root$i" > "$lst")
+		#got "$lst" || (cook "$i" > "$lst")
+		echo "$lst"
+	done
+}
+
+albums()
+{
+	a="${1#cpid/}"
+	cpid="${a%%/*}"
+	b="${a#$cpid/}"
+	j="${b%%/*}"
+	sed 's/cid=/\r\ncid=/g' "$1" |sed -n 's_cid=\([^"]*\)">\([^<]*\)<.*_\1 \2_p'|while read cid title; do if [ "$cid" != "$title" ]; then
+		title=${title//\//--}
+		cid=${cid//\//--}
+		mkdir -pv cid/$cid #|grep -q .&& mkdir -p queue/$cid
+		ln -sfT ../../../cid/$cid "cpid/$cpid/$j/$title ($cid)"
+	fi; done
+}
+
+generateMisc()
+{
+	pushd "$1" &>/dev/null
+
+	mkdir -p Misc
+	diff <(find -type l|grep -v ^./All/|sed s_^./[^/]*/__|sort -u) <(find All -type l -printf %f\\n|sort -u) --old-line-format=%L --unchanged-line-format=|foreachI cp -P All/I Misc
+	rmempty Misc
+
+	popd &>/dev/null
+}
+
+extras()
+{
+  if [ -e item.asp ]; then
+	got=
+	url=$(grep -i -o 'href="[^"]*booklet[^"]*' item.asp|head -1|recode xml..u8)
+	[ -n "$url" ] && cooknewfalible "${url##*/}" "${url#href=\"}" && got=1
+	url=$(grep -i -o 'href="[^"]*rear[^"]*' item.asp|head -1|recode xml..u8)
+	[ -n "$url" ] && cooknewfalible "${url##*/}" "${url#href=\"}" && got=1
+	url=$(grep -i -o "../blurbs_[^']*'" item.asp|head -1|recode xml..u8)
+	[ -n "$url" ] && cooknewfalible blurb.html "$root/catalogue/${url%\'}" && got=1
+	url=$(grep -o 'href="[^"]*sharedfiles/images/cds[^"]*' item.asp|head -1|recode xml..u8)
+	[ -n "$url" ] && ext="${url##*.}" && cooknewfalible "cover.$ext" "${url#href=\"}" && got=1 
+	
+	[ -n "$got" ] && dirname "$d"
+  fi
+}
+
+everything()
+{
+	cpid=$1
+	listings $cpid $2 |foreach albums
+	generateMisc cpid/$cpid
+}
+
+processQueue()
+{
+ while find queue/ -mindepth 1 -type d -print -quit |grep -q .; do
+  find queue/ -mindepth 1 -type d |
+  sort|uniq|shuf|
+  #grep "8.551142"| 
+  while read d; do
+	cid="${d#queue/}"
+	mv -n $d active &>/dev/null || continue
+	[ \! -e $d -a -e "active/$cid" ] || continue
+	[ `df .|tail -1|sed 's/ \+/ /g'|cut -d\  -f4` -ge 100000 ] || return
+		pushd "active/$cid" &&
+			echo $$ > .pid &&
+			cooknew item.asp "$getdisc${cid//--/\/}" &&
+			(if grep -q "Album Information is currently not available" item.asp; then popd; continue; fi) &&
+#		echo "$cid" &&
+			cookalbum "$cid" &&
+#		echo "$cid" &&
+			nametracks &&
+#		echo "$cid" &&
+#			(extras || true) &&
+#		echo "$cid" &&
+		popd &&
+#		echo "$cid" &&
+		mv "active/$cid/"* "active/$cid/".[^.]* "cid/$cid/" &&
+#		echo "$cid" &&
+		rmempty "active/$cid" &&
+		sleep `shuf -i2-18 -n1` && continue
+	break
+  done
+ done
+}
+
+everythingd()
+{
+  while true; do
+	[ -p "${HOME}/bin/nax/everything" ] || (echo Removing stale pipe; rm -f "${HOME}/bin/nax/everything"; mkfifo "${HOME}/bin/nax/everything")
+	#foreach everything < "${HOME}/bin/nax/everything"
+	while read a b; do everything a b; done < "${HOME}/bin/nax/everything"
+  done
+}
+
+qeverything()
+{
+	[ -p "${HOME}/bin/nax/everything" ] || (echo Removing stale pipe; rm -f "${HOME}/bin/nax/everything"; mkfifo "${HOME}/bin/nax/everything")
+	echo $1 > "${HOME}/bin/nax/everything"
+}
+
+#everything 26290
+
+#echo done
+
+#processQueue

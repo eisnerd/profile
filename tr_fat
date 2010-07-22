@@ -1,0 +1,40 @@
+#!/bin/bash
+conversion='sed_fat'
+act=$1
+shift
+if [ -z "$1" ]
+then
+	tr_fat "$act" *
+else
+
+export k
+export i
+for k
+do
+#  if [ "$k" = "-" ]; then
+#	sed -ue ''
+#  else
+#	printenv k
+#  fi |while read i; do
+  printenv k|grep batches -q || (i="$k"
+#  while if [ "$k" = "-" ]; then
+#	read i
+#  else [ -n "$k" ] && i="$k" && k=''
+#  fi do
+#echo Checking $i
+	j="`echo \$i|envsubst|$conversion`"
+	#echo  "$i" != "$j" 
+	[ "$i" != "$j" ] && (
+		echo  -e \\t"$i" != "$j" 
+		$act "$i" "$j"
+	)
+	[ -d "$j" ] || (echo -n "> "; realpath "$j")
+	if [ -d "$i" -a \! -L "$i" ]; then if pushd "$i"; then tr_fat "$act"; popd > /dev/null; fi
+	elif [ -d "$j" -a \! -L "$j" ]; then if pushd "$j"; then tr_fat "$act"; popd > /dev/null; fi
+	fi
+#  done
+)
+done
+export -n k
+export -n i
+fi

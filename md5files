@@ -1,0 +1,1 @@
+find -type f|while read i; do md5sum -b "$i"; done > md5.`date +%Y-%m-%d`

@@ -1,0 +1,1 @@
+ -E "/usr/bin/screen -q -a -A -U" -e "/usr/bin/screen -q -a -r 21670.pts-10.ubuntu-vm1"

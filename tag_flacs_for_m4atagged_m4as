@@ -1,0 +1,21 @@
+#!/bin/bash
+# pipe m4a filenames
+while read i
+do
+  targ="../Music/${i%*.m4a}.flac"
+  faad -i "$i" 2>&1 |grep ^\\\(Unable\ to\ find\\\|RAW$\\\) -q || (
+
+map=("writer TCOM" "album TALB" "artist TPE1" "disk TPOS" "track TRCK" "title TIT2" "date TDRC")
+echo eyeD3 --remove-all \"\$1\"
+echo -n eyeD3 --set-encoding=utf8
+	for j in `seq ${#map[@]}`
+	do
+		pair=(${map[$((j-1))]})
+		tag=`faad -i "$i" 2>&1|grep ^${pair[0]}:\  |sed s/^${pair[0]}:\ //|sed s/\\"/\\\\\\\\\"/g`
+		echo -n \ --set-text-frame=\"${pair[1]}:$tag\"
+	done
+echo -n \ --comment=::\"
+faad -i "$i" 2>&1 |tail -n+$((`faad -i "$i" 2>&1 |grep file\ info:$ -n |grep -o ^[0-9]*`+2))|sed s/\"/\\\\\"/g
+echo \" \"\$1\")|bash -s "$targ"
+
+done

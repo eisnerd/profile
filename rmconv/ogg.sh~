@@ -1,0 +1,3 @@
+sh ~/bin/rmconv/wav-1.sh $*; sh ~/bin/rmconv/wav-2.sh $*
+for i; do oggenc $i.wav; rm $i.wav; done
+

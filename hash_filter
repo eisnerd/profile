@@ -1,0 +1,26 @@
+#!/usr/bin/perl
+
+#use DBM::Deep;
+#my $db = DBM::Deep->new(@ARGV[0]);
+dbmopen(%db, @ARGV[0], 0666);
+$neg = $#ARGV == 1 && @ARGV[1] eq "n";
+$pos = !$neg;
+$pos = $#ARGV == 1 && @ARGV[1] eq "y";
+$ret=1;
+while(<STDIN>)
+{
+	$res = $db{$_};
+#$db->exists($_);
+	if ($pos)
+	{
+		$res=!$res;
+	}
+	if ($res)
+	{
+		$ret=0;
+		print;
+	}
+}
+dbmclose(%db);
+exit $ret;
+

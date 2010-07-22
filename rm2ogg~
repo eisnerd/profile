@@ -1,0 +1,10 @@
+#!/bin/bash -x
+#sh ~/bin/rmconv/ogg.sh $*
+
+trap 'exit 1' SIGINT SIGTERM
+for i; do
+	mkdir -p "${DIR}`dirname \"$i\"`" || exit 1
+	mplayer -noconsolecontrols -vc null -vo null -ao pcm:fast "$i" |tee info  || exit 1
+	oggenc -q 6 -o "${DIR}$i.ogg" audiodump.wav -t "`(sed -n 's/^ name: //p' info;basename \"$i\"|sed 's/\.r[am]m\?$//')|head -1`" -a "`(sed -n 's/^ author: //p' info;dirname \"$i\")|head -1`"  || exit 1
+	rm audiodump.wav info || exit 1
+done

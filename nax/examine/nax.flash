@@ -1,0 +1,220 @@
+GET /utilities/encryption/genhttptoken.asp?tid=E7ECBB31-8949-4DFD-A964-830B1A95AD94&url=/media/aacstorage/aac64k/ami/qd1590_001_full_064.mp4 HTTP/1.1
+Host: manchesterlib.naxosmusiclibrary.com
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.1.9) Gecko/20100315 Firefox/3.5.9 (.NET CLR 1.1.4322; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C; .NET4.0E)
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-gb,en;q=0.5
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+Keep-Alive: 300
+Connection: keep-alive
+Cookie: __CJ_MPlayer=%7B%22Type%22%3A%20%22fmp_http%22%2C%20%22Url%22%3A%20%22/mediaplayer/flash/http-fplayer.asp%22%7D; ASPSESSIONIDACSSRSBC=DBDNMMGAIHLDFBDNPFHOGDCD; nmlsession=surl=False&sid=03862C84%2DB5BD%2D48A5%2D9C4E%2DB91F0B462877&subid=OFN0005187&mid=101977&mt=MM&cno=ManchesLibNML03; dirpath=manchesterlib%2Enaxosmusiclibrary%2Ecom; Search%5FMode=CD+Page; B100Serverpoolcookie=3939204053.10611.3731481216.124678414; ASPSESSIONIDAATQRRDD=ENKLIGIADNDBIGJPLEBFPPPF
+
+
+GET /media/aacstorage/aac64k/ami/qd1590_001_full_064.mp4?dlauth=1275664886_a432d0b6fc03b67eb32b2029a8cc74dc HTTP/1.1
+Host: 80audiostream.naxosmusiclibrary.com
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.1.9) Gecko/20100315 Firefox/3.5.9 (.NET CLR 1.1.4322; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C; .NET4.0E)
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-gb,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+Keep-Alive: 300
+Connection: keep-alive
+
+
+curl -i -H "Host: 80audiostream.naxosmusiclibrary.com" -H "User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.1.9) Gecko/20100315 Firefox/3.5.9 (.NET CLR 1.1.4322; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C; .NET4.0E)" -H "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8" -H "Accept-Language: en-gb,en;q=0.5" -H "Accept-Encoding: gzip,deflate" -H "Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7" -H "Keep-Alive: 300" -H "Connection: keep-alive" "http://217.41.223.10/media/aacstorage/aac64k/ami/qd1590_001_full_064.mp4?dlauth=1275664718_6c00d9f3859b426897cd5907b5666711"
+
+1275652376_2f0b0ede84f32c2c0dd069612b6b00fd
+rv!El@)
+rPH/P~GET /media/aacstorage/aac64k/ami/qd1590_001_full_064.mp4?dlauth=1275652376_2f0b0ede84f32c2c0dd069612b6b00fd HTTP/1.1
+Host: 80audiostream.naxosmusiclibrary.com
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.1.9) Gecko/20100315 Firefox/3.5.9 (.NET CLR 1.1.4322; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C; .NET4.0E)
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-gb,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+Keep-Alive: 300
+Connection: keep-alive
+
+
+GET /mediaplayer/flash/http-fplayer.asp?br=64&tl=884884 HTTP/1.1
+Host: manchesterlib.naxosmusiclibrary.com
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.1.9) Gecko/20100315 Firefox/3.5.9 (.NET CLR 1.1.4322; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C; .NET4.0E)
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-gb,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+Keep-Alive: 300
+Referer: http://manchesterlib.naxosmusiclibrary.com/catalogue/item.asp?cid=AM125
+Cookie: B100Serverpoolcookie=3939204053.21603.3732006784.3581387189; ASPSESSIONIDCATRSSDC=FHMDHJDDJICMMBICKBHIPLJB; dirpath=manchesterlib%2Enaxosmusiclibrary%2Ecom; Search%5FMode=CD+Page; ASPSESSIONIDAASRQSCC=FHMBGGNDNBCOEILCEECIPCMH; ASPSESSIONIDACTRTTBC=NGMPHHODHHDBFNMNDGGHJJCL; __CJ_MPlayer=%7B%22Type%22%3A%20%22fmp_http%22%2C%20%22Url%22%3A%20%22/mediaplayer/flash/http-fplayer.asp%22%7D; ASPSESSIONIDACSRQQCD=JCACFGFAGBKGJCANMLCONIJD; ASPSESSIONIDACSSRSBC=CNCNMMGALOBCLKINEEFOGPEC; nmlsession=surl=False&sid=D134318F%2D67FE%2D4D7C%2DAFF8%2D6FC2428FA8D6&subid=OFN0005187&mid=101977&mt=MM&cno=ManchesLibNML03
+
+ renderPlayer('884884','64','4AC7989E-2998-4025-BEB7-9BFFD2E0EB78','manchesterlib.naxosmusiclibrary.com','false','');
+
+GET /images/shared/download_buttons/get_flash_player.gif HTTP/1.1
+Host: www.adobe.com
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.1.9) Gecko/20100315 Firefox/3.5.9 (.NET CLR 1.1.4322; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C; .NET4.0E)
+Accept: image/png,image/*;q=0.8,*/*;q=0.5
+Accept-Language: en-gb,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+Keep-Alive: 300
+Referer: http://manchesterlib.naxosmusiclibrary.com/mediaplayer/flash/http-fplayer.asp?br=64&tl=884884
+Cookie: s_vi=[CS]v1|2544A29705013944-60000107A0005715[CE]
+If-Modified-Since: Fri, 26 Oct 2007 18:17:14 GMT
+If-None-Match: "6b8-5c2a9e80"
+
+GET /javascript/sitesession.js HTTP/1.1
+Host: manchesterlib.naxosmusiclibrary.com
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.1.9) Gecko/20100315 Firefox/3.5.9 (.NET CLR 1.1.4322; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C; .NET4.0E)
+Accept: */*
+Accept-Language: en-gb,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+Keep-Alive: 300
+Referer: http://manchesterlib.naxosmusiclibrary.com/mediaplayer/flash/http-fplayer.asp?br=64&tl=878408
+Cookie: B100Serverpoolcookie=3939204053.21603.3732006784.3581387189; ASPSESSIONIDCATRSSDC=FHMDHJDDJICMMBICKBHIPLJB; dirpath=manchesterlib%2Enaxosmusiclibrary%2Ecom; Search%5FMode=CD+Page; ASPSESSIONIDAASRQSCC=FHMBGGNDNBCOEILCEECIPCMH; nmlsession=surl=False&sid=5CFC916D%2D4ECF%2D463C%2D9AEB%2D633816E7A9EC&mt=MM&cno=ManchesLibNML03&subid=OFN0005187&mid=101977; ASPSESSIONIDACTRTTBC=NGMPHHODHHDBFNMNDGGHJJCL; __CJ_MPlayer=%7B%22Type%22%3A%20%22fmp_http%22%2C%20%22Url%22%3A%20%22/mediaplayer/flash/http-fplayer.asp%22%7D
+
+GET /mediaplayer/flash/http-nmlplayer.swf HTTP/1.1
+Host: manchesterlib.naxosmusiclibrary.com
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.1.9) Gecko/20100315 Firefox/3.5.9 (.NET CLR 1.1.4322; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C; .NET4.0E)
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-gb,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+Keep-Alive: 300
+Referer: http://manchesterlib.naxosmusiclibrary.com/mediaplayer/flash/http-fplayer.asp?br=64&tl=878408
+Cookie: B100Serverpoolcookie=3939204053.21603.3732006784.3581387189; ASPSESSIONIDCATRSSDC=FHMDHJDDJICMMBICKBHIPLJB; dirpath=manchesterlib%2Enaxosmusiclibrary%2Ecom; Search%5FMode=CD+Page; ASPSESSIONIDAASRQSCC=FHMBGGNDNBCOEILCEECIPCMH; nmlsession=surl=False&sid=5CFC916D%2D4ECF%2D463C%2D9AEB%2D633816E7A9EC&mt=MM&cno=ManchesLibNML03&subid=OFN0005187&mid=101977; ASPSESSIONIDACTRTTBC=NGMPHHODHHDBFNMNDGGHJJCL; __CJ_MPlayer=%7B%22Type%22%3A%20%22fmp_http%22%2C%20%22Url%22%3A%20%22/mediaplayer/flash/http-fplayer.asp%22%7D
+
+GET /mediaplayer/flash/config.asp?token=http|4AC7989E-2998-4025-BEB7-9BFFD2E0EB78 HTTP/1.1
+Host: manchesterlib.naxosmusiclibrary.com
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.1.9) Gecko/20100315 Firefox/3.5.9 (.NET CLR 1.1.4322; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C; .NET4.0E)
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-gb,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+Keep-Alive: 300
+Cookie: B100Serverpoolcookie=3939204053.21603.3732006784.3581387189; ASPSESSIONIDCATRSSDC=FHMDHJDDJICMMBICKBHIPLJB; dirpath=manchesterlib%2Enaxosmusiclibrary%2Ecom; Search%5FMode=CD+Page; ASPSESSIONIDAASRQSCC=FHMBGGNDNBCOEILCEECIPCMH; ASPSESSIONIDACTRTTBC=NGMPHHODHHDBFNMNDGGHJJCL; __CJ_MPlayer=%7B%22Type%22%3A%20%22fmp_http%22%2C%20%22Url%22%3A%20%22/mediaplayer/flash/http-fplayer.asp%22%7D; ASPSESSIONIDACSRQQCD=JCACFGFAGBKGJCANMLCONIJD; ASPSESSIONIDACSSRSBC=CNCNMMGALOBCLKINEEFOGPEC; nmlsession=surl=False&sid=D134318F%2D67FE%2D4D7C%2DAFF8%2D6FC2428FA8D6&mt=MM&cno=ManchesLibNML03&subid=OFN0005187&mid=101977
+
+HTTP/1.1 200 OK
+Cache-Control: private
+Date: Fri, 04 Jun 2010 11:21:58 GMT
+Content-Type: text/xml
+Server: Microsoft-IIS/6.0
+X-Powered-By: ASP.NET
+Content-Encoding: gzip
+Vary: Accept-Encoding
+Transfer-Encoding: chunked
+
+<?xml version="1.0"?><fmsconfig><fmsuri>http://80audiostream.naxosmusiclibrary.com</fmsuri><fmsformat>mp4</fmsformat><fmsplaylist>[domain]/mediaplayer/genericpl.asp?tl=[tl]&amp;br=[bitrate]</fmsplaylist><imglocation></imglocation><albumLink>[domain]/catalogue/item.asp?cid=[cid]</albumLink><tokenLink>[domain]/utilities/encryption/genhttptoken.asp?tid=[pltoken]&amp;url=[file]</tokenLink></fmsconfig>
+
+GET /mediaplayer/genericpl.asp?tl=884884&br=64 HTTP/1.1
+Host: manchesterlib.naxosmusiclibrary.com
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.1.9) Gecko/20100315 Firefox/3.5.9 (.NET CLR 1.1.4322; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C; .NET4.0E)
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-gb,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+Keep-Alive: 300
+Cookie: B100Serverpoolcookie=3939204053.21603.3732006784.3581387189; ASPSESSIONIDCATRSSDC=FHMDHJDDJICMMBICKBHIPLJB; dirpath=manchesterlib%2Enaxosmusiclibrary%2Ecom; Search%5FMode=CD+Page; ASPSESSIONIDAASRQSCC=FHMBGGNDNBCOEILCEECIPCMH; ASPSESSIONIDACTRTTBC=NGMPHHODHHDBFNMNDGGHJJCL; __CJ_MPlayer=%7B%22Type%22%3A%20%22fmp_http%22%2C%20%22Url%22%3A%20%22/mediaplayer/flash/http-fplayer.asp%22%7D; ASPSESSIONIDACSRQQCD=JCACFGFAGBKGJCANMLCONIJD; ASPSESSIONIDACSSRSBC=CNCNMMGALOBCLKINEEFOGPEC; nmlsession=surl=False&sid=D134318F%2D67FE%2D4D7C%2DAFF8%2D6FC2428FA8D6&mt=MM&cno=ManchesLibNML03&subid=OFN0005187&mid=101977
+
+HTTP/1.1 200 OK
+Cache-Control: private
+Date: Fri, 04 Jun 2010 11:21:59 GMT
+Content-Type: text/xml
+Server: Microsoft-IIS/6.0
+X-Powered-By: ASP.NET
+Content-Encoding: gzip
+Vary: Accept-Encoding
+Transfer-Encoding: chunked
+
+<?xml version="1.0"?><ROOT><TRACK trackid="884884" trackno="1" shorttracktitle="I. Allegro" longtracktitle="Harpsichord Concerto in D minor, BWV 1059: I. Allegro" timing="00:05:16" dbfilename="QD1590_001" fmsfilename="822186001257_01_01"><ALBUM catalogueid="AM125" cataloguename="BACH, J.S.: Harpsichord Concerto, BWV 1059 / BACH, C.P.E.: Cello Concerto, Wq. 172 / BACH, W.F.: Flute Concerto (The Bach Dynasty) (Rousset)" catlabelid="AMI" categorylabel="AMI" labeldisplayname="Ambroisie" imageurl="http://cdn.naxosmusiclibrary.com/sharedfiles/images/cds/others/AM125.gif" hiresimageurl="http://cdn.naxosmusiclibrary.com/sharedfiles/images/cds/hires/AM125.jpg" thumbnailimageurl="http://cdn.naxosmusiclibrary.com/sharedfiles/images/cds/others/AM125b.gif" colurl="http://www.classicsonline.com/catalogue/product.aspx?pid=1011997&amp;affid=50"/><TRACKGROUP trackgroupid="459375" trackgroupname="Harpsichord Concerto in D minor, BWV 1059"/><ARTISTS><ARTIST id="31508" fullname="Rousset, Christophe" persontypeid="1" roleorinstrument="harpsichord" sortorder="1" textdisplay="Rousset, Christophe - harpsichord"/><ARTIST id="33034" fullname="Talens Lyriques, Les" persontypeid="12" roleorinstrument="Orchestra" sortorder="2" textdisplay="Talens Lyriques, Les"/><ARTIST id="31508" fullname="Rousset, Christophe" persontypeid="9" roleorinstrument="Conductor" sortorder="3" textdisplay="Rousset, Christophe - Conductor"/></ARTISTS><COMPOSERS><COMPOSER id="17648" fullname="Bach, Johann Sebastian" persontypeid="3" role="Classical Composer" textdisplay="Bach, Johann Sebastian - Classical Composer"/></COMPOSERS><STREAMLINK fms="/media/aacstorage/aac64k/ami/qd1590_001_full_064.mp4"/></TRACK></ROOT>
+
+GET /utilities/encryption/genhttptoken.asp?tid=4AC7989E-2998-4025-BEB7-9BFFD2E0EB78&url=/media/aacstorage/aac64k/ami/qd1590_001_full_064.mp4 HTTP/1.1
+Host: manchesterlib.naxosmusiclibrary.com
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.1.9) Gecko/20100315 Firefox/3.5.9 (.NET CLR 1.1.4322; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C; .NET4.0E)
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-gb,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+Keep-Alive: 300
+Cookie: B100Serverpoolcookie=3939204053.21603.3732006784.3581387189; ASPSESSIONIDCATRSSDC=FHMDHJDDJICMMBICKBHIPLJB; dirpath=manchesterlib%2Enaxosmusiclibrary%2Ecom; Search%5FMode=CD+Page; ASPSESSIONIDAASRQSCC=FHMBGGNDNBCOEILCEECIPCMH; ASPSESSIONIDACTRTTBC=NGMPHHODHHDBFNMNDGGHJJCL; __CJ_MPlayer=%7B%22Type%22%3A%20%22fmp_http%22%2C%20%22Url%22%3A%20%22/mediaplayer/flash/http-fplayer.asp%22%7D; ASPSESSIONIDACSRQQCD=JCACFGFAGBKGJCANMLCONIJD; ASPSESSIONIDACSSRSBC=CNCNMMGALOBCLKINEEFOGPEC; nmlsession=surl=False&sid=D134318F%2D67FE%2D4D7C%2DAFF8%2D6FC2428FA8D6&mt=MM&cno=ManchesLibNML03&subid=OFN0005187&mid=101977
+
+HTTP/1.1 200 OK
+Cache-Control: private
+Date: Fri, 04 Jun 2010 11:22:00 GMT
+Content-Type: text/xml
+Server: Microsoft-IIS/6.0
+X-Powered-By: ASP.NET
+Content-Encoding: gzip
+Vary: Accept-Encoding
+Transfer-Encoding: chunked
+
+<?xml version="1.0"?><ROOT>dlauth=1275650530_b247a42a9f2c903c50bbc1f181aed341</ROOT>
+
+GET /media/aacstorage/aac64k/ami/qd1590_001_full_064.mp4?dlauth=1275650530_b247a42a9f2c903c50bbc1f181aed341 HTTP/1.1
+Host: 80audiostream.naxosmusiclibrary.com
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.1.9) Gecko/20100315 Firefox/3.5.9 (.NET CLR 1.1.4322; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C; .NET4.0E)
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-gb,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+Keep-Alive: 300
+
+HTTP/1.1 200 OK
+Server: Apache
+ETag: "d85a889e94b049620b1421115ad7f8f6:1275315374"
+Last-Modified: Mon, 31 May 2010 14:16:14 GMT
+Accept-Ranges: bytes
+Content-Length: 1931635
+Content-Type: video/mp4
+Date: Fri, 04 Jun 2010 11:22:01 GMT
+Connection: keep-alive
+
+GET /httprequest/issessionvalid.asp HTTP/1.1
+Host: manchesterlib.naxosmusiclibrary.com
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.1.9) Gecko/20100315 Firefox/3.5.9 (.NET CLR 1.1.4322; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C; .NET4.0E)
+Accept: text/javascript, text/html, application/xml, text/xml, */*
+Accept-Language: en-gb,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+Keep-Alive: 300
+X-Requested-With: XMLHttpRequest
+X-Prototype-Version: 1.6.0.3
+Referer: http://manchesterlib.naxosmusiclibrary.com/mediaplayer/flash/http-fplayer.asp?br=64&tl=884884
+Cookie: B100Serverpoolcookie=3939204053.21603.3732006784.3581387189; ASPSESSIONIDCATRSSDC=FHMDHJDDJICMMBICKBHIPLJB; dirpath=manchesterlib%2Enaxosmusiclibrary%2Ecom; Search%5FMode=CD+Page; ASPSESSIONIDAASRQSCC=FHMBGGNDNBCOEILCEECIPCMH; ASPSESSIONIDACTRTTBC=NGMPHHODHHDBFNMNDGGHJJCL; __CJ_MPlayer=%7B%22Type%22%3A%20%22fmp_http%22%2C%20%22Url%22%3A%20%22/mediaplayer/flash/http-fplayer.asp%22%7D; ASPSESSIONIDACSRQQCD=JCACFGFAGBKGJCANMLCONIJD; ASPSESSIONIDACSSRSBC=CNCNMMGALOBCLKINEEFOGPEC; nmlsession=surl=False&sid=D134318F%2D67FE%2D4D7C%2DAFF8%2D6FC2428FA8D6&mt=MM&cno=ManchesLibNML03&subid=OFN0005187&mid=101977
+
+HTTP/1.1 200 OK
+Cache-Control: private
+Date: Fri, 04 Jun 2010 11:22:02 GMT
+Content-Type: text/plain
+Expires: Fri, 04 Jun 2010 11:22:02 GMT
+Server: Microsoft-IIS/6.0
+X-Powered-By: ASP.NET
+Set-Cookie: nmlsession=surl=False&sid=D134318F%2D67FE%2D4D7C%2DAFF8%2D6FC2428FA8D6&subid=OFN0005187&mid=101977&mt=MM&cno=ManchesLibNML03; expires=Fri, 04-Jun-2010 13:22:02 GMT; path=/
+Content-Encoding: gzip
+Vary: Accept-Encoding
+Transfer-Encoding: chunked
+
+True
+
+GET /mediaplayer/logstream.asp?state=O&origin=CD%20Page&fn=QD1590_001 HTTP/1.1
+Host: manchesterlib.naxosmusiclibrary.com
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.1.9) Gecko/20100315 Firefox/3.5.9 (.NET CLR 1.1.4322; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C; .NET4.0E)
+Accept: text/javascript, text/html, application/xml, text/xml, */*
+Accept-Language: en-gb,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+Keep-Alive: 300
+X-Requested-With: XMLHttpRequest
+X-Prototype-Version: 1.6.0.3
+Referer: http://manchesterlib.naxosmusiclibrary.com/mediaplayer/flash/http-fplayer.asp?br=64&tl=884884
+Cookie: B100Serverpoolcookie=3939204053.21603.3732006784.3581387189; ASPSESSIONIDCATRSSDC=FHMDHJDDJICMMBICKBHIPLJB; dirpath=manchesterlib%2Enaxosmusiclibrary%2Ecom; Search%5FMode=CD+Page; ASPSESSIONIDAASRQSCC=FHMBGGNDNBCOEILCEECIPCMH; ASPSESSIONIDACTRTTBC=NGMPHHODHHDBFNMNDGGHJJCL; __CJ_MPlayer=%7B%22Type%22%3A%20%22fmp_http%22%2C%20%22Url%22%3A%20%22/mediaplayer/flash/http-fplayer.asp%22%7D; ASPSESSIONIDACSRQQCD=JCACFGFAGBKGJCANMLCONIJD; ASPSESSIONIDACSSRSBC=CNCNMMGALOBCLKINEEFOGPEC; nmlsession=surl=False&sid=D134318F%2D67FE%2D4D7C%2DAFF8%2D6FC2428FA8D6&subid=OFN0005187&mid=101977&mt=MM&cno=ManchesLibNML03
+
+HTTP/1.1 200 OK
+Cache-Control: private
+Date: Fri, 04 Jun 2010 11:22:03 GMT
+Content-Type: text/html
+Server: Microsoft-IIS/6.0
+X-Powered-By: ASP.NET
+Content-Encoding: gzip
+Vary: Accept-Encoding
+Transfer-Encoding: chunked
+

@@ -1,0 +1,9 @@
+#!/bin/sh
+echo $1 >> /home/eisd/bin/screans.readpwd.log
+ps --pid $1 -o comm|tail -1 >> /home/eisd/bin/screans.readpwd.log
+ps --ppid $1 -o pid|tail -1 >> /home/eisd/bin/screans.readpwd.log
+ps --ppid $(ps --ppid $1 -o pid|tail -1) -o pid|tail -1 >> /home/eisd/bin/screans.readpwd.log
+readlink /proc/`ps --ppid $(ps --ppid $1 -o pid|tail -1) -o pid|tail -1`/cwd >> /home/eisd/bin/screans.readpwd.log
+echo >> /home/eisd/bin/screans.readpwd.log
+[ "`ps --pid $1 -o comm|tail -1`" = "screen" ] &&
+	readlink /proc/`ps --ppid $(ps --ppid $1 -o pid|tail -1) -o pid|tail -1`/cwd

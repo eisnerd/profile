@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# Output root
+cd ~/ttat/log
+
+#read project
+#project=$(echo $project|tr -d )
+
+# dos to unix eol conversion
+sed s/// -u | (
+
+# target filename
+read project
+
+# safe input validation
+if [ "${project[0]}" != "." ]
+then
+
+# send all following data to the next file
+	cat >> $project
+	#sed -u -e s/^M// >> $project
+
+fi
+)

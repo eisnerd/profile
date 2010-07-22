@@ -1,0 +1,8 @@
+#!/bin/bash -x
+b=$1
+[ -z "$b"] && b=`bash /home/eisd/Music/Zork/nax/resumable|head -1`
+pushd batches/$b >/dev/null || exit
+a=(*.asp)
+mv -v "${a[@]}" ../.. || exit
+popd > /dev/null
+./batch $b "${a[@]}"

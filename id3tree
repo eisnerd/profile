@@ -1,0 +1,36 @@
+#!/bin/bash
+fields=( ${FIELDS} )
+depth=${#fields[@]}
+file="`realpath "$1"`"
+if [ -z "${ACTION}" ]; then
+	action="ln -f"
+else
+	action="${ACTION}"
+fi
+
+conversion='sed -e y_/:?!_-·¿¡_ -e s/"\([^"]*\)"/“\1”/g'
+
+function act {
+	if [ $depth -eq $i ]; then
+		[ -e "$tag" ] || $action "$file" "$tag"
+		i=0
+		while [ -e ".$i-$tag" ]; do
+			(( i++ ))
+		done
+		ln -sf "$file" ".$i-$tag"
+	else
+		descend "$1"
+	fi
+}
+
+function descend {
+	{ [ -d "$tag" ] || mkdir -m 0755 -p "$tag" && cd "$tag"; } || echo "Error while descending into "$tag
+}
+
+i=0
+~/bin/id3tree.internal "$file" | while read tag
+	do
+		tag=$(echo $tag|${conversion})
+		act
+		(( i++ ))
+	done

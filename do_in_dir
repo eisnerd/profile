@@ -1,0 +1,8 @@
+#!/bin/bash
+if [ -z "$3" ]; then
+	pushd "`dirname \"$2\"`"
+else
+	pushd "$3"
+fi
+"$1" "$2"
+popd

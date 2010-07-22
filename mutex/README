@@ -1,0 +1,44 @@
+__introduction__
+
+this package provides two shell scripts with an implementation of a mutual
+exclution lock. it is very primitive but has been tested and proved to work
+well. the idea is that, if you need mutual exclusion to enter a critical section
+in a shell script, you can source one of these files and use the
+getLock <name> and release <name> functions to achieve concurrency control. 
+
+i found myself in the need for this functionality some time ago and decided
+to write some scripts to do the work. you can also take the traditional
+way and write a C program to use kernel system-calls to create a lock, 
+and then use this program from your scripts, but i've found that a
+pure-bash version is equally safe and much more fun to code!
+
+__directory structure__
+
+the wait directory includes a version with active wait (that is, each waiting
+process sleeps for random intervals and checks back the status of the lock, 
+to see if they can enter the critical section. it has a timeout to prevent
+deadlocks and starvation). 
+
+the nowait directory includes a version with no active wait. instead, the
+getLock function uses the SIGSTOP signal on itself when it must wait on
+a lock, and the release function uses the SIGCONT signal on any process which
+might be waiting on the released lock. 
+
+__usage__
+
+to use them in your script, simple source the files and use the functions. 
+they have the same name on both packages, i recommend using the nowait
+file since it is more efficient. 
+
+Both versions have been tested in production environments.
+
+__bugs__
+
+please send any bug reports or suggestions to fipar@acm.org, or use
+the sourceforge page bug submission form. 
+
+i hope you find these scripts as useful as i do.
+
+happy hacking. 
+
+Fernando Ipar - 2002 - fipar@acm.org

@@ -1,0 +1,20 @@
+find . -name \*.lst -o -name lst|grep -v \\./batches|while read d; do pushd "`dirname \"$d\"`" >/dev/null
+lst=$(basename "$d")
+asp=../done/${lst%*.lst}.asp
+[ -e "$asp" ] || asp=item.asp
+
+if [ -e "$asp" ]; then
+got=
+url=$(grep -i -o 'href="[^"]*booklet[^"]*' $asp|head -1|recode xml..u8)
+[ -n "$url" ] && wget -nv -c -U Mozilla "${url#href=\"}" && got=1
+url=$(grep -i -o 'href="[^"]*rear[^"]*' $asp|head -1|recode xml..u8)
+[ -n "$url" ] && wget -nv -c -U Mozilla "${url#href=\"}" && got=1
+url=$(grep -i -o "../blurbs_[^']*'" $asp|head -1|recode xml..u8)
+[ -n "$url" ] && wget -nv -c -U Mozilla "http://manchesterlib.naxosmusiclibrary.com/catalogue/${url%\'}" -Oblurb.html && got=1
+url=$(grep -o 'href="[^"]*sharedfiles/images/cds[^"]*' $asp|head -1|recode xml..u8)
+[ -n "$url" ] && ext=${url##*.} && wget -nv -c -U Mozilla "${url#href=\"}" "-Ocover.$ext"
+
+[ -n "$got" ] && dirname "$d"
+fi
+popd>/dev/null
+done

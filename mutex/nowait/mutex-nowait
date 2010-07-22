@@ -1,0 +1,114 @@
+#!/bin/bash
+#
+# Fernando Ipar -  2002 - fipar@acm.org
+# file-system based mutual exclusion lock 
+# for shell scripts, with no active wait. 
+# this script is released under the GNU GPL. 
+# see the file COPYING for more info, 
+# or lynx to http://www.gnu.org
+
+
+# we don't have a default lock name on this version, 
+# since we need a unique name so we can set up the
+# queue for waiting processes. 
+
+LOCKD="/tmp"
+
+# mnemonic return codes (for easy verification in client scripts)
+export LOCK_FREE=4 #the lock is free, that is, the file does not exist
+export LOCK_BUSY=3 #the lock is busy, that is, the file exists and the owner is running
+export LOCK_ORPHAN=0 #the lock is busy, but the owner is no longer on the system
+
+
+#remove path from the lock's file name, in case the caller mistakenly included it
+#and adds $LOCKD as the root for all locks
+sanitizeLockName()
+{
+lock=$1
+lock=$(basename $1)
+echo $LOCKD/$lock
+}
+
+# attempts to obtain the file lock
+# __with active wait__
+# i write my pid to the file to make
+# sure i'm the owner of the lock
+# returns 0 on success or 1 on dealock detection
+getLock()
+{
+
+lock=$(sanitizeLockName $1 2>/dev/null)
+
+[ -z "$1" ] && {
+	echo "usage: getLock <name>">&2
+	return 1
+}
+
+#first see if the lock isn't orphan
+[ -f $lock ] && isOrphan $lock && rm -f $lock
+#add a new process to the 'queue'
+#this 'queue' is actually a set of files
+#with QUEUE_PREFIX and the lock name
+#i didn't use one single file and the >> redirection
+#operator, precisely for mutual exclusion reasons, 
+#i have no way to prevent two processes waiting on
+#the same lock to overwrite each other's pid if
+#i append it to a single queue file. 
+[ -f $lock ] && {
+	echo $$> "$lock-queue-$$" #add mysqlf to the queue
+	kill -SIGSTOP $$ #sleep on the lock
+}|| {
+	echo $$>$lock
+	usleep $RANDOM
+	#we only have some active wait if there's an inconsistency while
+	#attempting to obtain the lock
+	[ $(cat $lock 2>/dev/null) -eq $$ ] && return 0 || getLock $lock
+}
+}
+
+
+# releases the lock
+# returns non-zero exit code if the client is not the
+# owner of the lock
+release()
+{
+lock=$(sanitizeLockName $1 2>/dev/null)
+
+[ -z "$1" ] && {
+	echo "usage: release <name>">&2
+	return 1
+}
+lock=$(basename $lock) # get rid of any path the caller has included by mistake
+lock="/tmp/$lock"
+[ $(cat $lock) -eq $$ ] && {
+	bname=$(basename $lock)
+	waiting=$(find $LOCKD -type f -name "$bname-queue-*" 2>/dev/null|head -1) #there is no real schedulling here...
+	[ -z "$waiting" ] && rm -f $lock || {
+		pid=$(cat $waiting)
+		rm -f $waiting #remove from queue
+		echo $pid > $lock #grant him the lock
+		kill -SIGCONT $pid #let him continue
+	}
+}|| return 1
+}
+
+
+# verifies if the given lock exists, and if so, 
+# if it is an orphan lock (if the process that acquired
+# it is no longer on the system)
+isOrphan()
+{
+lock=$(sanitizeLockName $1)
+
+[ -f $lock ] || return $LOCK_FREE
+[ -d /proc/$(cat $lock) ] && return $LOCK_BUSY || return $LOCK_ORPHAN
+}
+
+
+# returns the pid of the owner of the given lock (stdout)
+# or a non-zero exit code if the lock does not exist
+getOwnerPid()
+{
+lock=$(sanitizeLockName $1)
+[ -f $lock ] && echo $(cat $lock) || return 1
+}

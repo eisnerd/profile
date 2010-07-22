@@ -1,0 +1,3 @@
+dst="$1"
+shift
+mv "$@" "$dst"

@@ -1,0 +1,3 @@
+#!/bin/bash -x
+#for i; do [ -e "$i.ogg" -o -e "$i.mp3" ] || rm2ogg "$i"; done
+find . -name '*.r[am]' -o -name '*.ram'|sed s_^./__|while read i; do [ -e "$i.ogg" -o -e "$i.mp3" ] && false || { rm2ogg "$i" || exit; } done

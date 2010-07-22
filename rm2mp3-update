@@ -1,0 +1,1 @@
+for i; do if ( test -e $i && test ! -e $i.mp3 ); then rm2mp3 $i; fi done

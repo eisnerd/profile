@@ -1,0 +1,2 @@
+if [ ${#@} = 0 ]; then head -n1; else printenv $@; fi |
+	sed 's/ (THE)//' |sed -n "s_^\(\./\)\?\(\([[:alnum:] ']\|[[:alnum:]]-[[:alnum:]]\)*\)\(·\|, .*·\| \?- .*·\).*_\2_p"|titlecase

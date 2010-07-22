@@ -1,0 +1,30 @@
+#!/bin/bash
+# pipe m4a filenames
+while read i
+do
+  targ="${i%*.m4a}.flac"
+  faad -i "$i" 2>&1 |grep ^RAW$ -q || (
+
+	ln -sf "`realpath \"$i\"`" "/root/tmp.m4a" &&
+	faad "/root/tmp.m4a" -o "/root/tmp.wav" &&
+	flac -f --best "/root/tmp.wav" -o "$targ" &&
+	rm -f "/root/tmp.wav" &&
+(
+map=("writer TCOM" "album TALB" "artist TPE1" "disk TPOS" "track TRCK" "title TIT2" "date TDRC")
+echo -n eyeD3 --set-encoding=utf8
+	for j in `seq ${#map[@]}`
+	do
+		pair=(${map[$((j-1))]})
+		tag=`faad -i "$i" 2>&1|grep ^${pair[0]}:\  |sed s/^${pair[0]}:\ //|sed s/\\"/\\\\\\\\\"/g`
+		echo -n \ --set-text-frame=\"${pair[1]}:$tag\"
+	done
+echo -n \ --comment=::\"
+faad -i "$i" 2>&1 |tail -n+$((`faad -i "$i" 2>&1 |grep file\ info:$ -n |grep -o ^[0-9]*`+2))|sed s/\"/\\\\\"/g
+echo \" \"\$1\")|bash -s "$targ" &&
+
+#		--set-text-frame=
+#	orig="`echo $name |sed s/mp3$/flac/`";
+		mkdir -vp "../Music-m4a/`dirname \"$i\"`" &&
+		mv "$i" "../Music-m4a/$i"
+  )
+done

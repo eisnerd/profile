@@ -1,0 +1,52 @@
+#!/bin/bash
+
+cd /home/eisd/ttat/rsp
+
+for i in *.MSW.*
+do cat $i|while read -d, head
+ do
+	next=$(($head / 100000))
+	if [ "$part" != "$next" ]; then
+		part=$next
+		exec 1> ../cmp/`echo $i |sed s/\.[0-9]\*$/.$part/`
+	fi
+	read line
+	echo $head,$line
+ done
+done
+for i in *.IEC1131.*
+do cat $i|while read -d, head
+ do
+	next=$(($head / 100000))
+	if [ "$part" != "$next" ]; then
+		part=$next
+		exec 1> ../cmp/`echo $i |sed s/\.[0-9]\*$/.$part/`
+	fi
+	read line
+	echo $head,$line
+ done
+done
+
+cd ../cmp
+
+for prj in `ls -1 *.{IEC1131,MSW}.* 2> /dev/null |sed "s/.\(IEC1131\|MSW\)\.[0-9]*//"|sort -u`
+ do
+#  echo $prj
+  rm $prj
+  for i in `ls -1 $prj.{IEC1131,MSW}.* 2> /dev/null |sed "s/.*\.//"|sort -n -u`
+  do
+#	echo $prj.MSW.$i
+	touch $prj.MSW.$i
+	touch $prj.IEC1131.$i
+	sdiff $prj.IEC1131.$i $prj.MSW.$i | tee $prj.$i >> $prj
+  done
+  (
+	echo "<html><head><title>$prj</title></head>"
+	echo "<script language=\"JavaScript\"> setTimeout(\"window.location.reload(true)\", 20000) </script>"
+#	echo '<META HTTP-EQUIV="refresh" CONTENT="15">'
+	echo "<body><h1>$prj</h1><pre>"
+	cat $prj
+	echo "</pre></body>"
+	echo "</html>"
+  )	> $prj.html
+ done

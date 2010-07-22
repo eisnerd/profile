@@ -1,0 +1,3 @@
+for i; do mv $i.wav .tmp.wav; sox -v 0.2 .tmp.wav $i.wav; rm .tmp.wav; done
+
+	

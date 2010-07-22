@@ -1,0 +1,17 @@
+#!/bin/bash -x
+source $HOME/bin/nax/autocurling
+cook $root/me
+exit
+N=1
+src=$1
+try_get_url() {
+	url=`wget -O - -q "$src" | sed s_@[[:alnum:]]*64k/_@nml128k/_g\;s/_064\\./_128\\./g|sed "s/\"/\\n/g"|sed -n s/http/mms/p|grep -v nonet`
+	return 0
+}
+get_url() {
+	while try_get_url && [ "$url" = "${url#mms://}" ]
+	do [ $N -gt 50 ] && exit; echo Refetching url \($N\)...>&2; (( N++ )); done
+}
+until [ $(( N % 5 )) = 1 ] && get_url || true && mimms -t 30 -rc "$url" |tee /dev/stderr |grep -q complete
+do [ $N -gt 50 ] && exit; echo Retrying \($N\)...>&2; (( N++ )); done
+echo "$url"|grep -o [^/]*$

@@ -1,0 +1,8 @@
+#!/bin/sh
+(
+echo -n xfce4-terminal --hide-menubar --hide-toolbars --disable-server
+# -stt -ss rxvt -sbt 7 -sr -tf "%n.%t" -bg \"#EFEFDC\" -itabbg \"#BBBBB4\" -tabbg \"#EFEFDC\" -at
+/bin/bash /home/eisd/bin/screens.sh
+#echo -n " -at -e /usr/bin/screen -R"
+)|/bin/sh -s
+#/usr/bin/mrxvt -ss rxvt -sbt 7 -sr -bg "#EFEFDC" -itabbg "#BBBBB4" -tabbg "#EFEFDC" -aht -hb -stt `/bin/bash /home/eisd/screen.sh`

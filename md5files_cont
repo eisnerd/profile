@@ -1,0 +1,1 @@
+diff <(sed s/[0-9a-f]*\ \\*// md5.`date +%Y-%m-%d`) <(find -type f)|sed -n s/\>\ //p|while read i; do md5sum -b "$i"; done >> md5.`date +%Y-%m-%d`

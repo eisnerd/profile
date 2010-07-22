@@ -1,0 +1,33 @@
+#!/usr/bin/perl
+
+#use DBM::Deep;
+#my $db = DBM::Deep->new(@ARGV[0]);
+dbmopen(%db, @ARGV[0], 0666);
+
+if ($#ARGV == 1)
+{
+	if (!$db{@ARGV[1]."\n"})
+	{
+		dbmclose(%db);
+		exit;
+	}
+}
+else
+{
+	if ($#ARGV == 0)
+	{
+		while (<STDIN>)
+		{
+			if (!$db{$_})#->exists($_))
+			{
+				dbmclose(%db);
+				exit;
+			}
+			dbmclose(%db);
+			exit 1;
+		}
+	}
+}
+dbmclose(%db);
+exit 1;
+

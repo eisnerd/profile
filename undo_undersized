@@ -1,0 +1,30 @@
+#!/bin/sh
+find [^EF]* -name log|grep -v batches|while read d; do pushd "`dirname \"$d\"`";
+[ -e log.orig ] || cp log{,.orig}
+export any=no
+export j
+	k=no; cat log.orig|tr -d |grep --color=no -o "\([0-9]\+\.[0-9]* [kM]B ([^)]*)[^)]*$\|\+ mv.*wma'\)"|while read i; do
+	j="${i#+ mv *.wm \'}"
+	j="${j%\'}"
+	j=${j//\'\'\'/\'}
+	if [ "$j" = "$i" ]; then k=${i% [kM]B (*}; m=${i#*[0-9] }
+	else
+		j=`ved_fat j`
+		[ "$k" = "no" ] || [ $(echo `du "$j" | grep -o ^[0-9.]*` / 10000*1024$([ "${m:0:1}" = "M" ] && echo -n /10)|bc -l|xargs printf '%0.f') -ge $(echo $k$([ "${m:0:1}" = "k" ] && echo -n /10 || echo -n *10)|bc -l|xargs printf '%0.f') ] || echo `du "$j"` $k; k=no;
+	fi; done|tee /dev/stderr|wc -l|grep -vq ^0$ && (
+
+#	read a <&1 && [ "$a" = "n" ] && exit
+
+	k=no; cat log.orig|tr -d |grep --color=no -o "\([0-9]\+\.[0-9]* [kM]B ([^)]*)[^)]*$\|\+ mv.*wma'\)"|while read i; do
+	j="${i#+ mv *.wm \'}"
+	j="${j%\'}"
+	j=${j//\'\'\'/\'}
+	if [ "$j" = "$i" ]; then k=${i% [kM]B (*}; m=${i#*[0-9] }
+	else
+		j=`ved_fat j`
+		[ "$k" = "no" ] || [ $(echo `du "$j" | grep -o ^[0-9.]*` / 10000*1024$([ "${m:0:1}" = "M" ] && echo -n /10)|bc -l|xargs printf '%0.f') -ge $(echo $k$([ "${m:0:1}" = "k" ] && echo -n /10 || echo -n *10)|bc -l|xargs printf '%0.f') ] || (echo Moving $j; echo vm ${i#+ mv }|sed_fat|sed "s/'''/'\\\\''/g"|tee /dev/stderr|bash -xs); k=no;
+	fi; done
+
+	sed 's/"\([^$][^"]*\.wma\)"/"`echo \\"\1\\"|sed_fat`"/' get |sed 's#_64k/_#_@[[:alnum:]]*64k/_@nml#'|sed "s_[\]\?'_\\'_g"|grep -v eyeD3|bash -sx
+)
+popd; done

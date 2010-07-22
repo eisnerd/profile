@@ -1,0 +1,1 @@
+find batches/ -name \*.asp|sed 's_^batches/__;s_/[^/]*.asp$__'|sort|uniq

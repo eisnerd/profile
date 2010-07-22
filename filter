@@ -1,0 +1,7 @@
+#!/bin/bash
+t=$1
+shift
+l="$@"
+export l
+[ $t "$l" ] && printenv l
+export -n l

@@ -1,0 +1,544 @@
+GET / HTTP/1.1
+Host: manchesterlib.naxosmusiclibrary.com
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.1.9) Gecko/20100315 Firefox/3.5.9 (.NET CLR 1.1.4322; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C; .NET4.0E)
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-gb,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+Keep-Alive: 300
+
+HTTP/1.1 302 Object moved
+Set-Cookie: B100Serverpoolcookie=3939204053.21603.3732006784.3581387189; path=/
+Date: Wed, 02 Jun 2010 15:31:47 GMT
+Server: Microsoft-IIS/6.0
+X-Powered-By: ASP.NET
+Location: /libraryentry.asp?mid=101977&subid=OFN0005187&cno=ManchesLibNML03
+Content-Length: 194
+Content-Type: text/html
+Set-Cookie: ASPSESSIONIDCATRSSDC=FHMDHJDDJICMMBICKBHIPLJB; path=/
+Cache-control: private
+
+<head><title>Object moved</title></head>
+<body><h1>Object Moved</h1>This object may be found <a HREF="/libraryentry.asp?mid=101977&amp;subid=OFN0005187&amp;cno=ManchesLibNML03">here</a>.</body>
+
+GET / HTTP/1.1
+Host: manchesterlib.naxosmusiclibrary.com
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.1.9) Gecko/20100315 Firefox/3.5.9 (.NET CLR 1.1.4322; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C; .NET4.0E)
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-gb,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+Keep-Alive: 300
+
+HTTP/1.1 302 Object moved
+Set-Cookie: B100Serverpoolcookie=3939204053.21603.3732006784.3581387189; path=/
+Date: Wed, 02 Jun 2010 15:31:47 GMT
+Server: Microsoft-IIS/6.0
+X-Powered-By: ASP.NET
+Location: /libraryentry.asp?mid=101977&subid=OFN0005187&cno=ManchesLibNML03
+Content-Length: 194
+Content-Type: text/html
+Set-Cookie: ASPSESSIONIDCATRSSDC=FHMDHJDDJICMMBICKBHIPLJB; path=/
+Cache-control: private
+
+<head><title>Object moved</title></head>
+<body><h1>Object Moved</h1>This object may be found <a HREF="/libraryentry.asp?mid=101977&amp;subid=OFN0005187&amp;cno=ManchesLibNML03">here</a>.</body>
+
+GET /libraryentry.asp?mid=101977&subid=OFN0005187&cno=ManchesLibNML03 HTTP/1.1
+Host: manchesterlib.naxosmusiclibrary.com
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.1.9) Gecko/20100315 Firefox/3.5.9 (.NET CLR 1.1.4322; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C; .NET4.0E)
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-gb,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+Keep-Alive: 300
+Cookie: B100Serverpoolcookie=3939204053.21603.3732006784.3581387189; ASPSESSIONIDCATRSSDC=FHMDHJDDJICMMBICKBHIPLJB
+
+HTTP/1.1 200 OK
+Cache-Control: private
+Date: Wed, 02 Jun 2010 15:31:47 GMT
+Content-Type: text/html
+Server: Microsoft-IIS/6.0
+X-Powered-By: ASP.NET
+Content-Encoding: gzip
+Vary: Accept-Encoding
+Transfer-Encoding: chunked
+
+
+    <html>
+    <head>
+    <meta http-equiv="content-type" content="text/html;charset=iso-8859-1">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta name="robots" content="none">
+    <title>Naxos Music Library</title>
+    </head>
+    <body class="BODY_simple" bgcolor="#FFFFFF" link="white" alink="white" vlink="white" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+
+    <form name="selectcertificate" action="./page.library_cardno.asp" method="POST">
+    <input type="hidden" name="SubID" value="OFN0005187">
+    <input type="hidden" name="MemID" value="101977">
+    <input type="hidden" name="CertNo" value="ManchesLibNML03">
+    <input type="hidden" name="non_login" value="TRUE">
+    <input type="hidden" name="Admin_Login" value="FALSE">
+    <input type="hidden" name="Member_Login" value="TRUE">
+    <input type="hidden" name="can_Search" value="TRUE">
+    <input type="hidden" name="referurl" value="">
+    </form>
+    
+    <script language="javascript"><!--
+    if (document.selectcertificate) document.selectcertificate.submit();
+    //-->
+    </script>
+
+    </body>
+    </html>
+    
+POST /page.library_cardno.asp HTTP/1.1
+Host: manchesterlib.naxosmusiclibrary.com
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.1.9) Gecko/20100315 Firefox/3.5.9 (.NET CLR 1.1.4322; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C; .NET4.0E)
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-gb,en;q=0.5
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+Keep-Alive: 300
+Referer: http://manchesterlib.naxosmusiclibrary.com/libraryentry.asp?mid=101977&subid=OFN0005187&cno=ManchesLibNML03
+Cookie: B100Serverpoolcookie=3939204053.21603.3732006784.3581387189; ASPSESSIONIDCATRSSDC=FHMDHJDDJICMMBICKBHIPLJB
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 129
+
+SubID=OFN0005187&MemID=101977&CertNo=ManchesLibNML03&non_login=TRUE&Admin_Login=FALSE&Member_Login=TRUE&can_Search=TRUE&referurl=
+
+HTTP/1.1 200 OK
+Cache-Control: no-cache
+Date: Wed, 02 Jun 2010 15:31:48 GMT
+Content-Type: text/html
+Expires: Wed, 02 Jun 2010 15:31:48 GMT
+Server: Microsoft-IIS/6.0
+X-Powered-By: ASP.NET
+Content-Encoding: gzip
+Vary: Accept-Encoding
+Transfer-Encoding: chunked
+
+
+<html>
+<head>
+<title>Classical Music Listen Online</title>
+<link rel="stylesheet" type="text/css" href="./css/style.css" />
+<link rel="stylesheet" type="text/css" href="./css/header.css" />
+<link rel="stylesheet" type="text/css" href="./css/menubar.css" />
+<script language="javascript" src="./js/function.login_page.js"></script>
+<script language="javascript" src="./js/function.trialpreview.js"></script>
+</head>
+<body class="BODY_simple" bgcolor="#ffffff" link="#ffffff" alink="#ffffff" vlink="#ffffff" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+
+
+
+
+<table bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td valign="top" align="left" colspan="2">
+	
+
+<script language="javascript"><!--
+function FAQpop(url) {
+	var wv = '800'; var hv = '550';
+	if (window.innerHeight) {
+		var winsize = ',height='+hv+',width='+wv+',top='+((window.innerHeight-hv)/2)+',left='+((window.innerWidth-wv)/2);
+	} else if (window.screenY) {
+		var winsize = ',height='+hv+',width='+wv+',top='+((window.screenY-hv)/2)+',left='+((window.screenX-wv)/2);
+	} else {
+		var winsize = ',height='+hv+',width='+wv+',top='+((screen.availHeight-hv)/2)+',left='+((screen.availWidth-wv)/2);
+	}
+	FAQ_win = window.open(url,'FAQ','toolbar=no,menubar=no,status=no,scrollbars=yes'+winsize);
+	if (FAQ_win) FAQ_win.focus();
+}
+
+function ringtones_window(url) {
+	ringtones_win = window.open(url,'ringtones_win1','width='+(screen.availWidth-8)+',height='+(screen.availHeight-30)+',left=0,top=0,scrollbars=yes,resizable=yes,toolbar=no');
+	if (ringtones_win.focus!=null)
+	ringtones_win.focus();
+}
+
+function openuserinwin(url) {
+	if (window.innerHeight) {
+		var winsize = ',height='+hv+',width='+wv+',top='+((window.innerHeight-hv)/2)+',left='+((window.innerWidth-wv)/2);
+	} else if (window.screenY) {
+		var winsize = ',height='+hv+',width='+wv+',top='+((window.screenY-hv)/2)+',left='+((window.screenX-wv)/2);
+	} else {
+		var winsize = ',height='+hv+',width='+wv+',top='+((screen.availHeight-hv)/2)+',left='+((screen.availWidth-wv)/2);
+	}
+	userinwin = window.open(url,'UserInstructions','toolbar=no,menubar=no,status=no,scrollbars=yes'+winsize);
+	if (userinwin) userinwin.focus();
+}
+
+function myaccount_window(url) {
+	
+	myaccount_win = window.open(url,'MyAccount','toolbar=no,menubar=no,status=no,scrollbars=yes'+winsize);
+	if (myaccount_win.focus!=null)
+	myaccount_win.focus();
+}
+// -->
+</script>
+<table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td bgcolor="#FFFFFF" valign="bottom" align="left" width="100%" colspan="2"><table background="./images/header_bg.jpg" border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td valign="top" align="left" width="17%"><img border="0" title="Naxos Music Library" src="./images/nml_logo.jpg" height="65"></a></td><td valign="top" align="right"><img border="0" src="./images/spacer.gif" height="15" width="0"><br></td></tr></table></td></tr><tr><td background="./images/top_menu_bg.gif" valign="middle" align="left">
+	<table border="0" cellpadding="0" cellspacing="0" width="100%">
+	<tr>
+	<td valign="top" align="left" width="100%" nowrap>
+		
+		<table border="0" cellpadding="0" cellspacing="0">
+		<tr>
+		
+		</tr>
+		</table>
+		
+	</td>
+	
+	
+	<td colspan="2" valign="top" align="right" nowrap>
+		
+		<table border="0" cellpadding="0" cellspacing="0" width="100%">
+		<tr>
+		<!--<td valign="middle" align="left" nowrap><a class="menubar" href="./default.asp?page_name=About"></a></td>-->
+				<td valign="middle" align="left" nowrap><a class="menubar" href="#" onclick="javascript:FAQpop('./subscriber/faq.asp');"></a></td>
+				
+		<td nowrap><img border="0" src="./images/spacer.gif" height="20" width="10" /></td>
+		</tr>
+		</table>
+		
+	</td>
+	</tr>
+	</table>
+	</td></tr></table>
+</td>
+</tr>
+
+
+<tr>
+<td valign="top" align="left" width="10%">
+	
+	
+	<!--
+	<form name="qform" action="./login/nonauth.asp" method="POST" onsubmit="return login_form_checking();">
+	<form name="qform" action="./action.login_wiltshire_checking.asp" method="POST" onsubmit="return login_form_checking();">
+	<form name="qform" action="./action.subdomain.asp" method="POST" onsubmit="return login_form_checking();">
+	-->
+	<form name="qform" action="./action.login_confirm.asp" method="POST" onsubmit="return login_form_checking();">
+	<input type="hidden" name="mins15_preview" value="" />
+	<input type="hidden" name="subid" value="OFN0005187">
+	<input type="hidden" name="memid" value="101977">
+	<input type="hidden" name="certno" value="ManchesLibNML03">
+	<input type="hidden" name="non_login" value="TRUE">
+	<input type="hidden" name="Admin_Login" value="FALSE">
+	<input type="hidden" name="Member_Login" value="TRUE">
+	<input type="hidden" name="can_Search" value="TRUE">
+	<input type="hidden" name="referurl" value="">
+	<input type="hidden" name="referto" value="">
+	<input type="hidden" name="LG" value="">
+	<!--<input type="hidden" name="refer_flag" value="">-->
+	
+	
+	<table bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0" width="300">
+	<tr bgcolor="#ffffff"><td valign="middle" align="left"><font style="font-size:1px;"><br><br></font></td></tr>
+	<tr bgcolor="#ffffff"><td valign="middle" align="left" colspan="2" width="300"><img border="0" src="./images/current_subscriber.gif"></td></tr>
+	
+	<tr bgcolor="#ffffff">
+	<td bgcolor="#cccccc" valign="top" align="left" width="10"><font style="font-size:1px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font></td>
+	<td bgcolor="#cccccc" valign="top" align="left" width="300">
+		
+		<table bgcolor="#cccccc" border="0" cellpadding="0" cellspacing="1" width="100%">
+		<tr>
+		<td valign="middle" align="left" nowrap>
+			<table border="0" cellpadding="0" cellspacing="0" width="100%">
+			<tr>
+			<td valign="middle" align="left" nowrap><font style="color: #1e569f; font-size: 11px; font-weight: bold;">Enter Passcode</font></td>
+			<td valign="middle" align="right" width="1"><font style="color: #1e569f; font-size: 11px; font-weight: bold;">&nbsp;:&nbsp;</font></td>
+			</tr>
+			</table>
+		</td>
+		<td valign="middle" align="left" nowrap><input 
+			type="text" size="25" maxlength="20" name="USERNAME" title="Login" value=""
+			onfocus="document.qform.USERNAME.select(); window.status='Login'; return true;" 
+			onblur="window.status=''; return true;" 
+			onMouseOver="window.status='Login'; return true;" 
+			onMouseOut="window.status=''; return true;" 
+			style="font-size:11px; height:20px;"></td>
+		</tr>
+		
+		<input type="hidden" name="PASSWORD" />
+		
+		<input type="hidden" name="L_Code" value="">
+		<input type="hidden" name="item_code2" value="">
+		<input type="hidden" name="newQuery" value="New">
+		<input type="hidden" name="MemberFull" value="">
+		<input type="hidden" name="link2" value="">
+		<input type="hidden" name="forgotpass" value="">
+		
+		<tr>
+		<td valign="middle" align="left"></td>
+		<td valign="middle" align="left">
+			<table border="0" cellpadding="0" cellspacing="0" width="100%">
+			<tr>
+			<td valign="top" align="left"><a 
+				onclick="document.qform.submit();"
+				onfocus="window.status='Login'; return true;" 
+				onblur="window.status=''; return true;" 
+				onMouseOver="this.style.cursor='Hand'; window.status='Login'; return true;" 
+				onMouseOut="window.status=''; return true;"><img 
+				
+				type="submit" alt="Login" src="./images/login.gif" value="Login"></a>
+			</td>
+			<td valign="middle" align="right"><a 
+				title="Help" align="right" style="text-decoration:none; font-size:12px; font-weight:bold;" 
+				href="javascript:faq_window('./sharefile/help.htm');" 
+				onfocus="window.status='Help'; return true;" 
+				onblur="window.status=''; return true;" 
+				onMouseOver="window.status='Help'; return true;" 
+				onMouseOut="window.status=''; return true;"><img 
+				align="top" border="0" title="Help" src="./images/help.gif">&nbsp;Help&nbsp;</a></td>
+			</tr>
+			</table>
+		</td>
+		</tr>
+		
+		
+		
+		<tr>
+		<td valign="middle" align="left" colspan="2">
+			<table border="0" cellpadding="0" cellspacing="1" width="92%">
+<tr>
+<td valign="top" align="left" style="font-size:11px;">
+	For further information, and details on institutional licensing, please contact a Naxos representative in your country / territory:
+</td>
+</tr>
+
+<tr>
+<td valign="top" align="left" style="font-size:11px;">
+	
+	<b>AUSTRALIA: Andrew McKeich<br />
+	Email: <a style="font-size:11px;" href="mailto:naxosmusiclibrary@savd.com.au">naxosmusiclibrary@savd.com.au</a></b><br /><br />
+	
+	<b>CANADA: Raymond Bisha<br />
+	Email: <a style="font-size:11px;" href="mailto:raymond@naxoscanada.com">Raymond@NaxosCanada.com</a></b><br /><br />
+	
+	<b>Czech Republic: Jana Vranova<br />
+	Email: <a style="font-size:11px;" href="mailto:classic@telecom.cz">classic@telecom.cz</a></b><br /><br />
+	
+	<b>Denmark: Mimi Kj&#230;r<br />
+	Email: <a style="font-size:11px;" href="mailto:mimi@naxos.dk">mimi@naxos.dk</a></b><br /><br />
+	
+	<b>FRANCE: Abeille Musique<br />
+	Email: <a style="font-size:11px;" href="mailto:naxosdiscotheque@abeillemusique.com">naxosdiscotheque@abeillemusique.com</a><br />
+	URL:</b> <a style="font-size:11px;" href="http://www.naxosdiscotheque.com">www.naxosdiscotheque.com</a><br /><br />
+	
+	<b>GERMANY: Markus Petersen<br />
+	Email: <a style="font-size:11px;" href="mailto:nml@naxos.de">NML@Naxos.de</a></b><br /><br />
+	
+	<b>HONG KONG: Amanda Lai<br />
+	Email: <a style="font-size:11px;" href="mailto:amanda.lai@naxos.com">Amanda.Lai@Naxos.com</a></b><br /><br />
+	
+	<b>Indonesia: Kristoforus Sunardi Sukowardi<br />
+	Email: <a style="font-size:11px;" href="mailto:psmedia@telkomvision.com">psmedia@telkomvision.com</a></b><br /><br />
+	
+	<b>Ireland: Harry Willis<br />
+	Email: <a style="font-size:11px;" href="mailto:harry@cosmicsounds.ie">Harry@CosmicSounds.ie</a></b><br /><br />
+	
+	<b>JAPAN: Naxos Digital Japan<br />
+	Email: <a style="font-size:11px;" href="mailto:info@naxos.jp">info@Naxos.jp</a><br />
+	URL:</b> <a style="font-size:11px;" href="http://ml.naxos.jp">ML.Naxos.jp</a><br /><br />
+	
+	<b>Mexico: Pedro Carmona O<br />
+	Email: <a style="font-size:11px;" href="mailto:pedro.carmona@urtext.com.mx">Pedro.Carmona@Urtext.com.mx</a></b><br /><br />
+	
+	<b>NEW ZEALAND: Paul Merton<br />
+	Email: <a style="font-size:11px;" href="mailto:paul@tritonmusic.co.nz">paul@tritonmusic.co.nz</a></b><br /><br />
+	
+	<b>NORWAY: Martin Alfsen<br />
+	Email: <a style="font-size:11px;" href="mailto:martin@martinalfsen.no">martin@MartinAlfsen.no</a></b><br /><br />
+	
+	<b>Portugal: Joao Carlos Callixto<br />
+	Email: <a style="font-size:11px;" href="mailto:joaocarloscallixto@cnmusica.com">joaocarloscallixto@cnmusica.com</a></b><br /><br />
+	
+	<b>SINGAPORE: Daniel Low<br />
+	Email: <a style="font-size:11px;" href="mailto:daniel@drs.com.sg">daniel@drs.com.sg</a></b><br /><br />
+	
+	<b>Slovakia: Jozef Krupa<br />
+	Email: <a style="font-size:11px;" href="mailto:divyd@divyd.sk">divyd@divyd.sk</a></b><br /><br />
+	
+	<b>South Africa: Charles K&#252;hn<br />
+	Email: <a style="font-size:11px;" href="mailto:charles@nextmusic.co.za">charles@nextmusic.co.za</a></b><br /><br />
+	
+	<b>SOUTH KOREA: Kai Czepiczka<br />
+	Email: <a style="font-size:11px;" href="mailto:naxoskorea@naxos.com">NaxosKorea@Naxos.com</a><br />
+	URL:</b> <a style="font-size:11px;" href="http://www.NaxosMusicLibrary.com/Korea">www.NaxosMusicLibrary.com/Korea</a><br /><br />
+	
+	<b>SPAIN: Polo Digital Multimedia, S.L.<br />
+	Email: <a style="font-size:11px;" href="mailto:correo@polodigital.com">Correo@PoloDigital.com</a><br />
+	URL:</b> <a style="font-size:11px;" href="http://www.naxosmusiclibrary.com/spain">www.NaxosMusicLibrary.com/Spain</a></b><br /><br />
+	
+	<b>SWEDEN: Stephan Jansson<br />
+	Email: <a style="font-size:11px;" href="mailto:stephan@naxos.se">Stephan@Naxos.se</a></b><br /><br />
+	
+	<b>TAIWAN: S. C. Chiang<br />
+	Email: <a style="font-size:11px;" href="mailto:groscctw@ms32.hinet.net">Groscctw@ms32.hinet.net</a></b><br /><br />
+	
+	<b>UNITED KINGDOM: Graham Muir<br />
+	Email: <a style="font-size:11px;" href="mailto:gmuir@selectmusic.co.uk">GMuir@SelectMusic.co.uk</a></b><br /><br />
+	
+	<b>UNITED STATES OF AMERICA: Randall Foster<br />
+	Email: <a style="font-size:11px;" href="mailto:musiclibrary@naxosusa.com">MusicLibrary@NaxosUSA.com</a></b><br /><br />
+	
+	<b>OTHER COUNTRIES:</b><br />
+	<b>Same as Hong Kong</b><br /><br />
+	
+</td>
+</tr>
+</table>
+
+		</td>
+		</tr>
+		</table>
+		
+	</td>
+	</tr>
+	
+	<tr bgcolor="#ffffff">
+	<td valign="middle" align="left" colspan="2" width="350"><img 
+		border="0" src="images/sub_login_bottom4.gif" width="300" height="26" /></td>
+	</tr>
+	</table>
+	</form>
+	
+	
+	
+	<script language="javascript"><!--
+	document.qform.USERNAME.focus();
+	// -->
+	</script>
+	
+</td>
+
+<td valign="top" align="left" width="90%">
+	
+	<table bgcolor="#ffffff" border="0" cellpadding="3" cellspacing="0" width="100%">
+	<tr>
+	<td valign="top" align="left">
+		
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td align="left" background="./images/new_subscriber_bg.gif" colspan="3" width="100%"><img border="0" src="./images/new_subscriber_bg.gif"></td>
+</tr>
+<tr>
+    <td colspan="3">
+        
+    </td>
+</tr>
+<tr><td colspan="3"><img border="0" height="5" width="0"></td></tr>
+<tr>
+<td>&#160;</td>
+<td valign="top" align="left" colspan="2" nowrap>
+	<table border="0" cellpadding="2" cellspacing="0" width="100%">
+	<tr>
+	<td valign="top" align="left" colspan="2">
+		
+		<table border="0" cellpadding="2" cellspacing="0" width="100%">
+		
+		<tr><td valign="top" align="left" colspan="3"><b>With Naxos Music Library you can</b></td></tr> 
+		<tr><td valign="top" align="left" width="1"><li></li></td><td valign="top" align="left" colspan="2" width="99%">Access over 610,800 tracks (more than 42,660 CDs) - the entire Naxos and Marco Polo <!--<a style="font-size:11px;" href="javascript:downloadPDF_window('./Login/downloadPDF.asp');">-->catalogues<!--</a>-->, plus other licensed independent labels</td></tr>
+		
+		<tr>
+		<td valign="top" align="left"><li></li></td><td valign="top" align="left">Listen to whole CDs or individual tracks - you decide</td>
+		</tr>
+		<tr><td valign="top" align="left" colspan="2"><b style="color:#FF0000;">System requirements: </b></td></tr>
+		<tr>
+		    <td colspan="2">
+		        Please try our <a href="http://www.naxosmusiclibrary.com/home.asp">"15-minute Free Preview"</a> to see if your computer system is compatible with our streaming services. 
+                <br /><br />
+                Adobe Flash is the default player for Naxos Music Library. Please make sure you have Adobe Flash Player version 9 for MAC or version 10 for PC is installed.  You can find the latest version of Adobe Flash here: <a href="http://www.adobe.com/ap/products/flashplayer/">http://www.adobe.com/ap/products/flashplayer/</a>.
+                <br /><br />
+            </td>
+		</tr>
+		<tr>
+		<td valign="middle" align="left" height="10" width="10">
+			<table border="0" cellpadding="0" cellspacing="0" width="100%">
+			<tr>
+			<td bgcolor="#2A9CFF" valign="top" align="left" height="10" width="10"><img border="0" src="./images/spacer.gif" height="10" width="10"></td>
+			</tr>
+			</table>
+		</td>
+		<td valign="middle" align="left" colspan="1">
+		<font style="color:#2A9CFF; font-weight:bold;">For technical questions, please contact:</font>
+		</td>
+		</tr>
+		<tr>
+		<td></td>
+		<td valign="top" align="left" colspan="1">
+			USA: 
+			<a class="blue" style="font-size:11px; text-decoration:underline;" 
+			href="mailto:nmlhelp@naxosusa.com" 
+			title="NMLHelp@Naxosusa.com" 
+			onMouseOver="window.status='mail to NMLHelp@Naxosusa.com'; return true;" 
+			onMouseOut="window.status=''; return true;">NMLHelp@Naxosusa.com</a>;
+			Tel: 615-465-3833
+		</td>
+		</tr>
+		<tr>
+		<td></td>
+		<td valign="top" align="left" colspan="1">
+			All countries except USA: 
+			<a class="blue" style="font-size:11px; text-decoration:underline;" 
+			href="mailto:customer.service@naxos.com" 
+			title="Customer.Service@Naxos.com" 
+			onMouseOver="window.status='mail to Customer.Service@Naxos.com'; return true;" 
+			onMouseOut="window.status=''; return true;">Customer.Service@Naxos.com</a>
+		</td>
+		</tr>
+		</table>
+	</td>
+	</tr>
+	</table>
+</td>
+<td>&#160;</td>
+</tr>
+
+<tr><td style="font-size:5px;">&nbsp;</td></tr>
+
+<tr>
+<td align="left" background="./images/join3_sub_title_02.gif" width="1%"><img border="0" src="./images/join3_sub_title_01.gif" width="14" height="19"></td>
+<td align="left" background="./images/join3_sub_title_02.gif" width="97%" nowrap><font style="color:#FFFFFF; font-size:12px; font-weight:bold;">Naxos Music Library Features:</font></td>
+<td align="right" background="./images/join3_sub_title_02.gif" width="2%"><img border="0" src="./images/join3_sub_title_04.gif" width="16" height="19"></td>
+</tr>
+
+<tr><td style="font-size:3px;">&nbsp;</td></tr>
+
+<tr>
+<td></td>
+<td valign="top" align="left" colspan="2" nowrap>
+	<table border="0" cellpadding="2" cellspacing="0" width="100%">
+	<tr><td valign="top" align="left"><li></li></td><td valign="top" align="left">Classical music</td></tr>
+	<tr><td valign="top" align="left"><li></li></td><td valign="top" align="left">Six other genres including Jazz, Blues, World and Chinese music</td></tr>
+	<!--<tr><td valign="top" align="left"><li></li></td><td valign="top" align="left">All new releases added monthly (On average over 35 per month in 2005)</td></tr>-->
+	<tr><td valign="top" align="left"><li></li></td><td valign="top" align="left">500 CDs are added every month</td></tr>
+	<tr><td valign="top" align="left"><li></li></td><td valign="top" align="left">CD Quality sound (128Kbps; broadband required) and / or Near-CD Quality (64Kbps; broadband or DSL / ISDN required) and FM Quality (20Kbps; suitable for a dial-up connection)</td></tr>
+	<tr><td valign="top" align="left"><li></li></td><td valign="top" align="left">Accessible from anywhere in the world</td></tr>
+	<!--
+	<tr><td valign="top" align="left"><li></li></td><td valign="top" align="left">US$15 / &euro;15 per month (Near-CD Quality) or US$25 / &euro;25 per month (CD Quality)*</td></tr>
+	<tr><td valign="top" align="left"><li></li></td><td valign="top" align="left">US$150 / &euro;150 per year (Near-CD Quality) or US$225 / &euro;225 per year (CD Quality)*</td></tr>
+	<tr><td valign="top" align="left"><li></li></td><td valign="top" align="left">SPECIAL RATES AVAILABLE FOR EDUCATIONAL INSTITUTIONS AND LIBRARIES</td></tr>
+	-->
+	</table>
+</td>
+<td></td>
+</tr>
+</table>
+
+	</td>
+	</tr>
+	</table>
+	
+</td>
+</tr>
+</table>
+
+
+</body>
+</html>
+

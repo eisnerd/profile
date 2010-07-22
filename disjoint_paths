@@ -1,0 +1,19 @@
+#grep ^/dev /etc/mtab |cut -f2 -d\ |sed s_^/__ > fs
+cp fs fs.1
+touch fs.2
+cat fs |while read f; do
+  while grep . -q fs.1; do
+	flt="^\("
+	while read g; do
+		[ "$g" = "$f" ] && continue
+		#echo ${g#*/}
+		[ "${g#*/}" != "$g" ] && { echo $g>> fs.1; 
+g="${g%%/*}"; echo $g; }
+		flt="$flt/$g\\|"
+	done<fs.1
+	mv fs.2 fs.1
+	touch fs.2
+#	find $f -maxdepth 1|grep -v "${flt%|})$"
+  done
+cp fs fs.1
+done

@@ -1,0 +1,44 @@
+#!/bin/bash
+
+conv()
+{
+	dest="`realpath \"$i\"|sed s/flac$/mp3/|sed \"$pat\"`"
+	mkdir -vp "`dirname \"$dest\"`" &&
+	echo Converting \"$i\" to \"$dest\" &&
+	flac -s -f "$i" -d -o "$i.wav" &&
+	lame -S -V2 "$i.wav" "$dest" &&
+	id3cp "$i" "$dest" &&
+	rm "$i.wav"
+}
+args=($@)
+if [ 0 -eq ${#args[@]} ]
+then
+	echo Error: must specify a destination filename sed expression
+elif [ 2 -gt ${#args[@]} ]
+then
+	# default arguments
+	[ -z `ls -1 *.flac` ] && exit
+	. $0 $1 *.flac
+	# flac2mp3 *.flac
+else
+	pat="$1"
+	shift
+	#for i in *.flac; do flac "$i" -d -c | lame -V2 - "`echo $i|sed s/flac$/mp3/|sed \"$1\"`" && id3cp "$i" "`echo $i|sed s/flac$/mp3/|sed \"$1\"`"; done
+	for j
+	do
+#	  (if [ "-" = "$j" ]; then cat; else echo $j; fi)| while read i; do
+#		flac "$i" -d -o "$i.wav" &&
+#		lame -V2 "$i.wav" "`echo $i|sed s/flac$/mp3/|sed \"$pat\"`" &&
+#		id3cp "$i" "`echo $i|sed s/flac$/mp3/|sed \"$pat\"`" &&
+#		rm "$i.wav"
+#	  done
+	  if [ "-" = "$j" ];
+	  then
+		while read i; do conv; done
+	  else
+		i="$j"
+		conv
+	  fi
+	done
+
+fi

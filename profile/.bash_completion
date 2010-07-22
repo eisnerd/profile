@@ -1,0 +1,1 @@
+for i in $HOME/bin/*.completion; do [ "$i" != "$HOME/bin/*.completion" ] && . "$i"; done

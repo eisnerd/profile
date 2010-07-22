@@ -1,0 +1,1 @@
+complete -f -X '!*.@(mid?(i)|MID?(I))' midview

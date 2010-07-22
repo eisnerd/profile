@@ -1,0 +1,1 @@
+echo \$$1|envsubst|sed_fat

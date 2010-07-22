@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# Output root
+cd ~/ttat/rsp
+
+# dos to unix eol conversion
+#tr -d  | (
+sed s/$// -u | (
+
+# target filename (excluding .inc part)
+read project
+
+# safe input validation
+if [ "${project[0]}" != "." ]
+then
+
+# send all following data to the next file
+	cat >> $project.$((`find . -name $project.\\* -a \! -size 0 2>/dev/null|wc -l` + 1))
+fi
+)

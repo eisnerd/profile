@@ -1,0 +1,12 @@
+#!/usr/bin/perl
+
+#use DBM::Deep;
+#my $db = DBM::Deep->new(@ARGV[0]);
+dbmopen(%db, @ARGV[0], 0666);
+
+$|++;
+while(<STDIN>)
+{
+	print $db{$_}."\n";
+}
+dbmclose(%db);

@@ -1,0 +1,5 @@
+#!/bin/sh
+env > /home/eisd/bin/screens.newtab.log
+pwd >> /home/eisd/bin/screens.newtab.log
+date >> /home/eisd/bin/screens.newtab.log
+/usr/bin/screen -q -a -U

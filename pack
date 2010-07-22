@@ -1,0 +1,12 @@
+#!/usr/local/bin/runhaskell
+import Data.BinPack
+main =
+	getLine >>= \n ->
+	getContents >>= \c ->
+
+		mapM_(\x -> mapM_ putStrLn x>>putStrLn "") $
+		 map (map id.items) $
+		 minimizeBins ModifiedFirstFit Decreasing length
+			(read n :: Int)
+			(lines c)
+

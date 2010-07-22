@@ -1,0 +1,51 @@
+#!/bin/bash -x
+cleanup() {
+	rm -f pid
+	trap - INT TERM EXIT
+	exit
+}
+trap cleanup INT TERM EXIT
+echo $$>pid
+
+screen -X title "`realpath item.asp|sed \"s_.*/Zork/nax[^/]*/batches/\([^/]*\).*_\1 ${root##*/}_\"`"
+conversion='sed_fat_from_xml'
+title=$(tr \\n \  < item.asp|sed "s_.*<title>\(.*\) - Naxos Music Library</title>.*_\1_"|$conversion)
+touch title.$title
+#if (find {~/Music,/media}/Zork/nax/ /green/eisd/second/* /green/eisd/*/{,Music/}nax /green/eisd/darkstar/eisd/Music/nax -maxdepth 1 -iname "$title"; find /net/sd -name $root\\.\*)|grep -q .; then
+cid=${PWD##*/}
+if
+	if [ -z "$use_cid" ]; then
+		[ `locate -qc "$title"` \> 0 ]
+	else
+		[ -z "$cid" -o -e "/green/eisd/second/bycid/$cid.asp" ]
+	fi
+then
+	echo done
+	#mkdir -p done
+	#mv item.asp done/$cid.asp
+	mv item.asp done
+	exit
+#elif find /net/sd -name ${root##*/}\\.\*|grep -q .; then
+#	echo done
+#	mkdir -p lost/sd
+#	mv "$doc" lost/sd
+#	exit
+else
+#	mv "$doc" lost
+	echo NEW
+fi
+
+cp -a ~/bin/nax/{tree_q02.xq,dl} . &&
+(
+#if [ "${doc%*.snip}" = "$doc" ]; then
+echo "<doc>"
+grep \\\(streamw\\?\\.asp\\\|selectMemberTracks\\\) item.asp |sed "s_\(<input[^/]*\)>_\1 />_g"|sed s/\\xC2\\xA0/\ /g|sed "s_\<br */\?_br/_g"|sed "s_[ \t]*\([^ ].*\)_<line>\1</line>_"|tr -d |sed "s/&nbsp;/ /g"|sed "s/2\.0&/2.0&amp;/g"
+echo "</doc>"
+)>snip &&
+galax-run tree_q02.xq -context-item snip -language xqueryp|sed "s/ __ /\"/g"|sed "s/&amp;/\&/g"|sed "s/&apos;/'/g"|sed "s/&gt;/>/g" |sed "s/&nbsp;/ /g"|sed 's/&quot;/"/g'|sed "s/ \+;\([^ ]\)/; \1/g"|grep -v "res>" >get &&
+sed 's/"\([^$][^"]*\.wma\)"/"`echo \\"\1\\"|sed_fat`"/' get |sed 's#_64k/_#_@[[:alnum:]]*64k/_@nml#'|sed "s_[\]\?'_\\'_g"|grep -v eyeD3|bash -sx 2>&1|tee log &&
+grep ^file get |sed "s/^.*\(http:.*\)\"  |\.\/dl.*/\1/" > urls &&
+grep ^\ \ mv get |sed "s/^.*[^\\]\"\(\([^\"]\|\\\"\)*\)\"\ *$/\1/" > lst &&
+find -name \*.wma|wmatagread - &&
+#mv * ${PWD/\/active\///cid/} &&
+echo

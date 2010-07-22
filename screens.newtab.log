@@ -1,0 +1,19 @@
+USER=eisd
+SSH_CLIENT=192.168.3.15 8979 22
+MAIL=/var/mail/eisd
+SHLVL=1
+HOME=/home/eisd
+XDG_SESSION_COOKIE=37dbcb2370c2d3b4f597e0ca496de08b-1261329583.478707-1743775503
+COLORTERM=Terminal
+LOGNAME=eisd
+_=/usr/bin/xfterm.pref
+WINDOWID=18874371
+TERM=xterm
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games
+DISPLAY=localhost:12.0
+LANG=en_GB.UTF-8
+SHELL=/bin/bash
+PWD=/home/eisd
+SSH_CONNECTION=192.168.3.15 8979 192.168.3.218 22
+/home/eisd
+Sun Dec 20 17:36:39 GMT 2009

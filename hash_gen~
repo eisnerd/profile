@@ -1,0 +1,20 @@
+#!/usr/bin/perl
+
+#use DBM::Deep;
+#my $db = DBM::Deep->new(@ARGV[0]);
+dbmopen(%db, @ARGV[0], 0666);
+while(<STDIN>)
+{
+	if (/(.*?)(?:(?<!:): (.*))/)
+	{
+		$a=$1."\n";
+	}
+	else
+	{
+		$a=$_;
+	}
+	$a =~ s/::/:/g;
+	$db{$a} = $2;
+	print $a." -> ".$db{$a}."\n";
+}
+#dbmclose(%db);

@@ -1,0 +1,262 @@
+OPEN: http://manchesterlib.naxosmusiclibrary.com/page.library_cardno.asp
+
+Response Headers
+Cache-Control	no-cache
+Date	Wed, 02 Jun 2010 15:01:36 GMT
+Content-Type	text/html
+Expires	Wed, 02 Jun 2010 15:01:36 GMT
+Server	Microsoft-IIS/6.0
+X-Powered-By	ASP.NET
+Content-Encoding	gzip
+Vary	Accept-Encoding
+Transfer-Encoding	chunked
+
+Request Headers
+Host	manchesterlib.naxosmusiclibrary.com
+User-Agent	Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.1.9) Gecko/20100315 Firefox/3.5.9 (.NET CLR 1.1.4322; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C; .NET4.0E)
+Accept	text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language	en-gb,en;q=0.5
+Accept-Encoding	gzip,deflate
+Accept-Charset	ISO-8859-1,utf-8;q=0.7,*;q=0.7
+Keep-Alive	300
+Connection	keep-alive
+Referer	http://manchesterlib.naxosmusiclibrary.com/libraryentry.asp?mid=101977&subid=OFN0005187&cno=ManchesLibNML03
+Cookie	B100Serverpoolcookie=3939204053.31811.3732006272.3494456299; ASPSESSIONIDCCTRSSBC=LBFHOBJCJIDEMMBFFCGGEDOC; dirpath=manchesterlib%2Enaxosmusiclibrary%2Ecom; Search%5FMode=CD+Page; ASPSESSIONIDCCSTTQCD=LOAKIOICJJEJAFEJCDPHGDBE; ASPSESSIONIDCCSRSTDD=CPOHNPCDPOOCBBPKKNEACOAO
+
+Post body
+Admin_Login	FALSE
+CertNo	ManchesLibNML03
+MemID	101977
+Member_Login	TRUE
+SubID	OFN0005187
+can_Search	TRUE
+non_login	TRUE
+referurl	
+
+LOGIN: http://manchesterlib.naxosmusiclibrary.com/action.login_confirm.asp
+
+Response Headers
+Date	Tue, 01 Jun 2010 15:23:07 GMT
+Server	Microsoft-IIS/6.0
+X-Powered-By	ASP.NET
+Location	/
+Content-Length	122
+Content-Type	text/html
+Expires	Tue, 01 Jun 2010 15:23:06 GMT
+Set-Cookie	nmlsession=surl=False&subid=OFN0005187&mid=101977&mt=MM&cno=ManchesLibNML03&sid=70D54DDF%2DD080%2D4AE5%2DB05E%2D726309DE7280; expires=Tue, 01-Jun-2010 17:23:08 GMT; path=/ dirpath=manchesterlib%2Enaxosmusiclibrary%2Ecom; path=/
+Cache-Control	no-cache
+
+Request Headers
+Host	manchesterlib.naxosmusiclibrary.com
+User-Agent	Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.1.9) Gecko/20100315 Firefox/3.5.9 (.NET CLR 1.1.4322; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C; .NET4.0E)
+Accept	text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language	en-gb,en;q=0.5
+Accept-Encoding	gzip,deflate
+Accept-Charset	ISO-8859-1,utf-8;q=0.7,*;q=0.7
+Keep-Alive	300
+Connection	keep-alive
+Referer	http://manchesterlib.naxosmusiclibrary.com/page.library_cardno.asp
+Cookie	B100Serverpoolcookie=3939204053.31811.3732006272.3494456299; ASPSESSIONIDCCTRSSBC=LBFHOBJCJIDEMMBFFCGGEDOC
+
+Post Body
+Admin_Login	FALSE
+LG	
+L_Code	
+MemberFull	
+Member_Login	TRUE
+PASSWORD	
+USERNAME	MAND9999010254187
+can_Search	TRUE
+certno	ManchesLibNML03
+forgotpass	
+item_code2	
+link2	
+memid	101977
+mins15_preview	
+newQuery	New
+non_login	TRUE
+referto	
+referurl	
+subid	OFN0005187
+
+BIOG snippet:
+<ul id="ulWorkCat">
+	<li id="wc36" class="wcSelected">
+		<a onclick="javascript:FilterWorkCategory('C','26291','36','');" href="javascript:void(0);">Ballet</a>
+	</li>
+	...
+	<li id="wc0" class="wcListed">
+		<a title="List all" onclick="javascript:FilterWorkCategory('C','26291','0','');" href="javascript:void(0);">All</a>
+	</li>
+</ul>
+
+BIOG sub-snippet:
+<ul id="cdInitials">
+	<li class="InitSelected">
+		<a style="text-decoration: none;" onclick="javascript:FilterWorkCategory('composer','26291','36','0');" href="javascript:void(0);">
+		<font color="#ffffff">All</font>
+		</a>
+	</li>
+	<li class="InitListed">
+		<a style="text-decoration: none;" onclick="javascript:FilterWorkCategory('composer','26291','36','S');" href="javascript:void(0);">S</a>
+	</li>
+</ul>
+
+BIOG ('C','26291','36',''): http://manchesterlib.naxosmusiclibrary.com/composer/showdiscography.asp?pg=C&pid=26291&wc=36&i=
+
+Response Headers
+Cache-Control	private
+Date	Tue, 01 Jun 2010 15:46:41 GMT
+Content-Type	text/html
+Server	Microsoft-IIS/6.0
+X-Powered-By	ASP.NET
+Set-Cookie	ASPSESSIONIDCCSTTQCD=LOAKIOICJJEJAFEJCDPHGDBE; path=/
+Content-Encoding	gzip
+Vary	Accept-Encoding
+Transfer-Encoding	chunked
+
+Request Headers
+Host	manchesterlib.naxosmusiclibrary.com
+User-Agent	Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.1.9) Gecko/20100315 Firefox/3.5.9 (.NET CLR 1.1.4322; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C; .NET4.0E)
+Accept	text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language	en-gb,en;q=0.5
+Accept-Encoding	gzip,deflate
+Accept-Charset	ISO-8859-1,utf-8;q=0.7,*;q=0.7
+Keep-Alive	300
+Connection	keep-alive
+Content-Type	application/x-www-form-urlencoded; charset=UTF-8
+Referer	http://manchesterlib.naxosmusiclibrary.com/composer/btm.asp?composerid=26291
+Content-Length	53
+Cookie	B100Serverpoolcookie=3939204053.31811.3732006272.3494456299; ASPSESSIONIDCCTRSSBC=LBFHOBJCJIDEMMBFFCGGEDOC; nmlsession=surl=False&sid=70D54DDF%2DD080%2D4AE5%2DB05E%2D726309DE7280&subid=OFN0005187&mid=101977&mt=MM&cno=ManchesLibNML03; dirpath=manchesterlib%2Enaxosmusiclibrary%2Ecom; Search%5FMode=Biography+Page
+
+Params
+i	
+pg	C
+pid	26291
+wc	36
+
+Post body
+/composer/showdiscography.asp?pg	C
+i	
+pid	26291
+wc	36
+
+BIOG ('C','26291','0',''): http://manchesterlib.naxosmusiclibrary.com/composer/showdiscography.asp?pg=C&pid=26291&wc=0&i=
+
+Response Headers
+Cache-Control	private
+Date	Tue, 01 Jun 2010 15:54:29 GMT
+Content-Type	text/html
+Server	Microsoft-IIS/6.0
+X-Powered-By	ASP.NET
+Content-Encoding	gzip
+Vary	Accept-Encoding
+Transfer-Encoding	chunked
+
+Request Headers
+Host	manchesterlib.naxosmusiclibrary.com
+User-Agent	Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.1.9) Gecko/20100315 Firefox/3.5.9 (.NET CLR 1.1.4322; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C; .NET4.0E)
+Accept	text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language	en-gb,en;q=0.5
+Accept-Encoding	gzip,deflate
+Accept-Charset	ISO-8859-1,utf-8;q=0.7,*;q=0.7
+Keep-Alive	300
+Connection	keep-alive
+Content-Type	application/x-www-form-urlencoded; charset=UTF-8
+Referer	http://manchesterlib.naxosmusiclibrary.com/composer/btm.asp?composerid=26291
+Content-Length	52
+Cookie	B100Serverpoolcookie=3939204053.31811.3732006272.3494456299; ASPSESSIONIDCCTRSSBC=LBFHOBJCJIDEMMBFFCGGEDOC; nmlsession=surl=False&sid=70D54DDF%2DD080%2D4AE5%2DB05E%2D726309DE7280&subid=OFN0005187&mid=101977&mt=MM&cno=ManchesLibNML03; dirpath=manchesterlib%2Enaxosmusiclibrary%2Ecom; Search%5FMode=Biography+Page; ASPSESSIONIDCCSTTQCD=LOAKIOICJJEJAFEJCDPHGDBE
+Pragma	no-cache
+Cache-Control	no-cache
+
+Params
+i	
+pg	C
+pid	26291
+wc	0
+
+Post body
+/composer/showdiscography.asp?pg	C
+i	
+pid	26291
+wc	0
+
+BIOG ('composer','26291','0','W'): http://manchesterlib.naxosmusiclibrary.com/composer/showdiscography.asp?pg=composer&pid=26291&wc=0&i=W
+
+Response Headers
+Cache-Control	private
+Date	Tue, 01 Jun 2010 15:58:12 GMT
+Content-Type	text/html
+Server	Microsoft-IIS/6.0
+X-Powered-By	ASP.NET
+Content-Encoding	gzip
+Vary	Accept-Encoding
+Transfer-Encoding	chunked
+
+Request Headers
+Host	manchesterlib.naxosmusiclibrary.com
+User-Agent	Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.1.9) Gecko/20100315 Firefox/3.5.9 (.NET CLR 1.1.4322; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C; .NET4.0E)
+Accept	text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language	en-gb,en;q=0.5
+Accept-Encoding	gzip,deflate
+Accept-Charset	ISO-8859-1,utf-8;q=0.7,*;q=0.7
+Keep-Alive	300
+Connection	keep-alive
+Content-Type	application/x-www-form-urlencoded; charset=UTF-8
+Referer	http://manchesterlib.naxosmusiclibrary.com/composer/btm.asp?composerid=26291
+Content-Length	60
+Cookie	B100Serverpoolcookie=3939204053.31811.3732006272.3494456299; ASPSESSIONIDCCTRSSBC=LBFHOBJCJIDEMMBFFCGGEDOC; nmlsession=surl=False&sid=70D54DDF%2DD080%2D4AE5%2DB05E%2D726309DE7280&subid=OFN0005187&mid=101977&mt=MM&cno=ManchesLibNML03; dirpath=manchesterlib%2Enaxosmusiclibrary%2Ecom; Search%5FMode=Biography+Page; ASPSESSIONIDCCSTTQCD=LOAKIOICJJEJAFEJCDPHGDBE
+Pragma	no-cache
+Cache-Control	no-cache
+
+Params
+i	W
+pg	composer
+pid	26291
+wc	0
+
+Post body
+/composer/showdiscography.asp?pg	composer
+i	W
+pid	26291
+wc	0
+
+BIOG ('composer','26291','0','0'): http://manchesterlib.naxosmusiclibrary.com/composer/showdiscography.asp?pg=composer&pid=26291&wc=0&i=0
+
+Response Headers
+Cache-Control	private
+Date	Tue, 01 Jun 2010 16:02:04 GMT
+Content-Type	text/html
+Server	Microsoft-IIS/6.0
+X-Powered-By	ASP.NET
+Content-Encoding	gzip
+Vary	Accept-Encoding
+Transfer-Encoding	chunked
+
+Request Headers
+Host	manchesterlib.naxosmusiclibrary.com
+User-Agent	Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.1.9) Gecko/20100315 Firefox/3.5.9 (.NET CLR 1.1.4322; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C; .NET4.0E)
+Accept	text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language	en-gb,en;q=0.5
+Accept-Encoding	gzip,deflate
+Accept-Charset	ISO-8859-1,utf-8;q=0.7,*;q=0.7
+Keep-Alive	300
+Connection	keep-alive
+Content-Type	application/x-www-form-urlencoded; charset=UTF-8
+Referer	http://manchesterlib.naxosmusiclibrary.com/composer/btm.asp?composerid=26291
+Content-Length	60
+Cookie	B100Serverpoolcookie=3939204053.31811.3732006272.3494456299; ASPSESSIONIDCCTRSSBC=LBFHOBJCJIDEMMBFFCGGEDOC; nmlsession=surl=False&sid=70D54DDF%2DD080%2D4AE5%2DB05E%2D726309DE7280&subid=OFN0005187&mid=101977&mt=MM&cno=ManchesLibNML03; dirpath=manchesterlib%2Enaxosmusiclibrary%2Ecom; Search%5FMode=Biography+Page; ASPSESSIONIDCCSTTQCD=LOAKIOICJJEJAFEJCDPHGDBE
+Pragma	no-cache
+Cache-Control	no-cache
+
+Params
+i	0
+pg	composer
+pid	26291
+wc	0
+
+Post body
+/composer/showdiscography.asp?pg	composer
+i	0
+pid	26291
+wc	0

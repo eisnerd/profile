@@ -1,0 +1,4 @@
+#!/bin/sh
+[ -z "$*" ] && cat && exit
+IFS=""
+while read i; do "$@" "$i"; done

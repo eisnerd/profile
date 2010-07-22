@@ -1,0 +1,2 @@
+#!/bin/sh
+ghc -o ~/bin/.midi ~/bin/midi.hs -O0 -fno-warn-warnings-deprecations -package midi -package gtk && ~/bin/.midi $@

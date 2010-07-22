@@ -1,0 +1,5 @@
+sig=-9
+[ "${1:0:1}" = "-" ] && sig=$1 && shift
+cmd=mimms
+[ -n "$1" ] && cmd="$1"
+ps T c|grep "\b$cmd$"|grep -w T|(read i j && echo $i $j && echo kill $sig $i && kill $sig $i)

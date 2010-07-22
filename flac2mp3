@@ -1,0 +1,21 @@
+#!/bin/bash
+
+args=($@)
+if [ 0 -eq ${#args[@]} ]
+then
+	# default arguments
+	[ -z `ls -1 *.flac` ] && exit
+	. $0 *.flac
+	# flac2mp3 *.flac
+else
+
+	#for i in *.flac; do flac "$i" -d -c | lame -V2 - "`echo $i|sed s/flac$/mp3/`" && id3cp "$i" "`echo $i|sed s/flac$/mp3/`"; done
+	for i
+	do
+		flac -f "$i" -d -o "$i.wav" &&
+		lame -V2 "$i.wav" "`echo $i|sed s/flac$/mp3/`" &&
+		id3cp "$i" "`echo $i|sed s/flac$/mp3/`" &&
+		rm "$i.wav"
+	done
+
+fi

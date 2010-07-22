@@ -1,0 +1,21 @@
+n=`/usr/bin/screen -ls | grep -c Detached`
+
+#echo -n " -E \"/usr/bin/screen -q -A -a -U\""
+#echo -n " -E /home/eisd/bin/screens.newtab"
+
+if [ $n -eq 0 ]
+then
+	echo -n " -e \"/usr/bin/screen -q -A -a -U\""
+#	echo -n " -e /home/eisd/bin/screens.newtab"
+else
+
+N=0
+#for i in `ls -1 /var/run/screen/S-eisd/`
+for i in `/usr/bin/screen -ls |/bin/grep Detached|/usr/bin/cut -f 2`
+do
+	[ $N = 0 ] || echo -n " --tab "
+	echo -n " -e \"/usr/bin/screen -q -a -r $i\""
+	(( N++ ))
+done
+#echo -n " ++NewTab \"/usr/bin/screen -R\" "
+fi

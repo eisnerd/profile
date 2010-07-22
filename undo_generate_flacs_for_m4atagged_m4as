@@ -1,0 +1,10 @@
+#!/bin/bash
+# pipe m4a filenames
+while read i
+do
+  targ="../Music/${i%*.m4a}.flac"
+  faad -i "$i" 2>&1 |grep ^\\\(Unable\ to\ find\\\|RAW$\\\) -q && (
+		mv "$i" "../Music/$i" &&
+		rm -f "$targ"
+  )
+done

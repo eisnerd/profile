@@ -1,1 +1,1 @@
-find -name \*.mp4|while read i; do d="${i%/*}"; f="${i##*/}"; f="${f%.mp4}"; [ `stat -c%s "$i"` -lt `grep --color=none '< Content-Length:' "$d/.$f.log"|grep -o '[0-9]*'` ] && echo "$i"; done
+find -name \*.mp4|while read i; do d="${i%/*}"; f="${i##*/}"; f="${f%.mp4}"; [ `stat -c%s "$i"` -lt `grep --color=none '< Content-Length:' "$d/.$f.log"|grep -o '[0-9]*'` ] && echo "$i"; done 2>&1 |tee small.log

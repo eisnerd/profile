@@ -229,6 +229,7 @@ listings()
 	got $biog || (cook "$getbiog$cpid" > $biog)
 
 	export composer=`grep '<tr><td align="left" valign="top">[^b]*<b>[^</>]*</b>' -o $biog|sed 's_.*<b>\([^</>]*\)</b>.*_\1_'`
+	[ -z "$composer" ] && composer=`grep -o '<strong>[^<>]*</strong>' $biog|sed 's/^<strong>\(Composer:\)\? *//;s_ *</strong>__'`
 	log $composer
 	mkdir -p Composer
 	if [ -n "$2" ]; then
@@ -236,6 +237,9 @@ listings()
 	else
 	  ln -sfT ../cpid/$cpid "Composer/$composer"
 	fi
+
+	export alb=cpid/$cpid/view_by_album.html
+	cook new $alb "$root/composer/er_btmalbum.asp?composerid=$cpid"
 
 	(grep FilterWorkCategory $biog|sed 's_FilterWork_\r\nFilterWork_g'|getcategory; getall $cpid)|while read i j; do
 		log -e \\t$j

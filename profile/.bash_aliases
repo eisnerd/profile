@@ -13,9 +13,30 @@ alias d='cd $OLDPWD'
 alias p=pushd
 alias P=popd
 
-fl()
-{
-        find "$@" -type l
+alias lc="cl"
+cl () {
+   if [ $# = 0 ]; then
+      cd && ll
+   else
+      cd "$*" && ll
+   fi
+}
+
+alias md="mkdir -p"
+function mc() {
+  md "$*" && cd "$*" && pwd
+}
+
+
+fl() {
+   find "$@" -type l
+}
+ff() {
+   find "$@" -type f
+}
+
+id-copy () {
+  [ -e ~/.ssh/id_rsa.pub ] && cat ~/.ssh/id_rsa.pub |ssh "$@" 'umask 077; test -d .ssh || mkdir .ssh ; cat >> .ssh/authorized_keys'
 }
 
 alias ill='sudo aptitude install'

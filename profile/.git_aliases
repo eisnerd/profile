@@ -1,0 +1,15 @@
+git-up() {
+  git remote|while read i; do git push $i --all "$@" && git push $i --tags "$@" || break; done
+}
+git-dn() {
+  git remote|while read i; do git fetch $i --all "$@" || break; done
+}
+git-dn-tags() {
+  git remote|while read i; do git fetch $i -t "$@" || break; done
+}
+git-whitespaceless() {
+  git diff --ignore-space-change "$@"
+}
+git-whitespaceless-add() {
+  git-whitespaceless "$@"|git apply --cache
+}

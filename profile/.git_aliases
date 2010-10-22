@@ -7,9 +7,22 @@ git-dn() {
 git-dn-tags() {
   git remote|while read i; do git fetch $i -t "$@" || break; done
 }
+
 git-whitespaceless() {
   git diff --ignore-space-change "$@"
 }
 git-whitespaceless-add() {
   git-whitespaceless "$@"|git apply --cache
+}
+git-mods() {
+  hash="/tmp/$(git log -n1 --pretty=format:%H)"
+  rm -f $hash.*
+  [ $# -ge 1 ] && [ "${1:0:1}" = "-" ] && n="${1:1}" && [ -z "${n##+([0-9])}" ] && opt=("-U$n" "--inter-hunk-context=$n") && shift
+  a=0; b=0; export i; git diff "${opt[@]}" --diff-filter=M "$@"|while IFS= read -r i; do [ "${i#diff}" = "$i" ] || {((a++)); b=0;}; [ "${i#@@}" = "$i" ] || ((b++)); printenv i >> $hash.$a-$b; done
+  for i in $hash.*; do [ "${i%-0}" = "$i" ] && diff -qawB <(sed  -n s/^-//p $i ) <(sed -n s/^+//p $i ) > /dev/null && rm $i; done
+  ls -1v $hash.*|xargs cat
+  rm $hash.*
+}
+git-mods-add() {
+  git-mods "$@"|git apply --cache
 }

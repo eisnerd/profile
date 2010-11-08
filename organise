@@ -5,10 +5,10 @@ find . -type d|tail -n+2
 list=list_default
 [ "$1" = "-" ] && list=cat && shift
 [ -z "$1" ] &&
- sorted=/home/eisd/Music/Naxos
+ sorted=$HOME/Music/Naxos
 [ -n "$1" ] &&
- sorted="/home/eisd/Music/Naxos$1"
-coproc hash_map /home/eisd/bin/sort
+ sorted="$HOME/Music/Naxos$1"
+coproc hash_map $HOME/bin/sort
 exec 3<&${COPROC[0]}
 exec 4>&${COPROC[1]}
 export cmp orig i
@@ -25,7 +25,7 @@ $list|grep -v $exclude|sed -u s_^\\./__|while read d; do
 	if [ "$j" != "$f" ] && cmp2="${j%%/*}" && [ "$cmp2" != "nax" ]; then
 		cmp="$cmp2"
 	elif lst=`echo *-*.lst` && [ -e "$lst" ]; then
-		#cmp2=`echo "${lst%-*}"|hash_map sort`;
+		#cmp2=`echo "${lst%-*}"|hash_map $HOME/bin/sort`;
 		echo "${lst%%-*}">&4
 		read cmp2 <&3
 		[ -n "$cmp2" ] && cmp="$cmp2";

@@ -1,3 +1,8 @@
+git-fup ()
+{
+#echo ${h%:*} - ${h#*:}
+         git push $1 -f --all --porcelain|sed -n 's/^![[:space:]]*//p'|while read h i; do git push $1 -f :${h#*:} || break; git push $1 $h || break;  done
+}
 git-up() {
   git remote|while read i; do git push $i --all "$@" && git push $i --tags "$@" || break; done
 }
@@ -25,4 +30,9 @@ git-mods() {
 }
 git-mods-add() {
   git-mods "$@"|git apply --cache
+}
+
+git-undo-modes() {
+  git diff --summary | grep --color 'mode change 100755 => 100644' | cut -d' ' -f7- | xargs -d'\n' chmod +x
+  git diff --summary | grep --color 'mode change 100644 => 100755' | cut -d' ' -f7- | xargs -d'\n' chmod -x
 }

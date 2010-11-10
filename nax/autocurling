@@ -1,11 +1,23 @@
 root=http://manchesterlib.naxosmusiclibrary.com
 stream=80audiostream.naxosmusiclibrary.com
-getbiog="$root/composer/btm.asp?composerid="
 getdisc="$root/catalogue/item.asp?cid="
+
+Composer()
+{
+export authors=Composer
+export getbiog="$root/composer/btm.asp?composerid="
+}
+Artist()
+{
+export getbiog="$root/artist_pro_new.asp?personid="
+export authors=Artist
+}
+
+Composer
 
 getall()
 {
-	echo "/composer/showdiscography.asp?pg=C&pid=$1&wc=0&i= All"
+	echo "/composer/showdiscography.asp?pg=${authors:0:1}&pid=$1&wc=0&i= All"
 }
 getcategory()
 {
@@ -229,18 +241,16 @@ listings()
 	got $biog || (cook "$getbiog$cpid" > $biog)
 
 	export composer=`grep '<tr><td align="left" valign="top">[^b]*<b>[^</>]*</b>' -o $biog|sed 's_.*<b>\([^</>]*\)</b>.*_\1_'`
-	[ -z "$composer" ] && composer=`grep -o '<strong>[^<>]*</strong>' $biog|sed 's/^<strong>\(Composer:\)\? *//;s_ *</strong>__'`
+	[ -z "$composer" ] && composer=`grep -o '<strong>[^<>]*</strong>' $biog|head -1|sed 's/^<strong>\(Composer:\)\? *//;s_ *\(&acute;s Discography\)\? *</strong>__'`
 	log $composer
-	mkdir -p Composer
+	mkdir -p $authors
 	if [ -n "$2" ]; then
-	  ln -sfT ../cpid/$cpid "Composer/$composer $2"
+	  ln -sfT ../cpid/$cpid "$authors/$composer $2"
 	else
-	  ln -sfT ../cpid/$cpid "Composer/$composer"
+	  ln -sfT ../cpid/$cpid "$authors/$composer"
 	fi
 
-	export alb=cpid/$cpid/view_by_album.html
-	cook new $alb "$root/composer/er_btmalbum.asp?composerid=$cpid"
-
+	if grep -q FilterWorkCategory $biog; then
 	(grep FilterWorkCategory $biog|sed 's_FilterWork_\r\nFilterWork_g'|getcategory; getall $cpid)|while read i j; do
 		log -e \\t$j
 		j=${j//\//-}
@@ -250,6 +260,18 @@ listings()
 		#got "$lst" || (cook "$i" > "$lst")
 		echo "$lst"
 	done
+	else
+	export alb=cpid/$cpid/view_by_album.html
+	cooknew $alb "$root/composer/render_btmalbum.asp?composerid=$cpid"
+	grep -A1 \<option "$alb"|tr -d \\\r |grep -v 'All Categories\|^[^a-z]*$'|while read a && read b; do
+		a=${a#*value=\"}; a=${a%\"*};
+		log -e "\\t${b#*>}"
+		lst="cpid/$cpid/${b#*>}"
+		mkdir -p "$lst"
+		cooknew "$lst/listing.html" "$root$a"
+		echo "$lst/listing.html"
+	done
+	fi
 }
 
 albums()
@@ -258,7 +280,7 @@ albums()
 	cpid="${a%%/*}"
 	b="${a#$cpid/}"
 	j="${b%%/*}"
-	sed 's/cid=/\r\ncid=/g' "$1" |sed -n 's_cid=\([^"]*\)">\([^<]*\)<.*_\1 \2_p'|while read cid title; do if [ "$cid" != "$title" ]; then
+	sed 's/cid=/\r\ncid=/g' "$1" |sed -n 's_cid=\([^"]*\)"[^>]*>\([^<]*\)<.*_\1 \2_p'|while read cid title; do if [ "$cid" != "$title" ]; then
 		title=${title//\//--}
 		cid=${cid//\//--}
 		mkdir -pv cid/$cid #|grep -q .&& mkdir -p queue/$cid
@@ -270,10 +292,15 @@ generateMisc()
 {
 	pushd "$1" &>/dev/null
 
+	if [ -e All ]; then
 	mkdir -p Misc
 	diff <(find -type l|grep -v ^./All/|sed s_^./[^/]*/__|sort -u) <(find All -type l -printf %f\\n|sort -u) --old-line-format=%L --unchanged-line-format=|foreachI cp -P All/I Misc
 	rmempty Misc
-
+	else
+	mkdir -p All
+	find -type l|while read i; do ln -sf `readlink "$i"` "All/${i#./*/}"; done
+	rmempty All
+	fi
 	popd &>/dev/null
 }
 

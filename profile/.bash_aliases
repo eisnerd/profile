@@ -5,7 +5,7 @@ alias L='ls -lH --color'
 alias La='ls -AlH --color'
 alias lal='ls -AlH --color'
 
-alias sed=ssed
+which ssed > /dev/null 2>&1 && alias sed=ssed
 alias cdr='cd `realpath .`'
 
 alias s='cd ..'
@@ -62,4 +62,5 @@ ext()
 	doodle -d /var/lib/doodle/doodle-locate.db -d /green/eisd/.doodle-locate.db .$1|grep \\.$1$
 }
 
-. ~/bin/wrap_aliases
+[ -f ~/bin/wrap_aliases ] && . ~/bin/wrap_aliases
+[ -f ~/bin/profile/.git_aliases ] && . ~/bin/profile/.git_aliases

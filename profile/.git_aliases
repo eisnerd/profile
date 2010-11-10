@@ -22,10 +22,25 @@ git-whitespaceless-add() {
 git-mods() {
   hash="/tmp/$(git log -n1 --pretty=format:%H)"
   rm -f $hash.*
-  [ $# -ge 1 ] && [ "${1:0:1}" = "-" ] && n="${1:1}" && [ -z "${n##+([0-9])}" ] && opt=("-U$n" "--inter-hunk-context=$n") && shift
-  a=0; b=0; export i; git diff "${opt[@]}" --diff-filter=M "$@"|while IFS= read -r i; do [ "${i#diff}" = "$i" ] || {((a++)); b=0;}; [ "${i#@@}" = "$i" ] || ((b++)); printenv i >> $hash.$a-$b; done
-  for i in $hash.*; do [ "${i%-0}" = "$i" ] && diff -qawB <(sed  -n s/^-//p $i ) <(sed -n s/^+//p $i ) > /dev/null && rm $i; done
-  ls -1v $hash.*|xargs cat
+  
+  # [ -z "${n##+([0-9])}" ] 
+  [ $# -ge 1 ] && [ "${1:0:1}" = "-" ] && n="${1:1}" && echo "$n"|grep -q '^[0-9]*$' && opt=("-U$n" "--inter-hunk-context=$n") && shift
+  
+  a=0; b=0; export i; git diff "${opt[@]}" --diff-filter=M "$@"|while IFS= read -r i; do
+    [ "${i#diff}" = "$i" ] || {((a++)); b=0;};
+    [ "${i#@@}" = "$i" ] || ((b++));
+    printenv i >> $hash.$a-$b;
+  done
+
+  existance=($hash.*)
+  [ "${existance[*]}" = "$hash.*" ] && return
+
+  tmpa=`mktemp`
+  tmpb=`mktemp`
+  for i in $hash.*; do [ "${i%-0}" = "$i" ] && sed  -n s/^-//p $i > $tmpa && sed -n s/^+//p $i > $tmpb && diff -qawB $tmpa $tmpb > /dev/null && rm $i; done
+  rm $tmpa $tmpb
+
+  ls -1v $hash.*|xargs cat|( which colordiff > /dev/null && colordiff 2> /dev/null || cat)
   rm $hash.*
 }
 git-mods-add() {
@@ -35,4 +50,12 @@ git-mods-add() {
 git-undo-modes() {
   git diff --summary | grep --color 'mode change 100755 => 100644' | cut -d' ' -f7- | xargs -d'\n' chmod +x
   git diff --summary | grep --color 'mode change 100644 => 100755' | cut -d' ' -f7- | xargs -d'\n' chmod -x
+}
+
+git-tags-at() {
+	H=$(git log -n1 --format=%H "$@")
+	[ -n "$H" ] &&
+		git tag|while read t; do
+			[ "$H" = "$(git log -n1 --format=%H $t)" ] && echo $t
+		done
 }

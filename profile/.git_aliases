@@ -7,10 +7,20 @@ git-up() {
   git remote|while read i; do git push $i --all "$@" && git push $i --tags "$@" || break; done
 }
 git-dn() {
-  git remote|while read i; do git fetch $i --all "$@" || break; done
+  git fetch --all -t "$@"
+}
+git-clean-tags() {
+  git tag -d $((git tag; git remote|xargs -n1 git ls-remote --tags |grep -v '\^{}$'|grep -o [^/]*$|uniq -u)|sort|uniq -d)
 }
 git-dn-tags() {
-  git remote|while read i; do git fetch $i -t "$@" || break; done
+  git-clean-tags
+  git-dn "$@"
+}
+git-for-repos() {
+  ls -1d */.git| while read i; do pushd $i/..; "$@"; popd; done
+}
+git-dn-all() {
+  git-for-repos git-dn-tags
 }
 
 git-whitespaceless() {

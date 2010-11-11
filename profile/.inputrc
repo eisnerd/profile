@@ -82,3 +82,16 @@ $endif
 "\e[8~": end-of-line
 
 "\M-o": "\C-p\C-a\M-f "
+
+# Quote the current or previous word
+"\eq": "\eb\"\ef\""
+# Refresh the line
+"\er": redraw-current-line
+# Edit variable on current line.
+"\ev": "\C-a\C-k$\C-y\M-\C-e\C-a\C-y="
+# edit the path
+"\C-xp": "PATH=${PATH}\e\C-e\C-a\ef\C-f"
+# help at end
+"\C-xh": "\C-e --help"
+# help at start
+"\eh": "\C-a\ef --help"

@@ -1,0 +1,9 @@
+original_branch=$(git describe --contains --all HEAD)
+original_branch=${original_branch:-HEAD}
+scr=$original_branch-scripts
+i=0
+while git show-ref -q $scr --; do scr=$original_branch-scripts$((++i)); done
+git checkout -b $scr
+git cherry-pick ^origin/installers scripts
+pushd ./`git-cd`Installers/sh && chmod +x $(ls -1|grep -v \\.)
+export PATH=".:~/bin:$PATH"

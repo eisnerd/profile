@@ -1,0 +1,3 @@
+popd
+git checkout $original_branch
+git branch -D $scr

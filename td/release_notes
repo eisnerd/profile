@@ -1,0 +1,30 @@
+#!/bin/bash
+[ -e ~/.git_aliases ] && source ~/.git_aliases
+[ -e ~/bin/profile/.git_aliases ] && source ~/bin/profile/.git_aliases
+
+foreach() {
+	while read -r; do "$@" "$REPLY"; done
+}
+export foreach
+where() {
+	export REPLY
+	while read -r; do "$@" "$REPLY" && printenv REPLY; done
+	export -n REPLY
+}
+export where
+
+if [ $# -gt 0 ]; then grade=$1; else grade=Release; fi
+rev=Last-$grade..$grade
+
+export line
+while read -r line; do
+	if [ "${line:0:1}" = "#" ]; then
+		line="${line#\# }"
+		printenv line
+		echo
+		eval "$line"
+		#printenv line| sed s/^#\ // |bash -xs
+	else
+		eval "echo $line"
+	fi
+done < `dirname $0`/release_template

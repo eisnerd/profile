@@ -1,0 +1,28 @@
+Notes for $(git-tags-at $grade|sed -n "s/\([0-9.]\)-$grade/\1/p" --) cf. the last $grade, $(git-tags-at Last-$grade|sed -n "s/\([0-9.]\)-$grade/\1/p" --)
+
+CCN Changes to TriDefine:
+
+# ccns_actions $rev
+
+
+CCN Status:
+
+# ccns_stat $rev
+
+
+Details:
+
+# git log $rev --no-merges --not origin/installers --oneline --name-only --|sed /\\//s/^/\\t/
+
+
+The with real source changes being to the following assemblies:
+
+# git log $rev --no-merges --not origin/installers --oneline --name-only -- |grep -v csproj$|sed -n s~^i~Tri~\;s~/.*$~~p|sort -u
+
+
+Other changes to the arrangements of the projects lead to the following being required in the patch:
+
+# git log $rev --no-merges --oneline --name-only -- |egrep -v '[a-z]{2}proj|^I' |sed -n s~/.*$~/~p|sort -u|where git-exists -q $grade|sed s~/$~~\;s~^i~Tri~|sed '/LogicEditor\|Modules/s/$/ (+)/'|sed '/TSXmlOutput\|IsaCommon\|Yokogawa\|PAC8000/s/$/ (*)/'
+
+\* Bundled into TriDefine for protection, so not included separately
+\+ Sent as required and not included in the patch zips

@@ -4,6 +4,6 @@ scr=$original_branch-scripts
 i=0
 while git show-ref -q $scr --; do scr=$original_branch-scripts$((++i)); done
 git checkout -b $scr
-git cherry-pick ^origin/installers scripts
+git cherry-pick ^origin/installers origin/scripts
 pushd ./`git-cd`Installers/sh && chmod +x $(ls -1|grep -v \\.)
 export PATH=".:~/bin:$PATH"

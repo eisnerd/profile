@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # If you don't at least have this script, just run these lines in your
 # TriDefine working directory. latest_scripts should take care of ensuring
 # you have the prerequisites for generating the release notes
@@ -5,6 +7,10 @@
 # It does assume a fair few aliases and functions in your bash environment
 # these are present at least on the build machine (currently mig11)
 
-. latest_scripts
-release_notes
-latest_scripts_pop
+[ -e ~/.git_aliases ] && source ~/.git_aliases
+[ -e ~/bin/profile/.git_aliases ] && source ~/bin/profile/.git_aliases
+
+
+. ~/bin/td/latest_scripts
+./release_notes > Release\ Notes.txt
+. ./latest_scripts_pop

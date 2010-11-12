@@ -1,5 +1,24 @@
-git-fup ()
-{
+git-dir() {
+  git rev-parse --git-dir
+}
+git-cd() {
+  git rev-parse --show-cdup
+}
+git-exists() {
+  g=
+  [ "$1" = "-q" ] && g=-q && shift
+  r=`git-cd`
+  [ "$1" = "-r" ] && r= && shift
+  [ -n "$r" ] && pushd "$r" > /dev/null 2>&1
+  h=HEAD
+  [ $# -gt 1 ] && h=$1 && shift
+  git ls-tree -d --name-only $h "$@" 2>/dev/null|grep $g .
+  ret=$?
+  [ -n "$r" ] && popd > /dev/null 2>&1
+  return $ret
+}
+
+git-fup () {
 #echo ${h%:*} - ${h#*:}
          git push $1 -f --all --porcelain|sed -n 's/^![[:space:]]*//p'|while read h i; do git push $1 -f :${h#*:} || break; git push $1 $h || break;  done
 }
@@ -69,3 +88,15 @@ git-tags-at() {
 			[ "$H" = "$(git log -n1 --format=%H $t)" ] && echo $t
 		done
 }
+
+[ -z "`type -t __git_ps1`" ] &&
+  if [ -e /etc/bash_completion.d/git ]; then
+	. /etc/bash_completion.d/git
+  elif [ -e /git/contrib/completion/git-completion.bash ]; then
+	. /git/contrib/completion/git-completion.bash
+  fi
+__git_ps1_n() {
+  __git_ps1|sed 's/)$/)\n/'
+}
+#[ -z "`type -t __git_ps1`" ] ||
+#  export PS1="${PS1:0:$((${#PS1}-3))}\[\033[33m\$(__git_ps1_n)\033[0m\]\$ "

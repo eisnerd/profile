@@ -14,12 +14,21 @@ alias p=pushd
 alias P=popd
 
 alias lc="cl"
-cl () {
+cl() {
    if [ $# = 0 ]; then
       cd && ll
    else
       cd "$*" && ll
    fi
+}
+
+foreach() {
+	while read -r; do "$@" "$REPLY"; done
+}
+where() {
+	export REPLY
+	while read -r; do "$@" "$REPLY" && printenv REPLY; done
+	export -n REPLY
 }
 
 alias md="mkdir -p"

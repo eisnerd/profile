@@ -56,6 +56,8 @@ alias shw='aptitude show'
 alias ge='q gedit'
 alias o=sudo
 
+source "`dirname \"${BASH_SOURCE[0]}\"`/.git_aliases"
+
 #alias updb="doodle -bn -d /var/lib/doodle/doodle-locate.db -l libextractor_filename /"
 #alias loc="doodle -d /var/lib/doodle/doodle-locate.db"
 #ext()

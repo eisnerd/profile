@@ -51,6 +51,10 @@ make-completion-wrapper _aptitude _sch aptitude search
 complete -o bashdefault -o default -o nospace -F _sch sch
 complete -o bashdefault -o default -o nospace -F _sch zch
 
+make-completion-wrapper _aptitude _shw aptitude install
+complete -o bashdefault -o default -o nospace -F _shw shw
+
+
 complete -F _root_command $filenames o
 
 function wrap_alias {

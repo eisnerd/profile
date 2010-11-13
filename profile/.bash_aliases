@@ -52,6 +52,7 @@ alias ill='sudo aptitude install'
 alias sch='aptitude search'
 alias zch='apt-cache search'
 alias rem='sudo aptitude remove' 
+alias shw='aptitude show' 
 alias ge='q gedit'
 alias o=sudo
 

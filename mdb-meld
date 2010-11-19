@@ -1,0 +1,1 @@
+meld <(mdb-dump "$1") <(mdb-dump "$2")

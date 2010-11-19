@@ -283,7 +283,10 @@ albums()
 	sed 's/cid=/\r\ncid=/g' "$1" |sed -n 's_cid=\([^"]*\)"[^>]*>\([^<]*\)<.*_\1 \2_p'|while read cid title; do if [ "$cid" != "$title" ]; then
 		title=${title//\//--}
 		cid=${cid//\//--}
-		mkdir -pv cid/$cid #|grep -q .&& mkdir -p queue/$cid
+		mkdir -pv cid/$cid |grep -q . &&
+			#mkdir -p queue/$cid
+			mkdir -p "New/cpid/$cpid/" &&
+			ln -sfT ../../../cid/$cid "New/cpid/$cpid/$title ($cid)"
 		ln -sfT ../../../cid/$cid "cpid/$cpid/$j/$title ($cid)"
 	fi; done
 }
@@ -292,15 +295,14 @@ generateMisc()
 {
 	pushd "$1" &>/dev/null
 
-	if [ -e All ]; then
-	mkdir -p Misc
-	diff <(find -type l|grep -v ^./All/|sed s_^./[^/]*/__|sort -u) <(find All -type l -printf %f\\n|sort -u) --old-line-format=%L --unchanged-line-format=|foreachI cp -P All/I Misc
-	rmempty Misc
-	else
 	mkdir -p All
 	find -type l|while read i; do ln -sf `readlink "$i"` "All/${i#./*/}"; done
 	rmempty All
-	fi
+
+	mkdir -p Misc
+	(fl|grep -v ^./All/|sed s_^./[^/]*/_./_|sort -u;cd All;fl)|sort|uniq -u|foreachI cp -P All/I Misc
+	rmempty Misc
+
 	popd &>/dev/null
 }
 
@@ -319,6 +321,14 @@ extras()
 	
 	[ -n "$got" ] && dirname "$d"
   fi
+}
+
+refreshEverything()
+{
+	pushd "cpid/$1" &&
+	rm -f biog.html */listing.html &&
+	popd &&
+	everything "$1"
 }
 
 everything()

@@ -1,0 +1,1 @@
+mdb-tables -1 $1 |while read i; do echo -e \\n===$i===; mdb-export $1 "$i"; done

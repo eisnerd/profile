@@ -39,6 +39,10 @@ $if mode=emacs
 # allow the use of the Delete/Insert keys
 "\e[3~": delete-char
 "\e[2~": quoted-insert
+
+"\ea": shell-backward-word
+"\es": shell-forward-word
+
 # # mappings for Ctrl-left-arrow and Ctrl-right-arrow for word moving
 "\e[5C": forward-word
 "\e[5D": backward-word
@@ -84,7 +88,9 @@ $endif
 "\M-o": "\C-p\C-a\M-f "
 
 # Quote the current or previous word
-"\eq": "\eb\"\ef\""
+#"\C-xq": "\eb\"\ef\""
+"\eq": "\ea\C-f\"\es\""
+"\C-xq": "\C-w\"\C-y\""
 # Refresh the line
 "\er": redraw-current-line
 # Edit variable on current line.

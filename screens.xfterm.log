@@ -1,1 +1,1 @@
- -E "/usr/bin/screen -q -a -A -U" -e "/usr/bin/screen -q -a -r 21670.pts-10.ubuntu-vm1"
+ -E "/usr/bin/screen -q -a -A -U" -e "/usr/bin/screen -q -a -r 24309.pts-4.djedsk-vm1" --tab  -e "/usr/bin/screen -q -a -r 12629.pts-2.djedsk-vm1" --tab  -e "/usr/bin/screen -q -a -r 2059.pts-0.djedsk-vm1"

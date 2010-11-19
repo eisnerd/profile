@@ -89,6 +89,11 @@ git-tags-at() {
 		done
 }
 
+git-graph() {
+  [ $# -eq 0 ] && b=--all
+  git log --graph --color --decorate=short --oneline $b "$@"
+}
+
 [ -z "`type -t __git_ps1`" ] &&
   if [ -e /etc/bash_completion.d/git ]; then
 	. /etc/bash_completion.d/git

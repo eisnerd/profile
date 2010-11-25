@@ -1,2 +1,3 @@
 mono-csc -debug+ -r:/usr/lib/cli/taglib-sharp-2.0/taglib-sharp.dll cpl.cs &&
-mono-csc -debug+ -r:/usr/lib/cli/taglib-sharp-2.0/taglib-sharp.dll cpld.cs
+mono-csc -debug+ -r:/usr/lib/cli/taglib-sharp-2.0/taglib-sharp.dll cpld.cs &&
+mono-csc -debug+ -r:/usr/lib/cli/taglib-sharp-2.0/taglib-sharp.dll cpld_straight.cs

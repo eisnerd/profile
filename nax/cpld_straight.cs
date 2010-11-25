@@ -8,10 +8,12 @@ public class WriteTags
 				if (next.StartsWith("::") && (file = next.Substring(2)) != null)
 			try
 			{
-			using(TagLib.File f = TagLib.File.Create(file))
+			using(TagLib.File f = TagLib.File.Create(file.Replace("Â", "")))
 			{
 				f.Tag.Composers = new string[] { System.Console.ReadLine()??"" };
 				f.Tag.Album = System.Console.ReadLine()??"";
+				if (f.Tag.Album == "ABORT")
+					continue;
 				f.Tag.Track = uint.Parse(System.Console.ReadLine());
 				f.Tag.Title = System.Console.ReadLine()??"";
 				string a = System.Console.ReadLine()??"";

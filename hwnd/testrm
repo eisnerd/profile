@@ -1,0 +1,1 @@
+find -name '*.rm' |while read i; do echo mplayer "$i" -ao pcm:fast:file=/dev/null -vo null 2>&1|grep -q -i "wrong\|no stream" && echo "$i"; done

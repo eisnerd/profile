@@ -1,0 +1,1 @@
+mono-csc -debug+ -r:/usr/lib/cli/taglib-sharp-2.0/taglib-sharp.dll *.cs -m:wmatags.CLI.Read

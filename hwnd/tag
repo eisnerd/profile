@@ -1,0 +1,20 @@
+find -name '*.rm'|while read rm; do
+	[ -e "$rm.txt" ] || continue
+	{ read a; read t; read l; read c; } < "$rm.txt"
+	x="$l ($c)                            "
+	echo "$x"
+	x="${x:0:28}"
+	x="${x//&/\&}"
+	grep -q 'www\.hardcorewillneverdie\.com' "$rm" && sed -i "s/www\.hardcorewillneverdie\.com/$x/" "$rm"
+	x="$a: $t                            "
+	echo "$x"
+	x="${x:0:28}"
+	x="${x//&/\&}"
+	grep -q 'www\.hardcorewillneverdie\.com' "$rm" && sed -i "s/www\.hardcorewillneverdie\.com/$x/" "$rm"
+	p="ln/"
+	f="$a· $t.rm"
+	mkdir -p "$p"
+	pushd "$p"
+	ln -sf "../$rm" "$f"
+	popd
+done

@@ -1,0 +1,6 @@
+pushd /backup/Music/hwnd/tapes
+for i in 1*; do find $i -name '*.rm'|sed s_^$i/__|while read j; do ln -sf "../$i/$j" "ln/$i. $j"; done; done
+popd
+pushd /backup/Music/hwnd/ln
+for i in ../*/ln; do k=${i#../}; k=${k%/ln}; mkdir -p "$k"; pushd "$k"; find "../$i" -name '*.rm'|while read j; do ln -sf "$j" "./${j#../$i/}"; done; popd; done
+popd

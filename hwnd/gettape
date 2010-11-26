@@ -1,0 +1,17 @@
+for l in listing.*; do
+	grep -io 'http://[0-9a-z.%/_-]*.ra\?m' $l|while read url; do
+		side=`grep -oP "(?<=$url>)[^<]*" $l`;
+		grep "$url" $l|sed 's/.*PLAY//;s/<[^>]*>/\n/g'|grep -v ^$|(
+		read a; read b; rm="$a. $b. $side.rm";
+		rm="${rm//\//-}"
+
+		ram="`wget -O- -t 0 --retry-connrefused \"$url\"| tr -d \\\r`";
+		wget -t 0 --retry-connrefused -c "-O$rm" "$ram";
+
+		tl="`grep \"$url\" $l|grep -oP \"(?<=popUp\(')[^']*\"`";
+		rm="$a. $b.txt"
+		rm="${rm//\//-}"
+		[ -n "$tl" ] && wget -c -t 0 --retry-connrefused "-O$rm" "$tl"
+		)
+	done
+done

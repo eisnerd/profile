@@ -1,0 +1,10 @@
+yr=$1
+[ -z "$yr" ] &&
+yr=1989 #"Happy Hardcore" #1994 #acid #hcb
+mkdir -p "$yr"
+wget "http://hardcorewillneverdie.com/mixes.php?sea=&yr=$yr&sort=dj" "-O$yr/listing.1"
+grep -o pag=[0-9]*\& "$yr/listing.1" |grep -o [0-9]\*|sort -nu|while read n; do wget "http://hardcorewillneverdie.com/mixes.php?sea=&yr=$yr&pag=$n&sort=dj" "-O$yr/listing.$n"; done
+pushd "$yr"
+	bash $HOME/bin/hwnd/gettape
+popd
+

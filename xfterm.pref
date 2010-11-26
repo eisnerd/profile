@@ -1,4 +1,5 @@
 #!/bin/sh
+echo export DISPLAY=$DISPLAY > ~/.display
 (
 echo -n /usr/local/bin/terminal --hide-menubar --hide-toolbars --disable-server --geometry=120x26
 # -stt -ss rxvt -sbt 7 -sr -tf "%n.%t" -bg \"#EFEFDC\" -itabbg \"#BBBBB4\" -tabbg \"#EFEFDC\" -at

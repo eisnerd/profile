@@ -9,7 +9,7 @@ which ssed > /dev/null 2>&1 && alias sed=ssed
 alias cdr='cd `realpath .`'
 
 alias s='cd ..'
-alias d='cd $OLDPWD'
+alias d='cd "$OLDPWD"'
 alias p=pushd
 alias P=popd
 

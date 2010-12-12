@@ -1,0 +1,3 @@
+ls /boot | grep vmlinuz | cut -d'-' -f2,3|grep -v $(uname -r|sed s/[^0-9]*$//)|while read i; do dpkg -l | grep ^ii | grep "$i" | awk -F' ' '{ print $2 }'; done|xargs sudo aptitude remove
+#dpkg -l 'linux-*' | sed '/^ii/!d;/'"$(uname -r | sed "s/\(.*\)-\([^0-9]\+\)/\1/")"'/d;s/^[^ ]* [^ ]* \([^ ]*\).*/\1/;/[0-9]/!d' | xargs sudo apt-get -y purge
+#dpkg -l 'linux-*' | sed '/^ii/!d;/'"$(uname -r | sed 's/[^0-9]*//';"s/\(.*\)-\([^0-9]\+\)/\1/")"'/d;s/^[^ ]* [^ ]* \([^ ]*\).*/\1/;/[0-9]/!d' | xargs sudo apt-get -y purge

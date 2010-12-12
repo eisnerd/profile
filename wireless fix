@@ -2,6 +2,6 @@
 if lsmod |grep -q rt2860sta && not gksudo rmmod rt2860sta; then 
 zenity --info --text="Try disabling wireless first"
 else
-gksudo rmmod rt3562sta
+lsmod |grep -q rt3562sta && gksudo rmmod rt3562sta
 gksudo modprobe rt3562sta
 fi

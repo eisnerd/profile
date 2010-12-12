@@ -1,0 +1,2 @@
+#!/bin/sh
+exec /home/eisd/rox-filer/ROX-Filer/AppRun "$@"

@@ -283,6 +283,7 @@ albums()
 	sed 's/cid=/\r\ncid=/g' "$1" |sed -n 's_cid=\([^"]*\)"[^>]*>\([^<]*\)<.*_\1 \2_p'|while read cid title; do if [ "$cid" != "$title" ]; then
 		title=${title//\//--}
 		cid=${cid//\//--}
+		[ -d /green/eisd/second ] && [ -L "/green/eisd/second/bycid/$cid.asp" ] && echo "see wma for $cid $title" && break
 		mkdir -pv cid/$cid |grep -q . &&
 			#mkdir -p queue/$cid
 			mkdir -p "New/cpid/$cpid/" &&
@@ -326,7 +327,7 @@ extras()
 refreshEverything()
 {
 	pushd "cpid/$1" &&
-	rm -f biog.html */listing.html &&
+	rm -f biog.html view_by_album.html */listing.html &&
 	popd &&
 	everything "$1"
 }

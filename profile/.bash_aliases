@@ -1,9 +1,9 @@
 alias l='ls --color'
 alias la='ls -A --color'
-alias ll='ls -lH --color'
-alias L='ls -lH --color'
-alias La='ls -AlH --color'
-alias lal='ls -AlH --color'
+alias ll='ls -lhH --color'
+alias L='ls -lhH --color'
+alias La='ls -AlhH --color'
+alias lal='ls -AlhH --color'
 
 which ssed > /dev/null 2>&1 && alias sed=ssed
 alias cdr='cd `realpath .`'
@@ -20,6 +20,10 @@ cl() {
    else
       cd "$*" && ll
    fi
+}
+
+lgrep() {
+   grep "$@" --color=always|less -R
 }
 
 foreach() {

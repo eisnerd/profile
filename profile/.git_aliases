@@ -28,11 +28,17 @@ git-up() {
 git-dn() {
   git fetch --all -t "$@"
 }
-git-clean-tags() {
+git-ls-stashed-tags() {
+  (find `git-dir`/refs-stash -type f -printf %f\  -exec cat {} \;|sort -u; find `git-dir`/refs/tags  -type f -printf %f\  -exec cat {} \;|sort -u)|sort|uniq -d
+}
+git-rm-stashed-tags() {
+  git-ls-stashed-tags|cut -f1 -d\  |xargs -d\\n git tag -d 
+}
+git-clean-remote-tags() {
   git tag -d $((git tag; git remote|xargs -n1 git ls-remote --tags |grep -v '\^{}$'|grep -o [^/]*$|uniq -u)|sort|uniq -d)
 }
 git-dn-tags() {
-  git-clean-tags
+  git-clean-remote-tags
   git-dn "$@"
 }
 git-for-repos() {

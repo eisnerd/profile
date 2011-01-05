@@ -13,6 +13,9 @@ alias d='cd "$OLDPWD"'
 alias p=pushd
 alias P=popd
 
+alias cm='cryptmount -m'
+alias cum='cryptmount -u'
+
 alias lc="cl"
 cl() {
    if [ $# = 0 ]; then

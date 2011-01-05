@@ -5,3 +5,4 @@ else
 lsmod |grep -q rt3562sta && gksudo rmmod rt3562sta
 gksudo modprobe rt3562sta
 fi
+o find /lib/modules/ -name 'rt2*.ko' -delete

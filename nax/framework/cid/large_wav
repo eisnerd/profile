@@ -1,0 +1,4 @@
+find -name \*.mp4|while read i; do
+        d="`dirname \"$i\"`"; f="`basename \"$i\" .mp4`";
+	[ -e "$d/.$f.decode" ] && tail -n1 "$d/.$f.decode"|grep -q ^[0-9]\\+$ && echo $(sed 's/.*timing="\([0-9:]*\).*/\1/;y/:/ /' "$d/.$f.cpl"|(read h m s; echo "`tail -n1 \"$d/.$f.decode\"` - (($h*60+$m)*60+$s-2)*176400"|bc -l)) "$i"
+done

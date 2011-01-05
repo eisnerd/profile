@@ -1,0 +1,35 @@
+TEMP=$(mktemp)
+wav=$(mktemp)
+tst="$(mktemp --tmpdir=. .testing.XXXXXXXXXX.mp4)"
+cleanup()
+{
+	rm "$TEMP" "$wav" "$tst"
+	trap - INT TERM
+	exit
+}
+trap cleanup INT TERM
+
+exec 3<>"$TEMP"
+if [ -z "$1" ]; then
+	find . -name '*.mp4' > "$TEMP"
+else
+	cat "$@" > "$TEMP"
+fi
+while read i <&3
+do 
+	echo "Testing $i" >&2
+	d="`dirname \"$i\"`"; f="`basename \"$i\" .mp4`";
+	{
+#	mplayer -noconsolecontrols -quiet -ao pcm:fast:file=$wav "$i" 2>&1
+#	sudo nice -20 
+	ln -f "$i" "$tst"
+	faad -o $wav "$tst" 2>&1 || echo "Warning: non-zero exit code; possible crash"
+	stat -c%s $wav
+	}|
+		tee "$d/.$f.decode"|
+#		grep -q "Failed to decode frame" &&
+#		grep -q '^Reading.*failed' &&
+		grep -q "^Warning:" &&
+		echo "$i"
+done
+exec 3>&-

@@ -2,6 +2,11 @@ root=http://manchesterlib.naxosmusiclibrary.com
 stream=80audiostream.naxosmusiclibrary.com
 getdisc="$root/catalogue/item.asp?cid="
 
+throttle()
+{
+	sleep `shuf -i7-50 -n1`
+}
+
 Composer()
 {
 export authors=Composer
@@ -154,8 +159,9 @@ tracktitle()
 
 recooktrack()
 {
-  cid="${1%/*}"
-  track="${1#*/}"
+  f="${1#./}"
+  cid="${f%/*}"
+  track="${f#*/}"
   track="${track%.mp4}"
   cpl="$cid/.$track.cpl"
   cp "$cpl"{,.`date +%Y-%m-%d.%T`} &&
@@ -169,7 +175,7 @@ recooktrack()
 	pushd "$cid" &&
 	 (curl -H "Host: $stream" -H "User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.1.9) Gecko/20100315 Firefox/3.5.9 (.NET CLR 1.1.4322; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C; .NET4.0E)" -H "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8" -H "Accept-Language: en-gb,en;q=0.5" -H "Accept-Encoding: gzip,deflate" -H "Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7" -H "Keep-Alive: 300" -H "Connection: keep-alive" "http://$stream$fms?`curl -i -H "User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.1.9) Gecko/20100315 Firefox/3.5.9 (.NET CLR 1.1.4322; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C; .NET4.0E)" -H "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8" -H "Accept-Language: en-gb,en;q=0.5" -H "Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7" -H "Keep-Alive: 300" -b /tmp/cookies.in "$root/utilities/encryption/genhttptoken.asp?tid=$tok&url=$fms"|grep ROOT|sed 's_.*<ROOT>\([^<]*\).*_\1_'`" -S -v 2> ".$track.log" > "$track.mp4" &&
 	popd &&
-	 [ "$resume" = "1" ] || sleep `shuf -i7-50 -n1`)
+	 [ "$resume" = "1" ] || throttle)
 	)
 }
 
@@ -190,7 +196,7 @@ cooktrack()
 	mv cpl ".$track.cpl" &&
 	( [ "$resume" = "0" -o \! -e "$track.mp4" -a \! -e [0-9]*"$title" ] &&
 	 (curl -H "Host: $stream" -H "User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.1.9) Gecko/20100315 Firefox/3.5.9 (.NET CLR 1.1.4322; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C; .NET4.0E)" -H "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8" -H "Accept-Language: en-gb,en;q=0.5" -H "Accept-Encoding: gzip,deflate" -H "Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7" -H "Keep-Alive: 300" -H "Connection: keep-alive" "http://$stream$fms?`curl -i -H "User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.1.9) Gecko/20100315 Firefox/3.5.9 (.NET CLR 1.1.4322; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C; .NET4.0E)" -H "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8" -H "Accept-Language: en-gb,en;q=0.5" -H "Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7" -H "Keep-Alive: 300" -b /tmp/cookies.in "$root/utilities/encryption/genhttptoken.asp?tid=$tok&url=$fms"|grep ROOT|sed 's_.*<ROOT>\([^<]*\).*_\1_'`" -S -v 2> ".$track.log" > "$track.mp4" &&
-	 [ "$resume" = "1" ] || sleep `shuf -i7-50 -n1`)
+	 [ "$resume" = "1" ] || throttle)
 	)
   )
 }
@@ -307,21 +313,68 @@ generateMisc()
 	popd &>/dev/null
 }
 
+also_table()
+{
+	perl -ne 'if (m/<b>Also:<\/b>/) { $a="" } if (m/<\/table>/) { undef $a } if (defined $a) { print }' "$@"
+}
+
+urls()
+{
+	sed -n 's/\(javascript:openNewWindow('\''\|href="\)\(.\/\)\?\([^#][^'\''"]*\)['\''"]/\n--\3\n/gp' |sed -n s/^--//p|sed s%^/%$root/%\;s%^../%$root/%
+}
+
+resol()
+{
+	recode xml..u8|sed s%^href=[\"\']%%\;s%^/%$root/%\;s%^\\\(./\\\)\\\?../%$root/%
+}
+
 extras()
 {
+  [ -n "$1" ] && pushd "$1"
   if [ -e item.asp ]; then
 	got=
-	url=$(grep -i -o 'href="[^"]*booklet[^"]*' item.asp|head -1|recode xml..u8)
-	[ -n "$url" ] && cooknewfalible "${url##*/}" "${url#href=\"}" && got=1
-	url=$(grep -i -o 'href="[^"]*rear[^"]*' item.asp|head -1|recode xml..u8)
-	[ -n "$url" ] && cooknewfalible "${url##*/}" "${url#href=\"}" && got=1
-	url=$(grep -i -o "../blurbs_[^']*'" item.asp|head -1|recode xml..u8)
-	[ -n "$url" ] && cooknewfalible blurb.html "$root/catalogue/${url%\'}" && got=1
+	(
+		grep -i -o 'href="[^"]*booklet[^"]*' item.asp
+		grep -i -o 'href="[^"]*rear[^"]*' item.asp
+	        grep -i -o "../blurbs_[^']*" item.asp
+		grep -o 'href="[^"]*sharedfiles/images/cds[^"]*' item.asp
+	)|resol|while read url; do
+		dst="${url//blurbs_+([a-z.])/blurb.html}"
+		dst="${dst##*/}"
+		dst="${dst%%\?*}"
+		echo "$dst"
+		echo "$url"
+		[ -n "$url" ] && cooknewfalible "also-$dst" "$url" && got=1
+	done
 	url=$(grep -o 'href="[^"]*sharedfiles/images/cds[^"]*' item.asp|head -1|recode xml..u8)
-	[ -n "$url" ] && ext="${url##*.}" && cooknewfalible "cover.$ext" "${url#href=\"}" && got=1 
+	[ -n "$url" ] && ext="${url##*.}" && cooknewfalible "cover.$ext" "${url#href=\"}"
+	if [ -s "cover.$ext" ]; then got=1; else rm -f "cover.$ext"; fi
 	
 	[ -n "$got" ] && dirname "$d"
   fi
+  [ -n "$1" ] && popd
+}
+
+pdfs()
+{
+	find -name '*.pdf'|xargs -n1 pdftotext -layout
+}
+
+htmltotext()
+{
+	html2text -style pretty -width 30 -utf8 -o "${1%.*}.txt" "$1"
+}
+
+htmls()
+{
+	find -name '*blurb.html*'|foreach htmltotext
+}
+
+extrasEverywaar()
+{
+	find -name item.asp|xargs -n1 dirname|foreach extras
+	pdfs
+	htmls
 }
 
 refreshEverything()

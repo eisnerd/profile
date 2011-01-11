@@ -1,0 +1,40 @@
+dst="$1"
+shift
+tmp=`mktemp --tmpdir=. .transfer.XXXXXXXXXX`
+find -L "$@" -name '*.mp4' -o -name '*.aac' -o -name '*.wma' -o -name '*.flac' -o -name '*.mp3' -o -name '*.html' -o -name '*.pdf' -o -name '*.jpg'|sort -V| while read i; do
+	b=
+	other=
+	d="`dirname \"$i\"`"
+	f="`basename \"${i%.*}\"`"
+	e="${i##*.}"
+	ln -f "$i" "$tmp"
+	case $e in
+		mp4|aac)
+		faad -a $tmp.aac $tmp
+		e=aac
+		;;
+		html|pdf)
+		${e}totext $tmp
+		other=`md5sum < $tmp.txt|cut -d\  -f1`
+		b=Extras/
+		e=lrc
+		recode -f u8..ascii < $tmp.txt|recode html..u8|recode -f u8..ascii|tr -d |sed s/\ *$/\ / > $tmp.lrc
+		rm $tmp.txt
+		;;
+		*)
+		ln -f $tmp{,.$e}
+		;;
+	esac
+	mkdir -p "$dst/$d"
+	cp -L $tmp.$e "$dst/$b$d/$f.$e"
+	[ -n "$other" ] && {
+		f="$other"
+		cp -L $tmp.$e "$dst/$b$d/$f.$e"
+	}
+	cpl="$d/.${f##+(0)}.cpl"
+	[ -e "$cpl" ] && {
+		sed 's/.*trackno="\([^"]*\)".*shorttracktitle="\([^"]*\)".*longtracktitle="\([^"]*\)".*cataloguename="\([^"]*\)"/"\4\n"\1\n"\2\n"\3\n/;s/textdisplay=/\n/g' "$cpl" |grep ^\"|sed 'y/\[\]/()/;s/^"//;s/".*//'|sed 's_Classical Composer_Composer_'|perl -e '$A=<>;$n=<>;$t=<>;$T=<>;if ($T =~ m/^(.*\w)\W*$t/) { $t=$T } elsif ($t ne $T) { chomp $t; $t.=": $T" };$C="";$c="";$o="";$s="";$p="";while(<>) { if (m/(.*) - (Classical )?Composer/) { $c=$1 } elsif (m/(.*) - Conductor/) { $C=$1."; " } elsif (m/(.*) - ([A-Z].*)/) { $p.=", $1 - $2" } elsif (m/(.*) - (.*)/) { $s.="$1 ($2)\n" } elsif ($o eq "") { chomp; $o=$_ } else { chomp; $o.=", $_" } }; foreach my $l (split /\n/, $s) { $o.=", $l" }; chomp $t; print "[00:00.00]$c; $A\[00:10.00]$t -- $C$o$p"' > "$dst/$d/$f.lrc"
+	}
+
+done
+rm -f $tmp*

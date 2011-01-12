@@ -1,0 +1,11 @@
+find -name '*.aac'|while read aac; do
+d="`dirname \"$aac\"`"; f="`basename \"$aac\" .aac`"; cpl="$d/.${f##+(0)}.cpl"
+[ -e "$cpl" ] || continue
+#find -name '*.cpl'|while read cpl; do
+#d="`dirname \"$cpl\"`"; f="`basename \"$cpl\" .cpl`"; f="${f#.}"
+(
+sed 's/.*trackno="\([^"]*\)".*shorttracktitle="\([^"]*\)".*longtracktitle="\([^"]*\)".*cataloguename="\([^"]*\)"/"\4\n"\1\n"\2\n"\3\n/;s/textdisplay=/\n/g' "$cpl" |grep ^\"|sed 'y/\[\]/()/;s/^"//;s/".*//'|sed 's_Classical Composer_Composer_'|perl -e '$A=<>;$n=<>;$t=<>;$T=<>;if ($T =~ m/^(.*\w)\W*$t/) { $t=$T } elsif ($t ne $T) { chomp $t; $t.=": $T" };$C="";$c="";$o="";$s="";$p="";while(<>) { if (m/(.*) - (Classical )?Composer/) { $c=$1 } elsif (m/(.*) - Conductor/) { $C=$1."; " } elsif (m/(.*) - ([A-Z].*)/) { $p.=", $1 - $2" } elsif (m/(.*) - (.*)/) { $s.="$1 ($2)\n" } elsif ($o eq "") { chomp; $o=$_ } else { chomp; $o.=", $_" } }; foreach my $l (split /\n/, $s) { $o.=", $l" }; chomp $t; print "[00:00.00]$c; $A\[00:10.00]$t -- $C$o$p"'
+#echo -n [00:00.00]\ 
+#sed 's/.*trackno="\([^"]*\)".*shorttracktitle="\([^"]*\)".*longtracktitle="\([^"]*\)".*cataloguename="\([^"]*\)"/"\4\n"\1\n"\2\n"\3\n/;s/textdisplay=/\n/g' "$cpl" |grep ^\"|sed 's/^"//;s/".*//'|sed 's_Classical Composer_Composer_'|perl -e '$A=<>;$A=~s/ \/ /\n  /g;$n=<>;$t=<>;$T=<>;if ($T =~ m/^(.*\w)\W*$t/) { $t.="$1\n" } elsif ($t ne $T) { $t.=$T };$C="";$c="";$o="";$s="";$p="";while(<>) { if (m/(.*) - (Classical )?Composer/) { $c=$1 } elsif (m/(.*) - Conductor/) { $C=$1."; " } elsif (m/(.*) - ([A-Z].*)/) { $p.="$1 - $2\n" } elsif (m/(.*) - (.*)/) { $s.="$1 ($2)\n" } elsif ($o eq "") { chomp; $o=$_ } else { chomp; $o.=", $_" } }; foreach my $l (split /\n/, $s) { $o.=", $l" }; print "$t$C$o\n$p$A"'|sed 's_^_[00:00.00] _'
+)> "$d/$f.lrc"
+done

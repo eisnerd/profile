@@ -1,0 +1,5 @@
+while read i; do
+	dst="$HOME/wanted/$i"
+	[ -e "$dst" ] || { mkdir -p "`dirname \"$dst\"`" && ln -s "`realpath \"$i\"`" "$dst"; }
+done
+#cpio -pvld $HOME/wanted

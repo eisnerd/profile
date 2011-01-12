@@ -26,6 +26,7 @@ do
 	faad -o $wav "$tst" 2>&1 || echo "Warning: non-zero exit code; possible crash"
 	stat -c%s $wav
 	}|
+#		sed s/.*//|
 		tee "$d/.$f.decode"|
 #		grep -q "Failed to decode frame" &&
 #		grep -q '^Reading.*failed' &&

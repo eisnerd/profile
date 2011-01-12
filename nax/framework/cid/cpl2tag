@@ -8,4 +8,6 @@ if [ -z "$1" ]; then
 else
 	cat "$@"
 fi |
-sed s_^./__|while read i; do echo "::$i"; f="${i#*/}"; f=${f%.mp4}; [ -e "${i%/*}/.$f.cpl" ] && (if grep -q '[^", -]\+[^"]*\(Classical \)\?Composer' "${i%/*}/.$f.cpl"; then sed 's/^.*\("\([^", -]\+\)[^"]*\(Classical \)\?Composer\).*$/\2\n/' "${i%/*}/.$f.cpl"; else echo; fi; sed 's/.*trackno="\([^"]*\)".*shorttracktitle="\([^"]*\)".*longtracktitle="\([^"]*\)".*cataloguename="\([^"]*\)"/"\4\n"\1\n"\2\n"\3\n/;s/textdisplay=/\n/g' "${i%/*}/.$f.cpl" |grep ^\"|sed 's/^"//;s/".*//'); done|~/bin/nax/cpld #> cpl2tag.log 2>&1
+sed s_^./__|while read i; do echo "::$i"; f="${i#*/}"; f=${f%.mp4}; [ -e "${i%/*}/.$f.cpl" ] && (if grep -q '[^", -]\+[^"]*\(Classical \)\?Composer' "${i%/*}/.$f.cpl"; then sed 's/^.*\("\([^", -]\+\)[^"]*\(Classical \)\?Composer\).*$/\2\n/' "${i%/*}/.$f.cpl"; else echo; fi; sed 's/.*trackno="\([^"]*\)".*shorttracktitle="\([^"]*\)".*longtracktitle="\([^"]*\)".*cataloguename="\([^"]*\)"/"\4\n"\1\n"\2\n"\3\n/;s/textdisplay=/\n/g' "${i%/*}/.$f.cpl" |grep ^\"|sed 's/^"//;s/".*//'); done|~/bin/nax/cpld > cpl2tag.log 2>&1 &
+tail -n+0 -f cpl2tag.log|less
+wait

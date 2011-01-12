@@ -1,40 +1,61 @@
 dst="$1"
 shift
-tmp=`mktemp --tmpdir=. .transfer.XXXXXXXXXX`
+n=0
+tmpbase=`mktemp --tmpdir=. .transfer.XXXXXXXXXX`
+trap cleanup INT TERM
+cleanup()
+{
+	rm -f $tmpbase*
+	trap - INT TERM
+	exit
+}
+
 find -L "$@" -name '*.mp4' -o -name '*.aac' -o -name '*.wma' -o -name '*.flac' -o -name '*.mp3' -o -name '*.html' -o -name '*.pdf' -o -name '*.jpg'|sort -V| while read i; do
 	b=
 	other=
 	d="`dirname \"$i\"`"
 	f="`basename \"${i%.*}\"`"
 	e="${i##*.}"
-	ln -f "$i" "$tmp"
+	tmp=$tmpbase.$((n++))
+	ln -f "$i" $tmp >&2
+
+	if [ "$f" = "cover" ]; then
+		convert -quiet -antialias -adaptive-resize 450x270\! $e:$tmp $tmp.jpg >&2
+		mkdir -p "$dst/$d" >&2
+		find -L "$d" -regex '.*/[0-9][0-9.]* .*'|sed s%\\.[^.]*$%%|sort -u|while read g; do cp $tmp.jpg "$dst/$g.jpg"; done
+		continue
+	fi
+
 	case $e in
 		mp4|aac)
-		faad -a $tmp.aac $tmp
+		#faad -a $tmp.aac $tmp >&2
 		e=aac
+		mv $tmp{,.$e} >&2
 		;;
 		html|pdf)
-		${e}totext $tmp
+		${e}totext $tmp >&2
 		other=`md5sum < $tmp.txt|cut -d\  -f1`
 		b=Extras/
 		e=lrc
 		recode -f u8..ascii < $tmp.txt|recode html..u8|recode -f u8..ascii|tr -d |sed s/\ *$/\ / > $tmp.lrc
-		rm $tmp.txt
+		rm $tmp.txt >&2
 		;;
 		*)
-		ln -f $tmp{,.$e}
+		mv $tmp{,.$e} >&2
 		;;
 	esac
-	mkdir -p "$dst/$d"
-	cp -L $tmp.$e "$dst/$b$d/$f.$e"
+
+	mkdir -p "$dst/$b$d" >&2
 	[ -n "$other" ] && {
-		f="$other"
-		cp -L $tmp.$e "$dst/$b$d/$f.$e"
+		ln $tmp.{$e,other}
+		echo $tmp.other "$dst/$b$d/$other.$e"
 	}
+	echo $tmp.$e "$dst/$b$d/$f.$e"
+
 	cpl="$d/.${f##+(0)}.cpl"
 	[ -e "$cpl" ] && {
 		sed 's/.*trackno="\([^"]*\)".*shorttracktitle="\([^"]*\)".*longtracktitle="\([^"]*\)".*cataloguename="\([^"]*\)"/"\4\n"\1\n"\2\n"\3\n/;s/textdisplay=/\n/g' "$cpl" |grep ^\"|sed 'y/\[\]/()/;s/^"//;s/".*//'|sed 's_Classical Composer_Composer_'|perl -e '$A=<>;$n=<>;$t=<>;$T=<>;if ($T =~ m/^(.*\w)\W*$t/) { $t=$T } elsif ($t ne $T) { chomp $t; $t.=": $T" };$C="";$c="";$o="";$s="";$p="";while(<>) { if (m/(.*) - (Classical )?Composer/) { $c=$1 } elsif (m/(.*) - Conductor/) { $C=$1."; " } elsif (m/(.*) - ([A-Z].*)/) { $p.=", $1 - $2" } elsif (m/(.*) - (.*)/) { $s.="$1 ($2)\n" } elsif ($o eq "") { chomp; $o=$_ } else { chomp; $o.=", $_" } }; foreach my $l (split /\n/, $s) { $o.=", $l" }; chomp $t; print "[00:00.00]$c; $A\[00:10.00]$t -- $C$o$p"' > "$dst/$d/$f.lrc"
 	}
-
-done
-rm -f $tmp*
+done|while read a b; do cp -L $a "$b"; rm $a; done
+wait
+cleanup

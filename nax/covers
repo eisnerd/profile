@@ -1,0 +1,1 @@
+find -name 'cover.jpg'|sed s/\\/cover\\.jpg$//|while read d; do convert -antialias -adaptive-resize 450x270\! jpg:- - < "$d/cover.jpg" > /tmp/cover.jpg; find -name "$d" -name '*.aac' -o -name '*.wma'|while read i; do cp /tmp/cover.jpg "${i:0:${#i}-3}jpg"; done; done

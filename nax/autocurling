@@ -330,7 +330,25 @@ resol()
 
 extras()
 {
-  [ -n "$1" ] && pushd "$1"
+  [ -n "$1" ] && pushd "$1" > /dev/null
+  [ -e item.asp ] || {
+	[ -n "$cid" ] || {
+	f=*.cid
+	[ -e "$f" ] && cid="${f%.cid}"
+	}
+	[ -n "$cid" ] || {
+	cid="${PWD##*\(}";
+	if [ "$cid" = "$PWD" ]
+		then cid=
+		else cid="${cid%)}"
+	fi
+	[ "$cid" = "$PWD" -o "$cid" != "${cid// /_}" ] && cid=
+	}
+	[ -n "$cid" ] && echo $cid
+	cooknew item.asp "$getdisc${cid//--/\/}"
+	grep -q 'Album Information is currently not available' item.asp && rm item.asp
+	cid=
+  }
   if [ -e item.asp ]; then
 	got=
 	(
@@ -342,8 +360,7 @@ extras()
 		dst="${url//blurbs_+([a-z.])/blurb.html}"
 		dst="${dst##*/}"
 		dst="${dst%%\?*}"
-		echo "$dst"
-		echo "$url"
+		echo "$dst <<-- $url"
 		[ -n "$url" ] && cooknewfalible "also-$dst" "$url" && got=1
 	done
 	url=$(grep -o 'href="[^"]*sharedfiles/images/cds[^"]*' item.asp|head -1|recode xml..u8)
@@ -352,12 +369,12 @@ extras()
 	
 	[ -n "$got" ] && dirname "$d"
   fi
-  [ -n "$1" ] && popd
+  [ -n "$1" ] && popd > /dev/null
 }
 
 pdfs()
 {
-	find -name '*.pdf'|xargs -n1 pdftotext -layout
+	find -name '*.pdf'|xargs -d\\n -n1 pdftotext
 }
 
 htmltotext()

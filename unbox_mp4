@@ -1,0 +1,1 @@
+find -name '*.mp4'|while read i; do faad "$i" -a "${i% mp4}aac" && rm "$i"; done

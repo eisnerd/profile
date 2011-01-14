@@ -1,3 +1,4 @@
+source $HOME/bin/nax/autocurling
 dst="$1"
 shift
 n=0
@@ -11,6 +12,7 @@ cleanup()
 }
 
 find -L "$@" -name '*.mp4' -o -name '*.aac' -o -name '*.wma' -o -name '*.flac' -o -name '*.mp3' -o -name '*.html' -o -name '*.pdf' -o -name '*.jpg'|sort -V| while read i; do
+	echo "$i" >&2
 	b=
 	other=
 	d="`dirname \"$i\"`"
@@ -28,9 +30,9 @@ find -L "$@" -name '*.mp4' -o -name '*.aac' -o -name '*.wma' -o -name '*.flac' -
 
 	case $e in
 		mp4|aac)
-		#faad -a $tmp.aac $tmp >&2
 		e=aac
-		mv $tmp{,.$e} >&2
+		faad -a $tmp.$e $tmp >&2
+		#mv $tmp{,.$e} >&2
 		;;
 		html|pdf)
 		${e}totext $tmp >&2
@@ -38,7 +40,7 @@ find -L "$@" -name '*.mp4' -o -name '*.aac' -o -name '*.wma' -o -name '*.flac' -
 		b=Extras/
 		e=lrc
 		recode -f u8..ascii < $tmp.txt|recode html..u8|recode -f u8..ascii|tr -d |sed s/\ *$/\ / > $tmp.lrc
-		rm $tmp.txt >&2
+		rm -f $tmp.txt >&2
 		;;
 		*)
 		mv $tmp{,.$e} >&2
@@ -47,7 +49,7 @@ find -L "$@" -name '*.mp4' -o -name '*.aac' -o -name '*.wma' -o -name '*.flac' -
 
 	mkdir -p "$dst/$b$d" >&2
 	[ -n "$other" ] && {
-		ln $tmp.{$e,other}
+		ln -f $tmp.{$e,other}
 		echo $tmp.other "$dst/$b$d/$other.$e"
 	}
 	echo $tmp.$e "$dst/$b$d/$f.$e"

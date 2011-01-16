@@ -1,9 +1,9 @@
-alias l='ls --color'
-alias la='ls -A --color'
-alias ll='ls -lhH --color'
-alias L='ls -lhH --color'
-alias La='ls -AlhH --color'
-alias lal='ls -AlhH --color'
+alias l='ls -v --color'
+alias la='ls -vA --color'
+alias ll='ls -vlhH --color'
+alias L='ls -vlhH --color'
+alias La='ls -vAlhH --color'
+alias lal='ls -vAlhH --color'
 
 which ssed > /dev/null 2>&1 && alias sed=ssed
 alias cdr='cd `realpath .`'

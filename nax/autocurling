@@ -209,14 +209,32 @@ nametracks()
 			track="`tracktitle \".$fms.cpl\"`" &&
 			[ -n "$track" ] && (
 				track="$i$track" &&
+				track="${track//\\/\\\\/}" &&
+				track="${track//&/\\&}" &&
 				export f &&
-				find -regex ".*$fms.*" |while read f; do mv -v "$f" "`ved f \"s/\(.*\)$fms\(.*\)/\1$track\2/\"`" || return false; done
+				find -regex ".*$fms.*" |while read f; do mv -nv "$f" "`ved f \"s/\(.*\)$fms\(.*\)/\1$track\2/\"`" || return 1; done
 			)
 		) || true
 	done
 }
 
+unnametracks()
+{
+	find -maxdepth 1 -name '*.mp4'|while read i; do
+		i="`basename \"$i\" .mp4`"
+		cpl=".$i.cpl"
+		[ -e "$cpl" ] && {
+			track="`sed -n 's/.*fmsfilename="\([^"]*\)".*/\1/p' \"$cpl\"`" &&
+			track="${track//\\/\\\\/}" &&
+			track="${track//&/\\&}" &&
+			export f &&
+			find -regex ".*$i.*" |while read f; do g="`ved f \"s/\(.*\)$i\(.*\)/\1$track\2/\"`"; [ "$f" = "$g" ] || (mv -nv "$f" "$g" || return 1); done
+		} || true
+	done
+}
+
 login() {
+	echo ================== Attempting login ================== >&2
 	dbg login
 	getLock cookies 1>&2
 #	rm -f /tmp/cookies.out /tmp/cookies.in
@@ -325,7 +343,7 @@ urls()
 
 resol()
 {
-	recode xml..u8|sed s%^href=[\"\']%%\;s%^/%$root/%\;s%^\\\(./\\\)\\\?../%$root/%
+	recode xml..u8|sed s%^\\\(href\\\|src\\\)=[\"\']%%\;s%^/%$root/%\;s%^\\\(./\\\)\\\?../%$root/%
 }
 
 extras()
@@ -355,7 +373,7 @@ extras()
 		grep -i -o 'href="[^"]*booklet[^"]*' item.asp
 		grep -i -o 'href="[^"]*rear[^"]*' item.asp
 	        grep -i -o "../blurbs_[^']*" item.asp
-		grep -o 'href="[^"]*sharedfiles/images/cds[^"]*' item.asp
+		grep -o '\(href\|src\)="[^"]*sharedfiles/images/cds[^"]*' item.asp
 	)|resol|while read url; do
 		dst="${url//blurbs_+([a-z.])/blurb.html}"
 		dst="${dst##*/}"
@@ -363,8 +381,10 @@ extras()
 		echo "$dst <<-- $url"
 		[ -n "$url" ] && cooknewfalible "also-$dst" "$url" && got=1
 	done
-	url=$(grep -o 'href="[^"]*sharedfiles/images/cds[^"]*' item.asp|head -1|recode xml..u8)
-	[ -n "$url" ] && ext="${url##*.}" && cooknewfalible "cover.$ext" "${url#href=\"}"
+	url=$(grep -o '\(href\|src\)="[^"]*sharedfiles/images/cds[^"]*' item.asp|head -1|recode xml..u8)
+	url="${url#href=\"}"
+	url="${url#src=\"}"
+	[ -n "$url" ] && ext="${url##*.}" && cooknewfalible "cover.$ext" "$url"
 	if [ -s "cover.$ext" ]; then got=1; else rm -f "cover.$ext"; fi
 	
 	[ -n "$got" ] && dirname "$d"

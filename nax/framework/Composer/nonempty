@@ -1,1 +1,1 @@
-find -L -name \*.mp4|lines dirname|uniq|while read i; do [ -e "../Nonempty/$i" ] && continue; mkdir -p "../Nonempty/`dirname \"$i\"`" || break; cp -d "$i" "../Nonempty/$i" || break; done
+find -L -name \*.mp4|lines dirname|uniq|while read i; do [ -e "../split/nonemptier/$i" ] && continue; mkdir -p "../split/nonemptier/`dirname \"$i\"`" || break; cp -d "$i" "../split/nonemptier/$i" || break; done

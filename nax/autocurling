@@ -34,7 +34,7 @@ foreach()
 }
 foreachI()
 {
-	xargs -n1 -d \\n -iI "$@"
+	xargs --no-run-if-empty -n1 -d \\n -iI "$@"
 }
 rmempty()
 {
@@ -307,7 +307,7 @@ albums()
 	sed 's/cid=/\r\ncid=/g' "$1" |sed -n 's_cid=\([^"]*\)"[^>]*>\([^<]*\)<.*_\1 \2_p'|while read cid title; do if [ "$cid" != "$title" ]; then
 		title=${title//\//--}
 		cid=${cid//\//--}
-		[ -d /green/eisd/second ] && [ -L "/green/eisd/second/bycid/$cid.asp" ] && echo "see wma for $cid $title" && break
+		[ -d /green/eisd/second ] && [ -L "/green/eisd/second/bycid/$cid.asp" ] && echo "see wma for $cid $title" && continue
 		mkdir -pv cid/$cid |grep -q . &&
 			#mkdir -p queue/$cid
 			mkdir -p "New/cpid/$cpid/" &&
@@ -394,7 +394,7 @@ extras()
 
 pdfs()
 {
-	find -name '*.pdf'|xargs -d\\n -n1 pdftotext
+	find -L -name '*.pdf' -print0|xargs --no-run-if-empty -0 -n1 pdftotext
 }
 
 htmltotext()
@@ -404,12 +404,12 @@ htmltotext()
 
 htmls()
 {
-	find -name '*blurb.html*'|foreach htmltotext
+	find -L -name '*blurb.html*'|foreach htmltotext
 }
 
 extrasEverywaar()
 {
-	find -name item.asp|xargs -n1 dirname|foreach extras
+	find -L -name item.asp -print0|xargs --no-run-if-empty -0 -n1 dirname|foreach extras
 	pdfs
 	htmls
 }
@@ -449,7 +449,7 @@ processQueue()
 #		echo "$cid" &&
 			nametracks &&
 #		echo "$cid" &&
-#			(extras || true) &&
+			(extras || true) &&
 #		echo "$cid" &&
 		popd &&
 #		echo "$cid" &&

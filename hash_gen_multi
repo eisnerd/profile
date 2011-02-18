@@ -9,17 +9,8 @@ while(<STDIN>)
 	if (/(.*?)(?:(?<!:): (.*))/)
 	{
 		$k=$1;
+		$k =~ s/::/:/g;
+		$db{$k} = $db{$k}.$2;
 	}
-	else
-	{
-		chomp;
-		$k=$_;
-	}
-	$k =~ s/::/:/g;
-	$v=$2;
-	chomp $v;
-	$db{$k} = $v;
-	#print $k." -> ".$v."$/";
-	#print $k." -> ".$db{$k}."$/";
 }
 dbmclose(%db);

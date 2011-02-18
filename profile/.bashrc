@@ -110,6 +110,6 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 fi
 
 export LESS=-R
-export PATH=~/bin/nax:~/bin:~/.cabal/bin:/opt/pvs:/opt/pvs/bin:/usr/local/arm-elf/bin:$PATH
+export PATH=~/green-eisd:~/bin/nax:~/bin:~/.cabal/bin:/opt/pvs:/opt/pvs/bin:/usr/local/arm-elf/bin:$PATH
 export FDRHOME=~/fdr-2.83-linux-academic
 export GPGKEY=7B13A611

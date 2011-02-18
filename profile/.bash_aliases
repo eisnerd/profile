@@ -16,6 +16,9 @@ alias P=popd
 alias cm='cryptmount -m'
 alias cum='cryptmount -u'
 
+alias xc='xz -zc - >'
+alias xd='xz -dc'
+
 alias lc="cl"
 cl() {
    if [ $# = 0 ]; then

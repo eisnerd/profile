@@ -7,10 +7,11 @@ $neg = $#ARGV == 1 && @ARGV[1] eq "n";
 $pos = !$neg;
 $pos = $#ARGV == 1 && @ARGV[1] eq "y";
 $ret=1;
+$/="\0";
 while(<STDIN>)
 {
-	chomp;
-	$res = $db{$_};
+	my ($k, $v) = split(' ', $_, 2);
+	$res = $db{$k};
 #$db->exists($_);
 	if ($pos)
 	{

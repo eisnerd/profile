@@ -1,0 +1,23 @@
+#!/usr/bin/perl
+
+#use DBM::Deep;
+#my $db = DBM::Deep->new(@ARGV[0]);
+dbmopen(%db, @ARGV[0], 0666);
+dbmopen(%dst, @ARGV[1], 0666);
+
+$|++;
+while(<STDIN>)
+{
+	chomp;
+	$v=$db{$_};
+	if ($v)
+	{
+		$dst{$_}=$v;
+	}
+	else
+	{
+		print "Warning: '$_' was not found in the source hash database$/";
+	}
+}
+dbmclose(%db);
+dbmclose(%dst);

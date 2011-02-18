@@ -5,8 +5,8 @@
 dbmopen(%db, @ARGV[0], 0666);
 while (my($k,$v) = each %db)
 {
+	chomp $k;
 	$k =~ s/:/::/g;
-	$k =~ s/\n$//;
-	print $k.": ".$v."\n";
+	print "$k: $v$/";
 }
 dbmclose(%db);

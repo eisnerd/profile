@@ -3,13 +3,13 @@
 #use DBM::Deep;
 #my $db = DBM::Deep->new(@ARGV[0]);
 dbmopen(%db, @ARGV[0], 0666);
-
+#$/="\0";
 if ($#ARGV == 1)
 {
-	if (!$db{@ARGV[1]."\n"})
+	if (!$db{@ARGV[1]})
 	{
 		dbmclose(%db);
-		exit;
+		exit 1;
 	}
 }
 else
@@ -18,16 +18,13 @@ else
 	{
 		while (<STDIN>)
 		{
+			chomp;
 			if (!$db{$_})#->exists($_))
 			{
 				dbmclose(%db);
-				exit;
+				exit 1;
 			}
-			dbmclose(%db);
-			exit 1;
 		}
 	}
 }
 dbmclose(%db);
-exit 1;
-

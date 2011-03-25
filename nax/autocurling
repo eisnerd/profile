@@ -70,7 +70,7 @@ resume=0
 
 valid()
 {
-	[ -s "$1" ] && ! grep -q '/subscriber/sessionexpired\|Your session has already expired\|Session timeout\|libraryentry\.asp' "$1"
+	[ -s "$1" ] && ! grep -q '<h1>Object Moved</h1>\|/subscriber/sessionexpired\|Your session has already expired\|Session timeout\|libraryentry\.asp' "$1"
 }
 got()
 {
@@ -298,22 +298,53 @@ listings()
 	fi
 }
 
+album()
+{
+	cid="${1//\//--}"
+	title="${2//\//--}"
+	if [ "$cid" != "$title" ]; then 
+		newdst="$3"
+		alldst="$4"
+		[ -d /green/eisd/second ] && [ -L "/green/eisd/second/bycid/$cid.asp" ] && echo "see wma for $cid $title" && return 1
+		mkdir -pv cid/$cid |grep -q . &&
+			#mkdir -p queue/$cid
+			mkdir -p "$newdst" &&
+			ln -sfT ../../../cid/$cid "$newdst/$title ($cid)"
+		ln -sfT ../../../cid/$cid "$alldst/$title ($cid)"
+	fi
+}
+
 albums()
 {
 	a="${1#cpid/}"
 	cpid="${a%%/*}"
 	b="${a#$cpid/}"
 	j="${b%%/*}"
-	sed 's/cid=/\r\ncid=/g' "$1" |sed -n 's_cid=\([^"]*\)"[^>]*>\([^<]*\)<.*_\1 \2_p'|while read cid title; do if [ "$cid" != "$title" ]; then
-		title=${title//\//--}
-		cid=${cid//\//--}
-		[ -d /green/eisd/second ] && [ -L "/green/eisd/second/bycid/$cid.asp" ] && echo "see wma for $cid $title" && continue
-		mkdir -pv cid/$cid |grep -q . &&
-			#mkdir -p queue/$cid
-			mkdir -p "New/cpid/$cpid/" &&
-			ln -sfT ../../../cid/$cid "New/cpid/$cpid/$title ($cid)"
-		ln -sfT ../../../cid/$cid "cpid/$cpid/$j/$title ($cid)"
-	fi; done
+	sed 's/cid=/\r\ncid=/g' "$1" |sed -n 's_cid=\([^"]*\)"[^>]*>\([^<]*\)<.*_\1 \2_p'|while read cid title; do album "$cid" "$title" "New/cpid/$cpid" "New/cpid/$cpid" "cpid/$cpid/$j"; done
+}
+
+labelAlbums()
+{
+	sed 's@</a>@\n@g' "lid/$1/listings/"*.html|sed -n "s@.*CDPage('\([^']*\)[^\"]*\">@\1\n@p" |while read cid && read title; do album "$cid" "$title" "New/lid/$1" "lid/$1/All"; done
+}
+
+label()
+{
+	mkdir -p "lid/$1/listings"
+	pushd "lid/$1/listings" || return 1
+	cooknew 1.html -e "$root/labels.asp" "$root/browsesearchlabel.asp?catlabelid=$1"
+	grep -A1 'font-size: medium; font-weight: bold; color: Black' 1.html| tr -d |
+		if read && read lab && lab="${lab## *}" && lab="${lab%% *}" && lab="${lab//\//--}" && [ -n "$lab" ]; then
+			mkdir -p Label && ln -sf "../lid/$1/All" "../../../Label/$lab" && (
+				for n in `seq 2 $N`; do cooknew $n.html -H "Content-Type: application/x-www-form-urlencoded" -H "Accept: */*" -H "Accept-Charset: UTF-8,*;q=0.5" -d "pageNo=$n&pageSize=15&Sort=CatalogueName%20ASC&CatLabelId=INA&languageId=EN&alpha=ALL" -e "$root/browsesearchlabel.asp?catlabelid=$1" "$root/BrowseSearchRenderLabel.asp"; done
+				popd
+				labelAlbums "$1"
+			)
+			return 0
+		else
+			mv -v 1.html err
+		fi
+	popd
 }
 
 generateMisc()

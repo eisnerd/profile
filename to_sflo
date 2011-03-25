@@ -11,7 +11,7 @@ cleanup()
 	exit
 }
 
-find -L "$@" -name '*.mp4' -o -name '*.aac' -o -name '*.wma' -o -name '*.flac' -o -name '*.mp3' -o -name '*.html' -o -name '*.pdf' -o -name '*.jpg'|sort -V| while read i; do
+find -L "$@" -name '*.mp4' -o -name '*.aac' -o -name '*.wma' -o -name '*.flac' -o -name '*.mp3' -o -name '*.html' -o -name '*.pdf' -o -name '*.jpg' -o -name '*.gif' -o -name '*.png'|fgrep -vf <(find $dst -type d|sed s_^${dst%/}/__|grep /|grep -v Extras|sed s%$%/%)|sort -V| while read i; do
 	echo "$i" >&2
 	b=
 	other=
@@ -31,7 +31,7 @@ find -L "$@" -name '*.mp4' -o -name '*.aac' -o -name '*.wma' -o -name '*.flac' -
 	case $e in
 		mp4|aac)
 		e=aac
-		faad -a $tmp.$e $tmp >&2
+		faad -a $tmp.$e $tmp 2>/dev/null
 		#mv $tmp{,.$e} >&2
 		;;
 		html|pdf)

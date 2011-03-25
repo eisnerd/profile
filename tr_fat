@@ -28,7 +28,7 @@ do
 		echo  -e \\t"$i" != "$j" 
 		$act "$i" "$j"
 	)
-	[ -d "$j" ] || (echo -n "> "; realpath "$j")
+#	[ -d "$j" ] || (echo -n "> "; realpath "$j")
 	if [ -d "$i" -a \! -L "$i" ]; then if pushd "$i"; then tr_fat "$act"; popd > /dev/null; fi
 	elif [ -d "$j" -a \! -L "$j" ]; then if pushd "$j"; then tr_fat "$act"; popd > /dev/null; fi
 	fi

@@ -320,7 +320,7 @@ albums()
 	cpid="${a%%/*}"
 	b="${a#$cpid/}"
 	j="${b%%/*}"
-	sed 's/cid=/\r\ncid=/g' "$1" |sed -n 's_cid=\([^"]*\)"[^>]*>\([^<]*\)<.*_\1 \2_p'|while read cid title; do album "$cid" "$title" "New/cpid/$cpid" "New/cpid/$cpid" "cpid/$cpid/$j"; done
+	sed 's/cid=/\r\ncid=/g' "$1" |sed -n 's_cid=\([^"]*\)"[^>]*>\([^<]*\)<.*_\1 \2_p'|while read cid title; do album "$cid" "$title" "New/cpid/$cpid" "cpid/$cpid/$j"; done
 }
 
 labelAlbums()

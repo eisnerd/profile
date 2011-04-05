@@ -31,8 +31,8 @@ find -L "$@" -name '*.mp4' -o -name '*.aac' -o -name '*.wma' -o -name '*.flac' -
 	case $e in
 		mp4|aac)
 		e=aac
-		faad -a $tmp.$e $tmp 2>/dev/null
-		#mv $tmp{,.$e} >&2
+		mp4creator -extract=1 $tmp
+		mv -f $tmp.{t1,$e}
 		;;
 		html|pdf)
 		${e}totext $tmp >&2

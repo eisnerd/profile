@@ -1,0 +1,56 @@
+#!/bin/bash
+list_default() {
+find . -type d|tail -n+2
+}
+list=list_default
+[ "$1" = "-" ] && list=cat && shift
+[ -z "$1" ] &&
+ sorted=/home/eisd/Music/Naxos
+[ -n "$1" ] &&
+ sorted="/home/eisd/Music/Naxos$1"
+coproc hash_map /home/eisd/bin/sort
+exec 3<&${COPROC[0]}
+exec 4>&${COPROC[1]}
+export cmp orig i
+exclude='sorted\|/green/eisd/second/[EF]\|batches'
+$list|grep -v $exclude|sed -u s_^\\./__|while read d; do
+  f="`realpath \"$d\"|tr ._ ,\ `"
+  pushd "$d" > /dev/null &&
+  i="`basename \"$(pwd -P)\"`" &&
+  if pwd -P|grep -vq $exclude && expands *.wma; then
+	cmp=`composer i`
+	orig="$cmp"
+
+	j="${f#/green/eisd/second/}"
+	if [ "$j" != "$f" ] && cmp2="${j%%/*}" && [ "$cmp2" != "nax" ]; then
+		cmp="$cmp2"
+	elif lst=`echo *-*.lst` && [ -e "$lst" ]; then
+		#cmp2=`echo "${lst%-*}"|hash_map sort`;
+		echo "${lst%%-*}">&4
+		read cmp2 <&3
+		[ -n "$cmp2" ] && cmp="$cmp2";
+	fi
+
+	[ -z "$cmp" ] && cmp=Misc
+
+	[ "`printenv cmp|recode -f u8..us|tr -d \\"`" = "Bartok" ] && cmp='Bartók'
+	[ "`printenv cmp|recode -f u8..us|tr -d \\"`" = "Saint-Saens" ] && cmp='Saint-Saëns'
+
+	echo $cmp: "$i"
+	mkdir -p "$sorted/$cmp"
+	a="`printenv orig|recode -f u8..bs|tr -dc '[:alnum:]'`"
+	b="`printenv cmp|recode -f u8..bs|tr -dc '[:alnum:]'`"
+	#echo "\"$a\"" = "\"$b\""
+	if [ "$a" = "$b" ]; then
+		#echo "$sorted/$cmp/${i/*· }"
+		#echo "$sorted/$cmp/${i#*· }"
+		rm -f "$sorted/$cmp/${i/*· }"
+		ln -sf "`pwd`" "$sorted/$cmp/${i/*· }"
+	else
+		echo "\"$a\"" /= "\"$b\""
+		ln -sf -t "$sorted/$cmp" "`pwd`";
+	fi
+  fi &&
+  popd > /dev/null
+done
+export -n cmp orig i

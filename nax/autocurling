@@ -4,7 +4,7 @@ getdisc="$root/catalogue/item.asp?cid="
 
 throttle()
 {
-	sleep `shuf -i7-50 -n1`
+	sleep `shuf -i1-5 -n1`
 }
 
 Composer()
@@ -211,6 +211,7 @@ nametracks()
 				track="$i$track" &&
 				track="${track//\\/\\\\/}" &&
 				track="${track//&/\\&}" &&
+				track="${track:0:200}" &&
 				export f &&
 				find -regex ".*$fms.*" |while read f; do mv -nv "$f" "`ved f \"s/\(.*\)$fms\(.*\)/\1$track\2/\"`" || return 1; done
 			)
@@ -265,6 +266,7 @@ listings()
 	got $biog || (cook "$getbiog$cpid" > $biog)
 
 	export composer=`grep '<tr><td align="left" valign="top">[^b]*<b>[^</>]*</b>' -o $biog|sed 's_.*<b>\([^</>]*\)</b>.*_\1_'`
+	[ -z "$composer" ] && composer=`tr -d '\r\n' < $biog |grep '<td[^<>]*align="left"[^<>]*>[^b]*<b>[^</>]*</b>' -o |sed 's_.*<b>\([^</>]*\)</b>.*_\1_'`
 	[ -z "$composer" ] && composer=`grep -o '<strong>[^<>]*</strong>' $biog|head -1|sed 's/^<strong>\(Composer:\)\? *//;s_ *\(&acute;s Discography\)\? *</strong>__'`
 	log $composer
 	mkdir -p $authors

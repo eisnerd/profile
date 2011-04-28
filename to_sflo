@@ -19,7 +19,7 @@ find -L "$@" -name '*.mp4' -o -name '*.aac' -o -name '*.wma' -o -name '*.flac' -
 	f="`basename \"${i%.*}\"`"
 	e="${i##*.}"
 	tmp=$tmpbase.$((n++))
-	ln -f "$i" $tmp >&2
+	cp "$i" $tmp >&2
 
 	if [ "$f" = "cover" ]; then
 		convert -quiet -antialias -adaptive-resize 450x270\! $e:$tmp $tmp.jpg >&2

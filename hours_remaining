@@ -1,0 +1,1 @@
+echo `grep 'remaining capacity' /proc/acpi/battery/BAT0/state |grep -o [0-9]\*` / `grep 'present rate' /proc/acpi/battery/BAT0/state |grep -o [0-9]\*`|bc -l

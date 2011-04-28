@@ -1,0 +1,22 @@
+#!/bin/bash -x
+#audacious2 -i gtkui -e "$@"
+#if [ ${#*} -gt 0 ]; then for i in "$@"; do echo "$i"; done; else cat; fi| sed 's/^/add\ "/;s/$/"/'|nyxmms2
+if [ "$1" = "-" ]; then shift; else
+st="`xm status|grep -o ^[^:]*`"
+[ $st = "Stopped" ] && {
+  export pl="`xm playlist list|sed 's/[* ]//g'`"
+  x=0
+  while printenv pl|grep ^pl$x$; do (( x++ )); done
+  xm playlist create pl$x
+  xm playlist switch pl$x
+}
+fi
+#if [ ${#*} -gt 0 ]; then realpath "$@"; else xargs -d\\n realpath; fi|sed 's_^/media/_/home/tc/eee/_'|xargs -d\\n xm add
+(if [ ${#*} -gt 0 ]; then for i; do realpath "$i"; done; else xargs -d\\n realpath; fi) |
+	#sed "s_^/media/_/home/tc/sshfs/$USER@emileee/media/_"|
+	sed '/^\/darkstar\|^\/green/!s_^_/home/tc/sshfs/'"$USER@$HOSTNAME/_"|
+	xargs -d\\n xm add
+#if [ ${#*} -gt 0 ]; then realpath "$@"; else xargs -d\\n realpath; fi|xargs -d\\n xm add
+
+[ "$st" != "Playing" ] && xm play
+export -n st pl

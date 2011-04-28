@@ -1,1 +1,3 @@
-enqueue
+p=.
+while [ -d "$p" -a \! -d "$p/queue" ]; do p=../$p; done
+while read i; do l="`readlink \"$i\"`"; l="${l#*cid/}"; [ ! -d "$p/cid/$l" ] || find "$p/cid/$l" -name '*.mp4'|grep -q . || mkdir -p "$p/queue/$l"; done

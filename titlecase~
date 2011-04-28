@@ -1,0 +1,13 @@
+declare -a a
+export i
+initialcase|while read -a a; do j=""; for i in "${a[@]}"; do
+	[ ${#i} -le 3 ] && i=`ved i 's/.*/\L&/'`
+	[ "$i" = "Mclachlan" ] && i=McLachlan
+	[ "$i" = "Mcrae" ] && i=McRae
+	[ "$i" = "bax" ] && i=Bax
+	[ "$i" = "tv" ] && i=TV
+
+	echo -n "$j$i"
+	j=" "
+done; echo; done
+export -n i

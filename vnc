@@ -1,0 +1,5 @@
+if [ $# -eq 0 ]; then 
+	gtkvncviewer -s pong
+else
+	gtkvncviewer "$@"
+fi

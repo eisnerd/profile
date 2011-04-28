@@ -1,0 +1,90 @@
+#!/bin/sh
+# Time-stamp: <2008-10-01 19:53:16 joham_luis> 
+# License: GPLv3
+# Author: ashtophet
+# Changelog:
+# - 01-10-2008 <look on the bright side...>:
+#   * Why saving as html? Using plain text instead.
+# - 11-07-2008:
+#   * Trying to debug an awkward behaviour
+# - 22-07-2007:
+#   · Script cleanup (see commments below)
+
+if ps axo uid,comm,user|grep xmms2d|grep $USER>/dev/null;
+then
+BROWSERF=$(which elinks)
+#BROWSER=$(which w3m) # Not needed anymore (01102008).
+#LUCKY="http://www.google.com/search?&btnI=&q=lyrics+"
+#SONG=$(xmms2 current '${artist} - ${title}')
+#FILEN=`printf "$SONG"|sed -e 's/ /_/g'`
+RESULT=$(xmms2 current '${artist} ${title}')
+#RESULT_FORMATED=$(echo $RESULT | sed -e 's/ /\\ /g')
+#LOC=$HOME/lyrics_html #TODO: use music path (see example bellow)
+XMMS2_FILE=$(xmms2 info|awk -F"file://" '/\[server\] url =/ { print $2 }')
+LOC=$(dirname "$XMMS2_FILE")
+SONG=$(basename "$XMMS2_FILE")
+FILEN=`printf "$SONG"|sed -e 's/[.]....\?$//g'`
+#LTMP=$HOME/tmp/prova_lyrc #Rendered obsolete, 22/07/2007
+CACH="Lyrics already obtained. Let's load'em!\n"
+NOCACH="Lyrics not fetched, so let's do it!\n"
+
+#Imported from great surfdraw. Keeping same name, of course.
+
+w3_url_escape () {
+    echo "$@" | sed 's/%/%25/g;
+                     s/+/%2B/g;
+#                    s/ /+/g;
+                     s/ /%20/g;
+                         s/(/%28/g;
+                         s/)/%29/g;
+                     s/"/%22/g;
+                     s/#/%23/g;
+                     s/\$/%24/g;
+                     s/&/%26/g;
+                     s/,/%2C/g;
+                     s/\./%2E/g;
+                     sx/x%2Fx;
+                     s/:/%3A/g;
+                     s/;/%3B/g;
+                     s/</%3C/g;
+                     s/=/%3D/g;
+                     s/>/%3E/g;
+                     s/?/%3F/g;
+                     s/@/%40/g;
+                     s/\[/%5B/g;
+                     s/\\/%74/g;
+                     s/\]/%5D/g;
+                     s/\^/%5E/g;
+                     s/{/%7B/g;
+                     s/|/%7C/g;
+                     s/}/%7D/g;
+                     s/~/%7E/g;
+                   '"s/'/%60/g"
+}
+
+
+RESULT_FORMATTED=`w3_url_escape "$RESULT"`
+BUTTON=`w3_url_escape "I'm Feeling Lucky"`
+
+#test -d $LOC || mkdir $LOC # Commented when using music path
+
+if test -f $LOC/"$FILEN".txt
+then printf "$CACH\n";$PAGER $LOC/"$FILEN".txt;exit 0
+#else echo $NOCACH; echo -n $LUCKY $RESULT > $LTMP
+#     echo \"`cat $LTMP`\" | xargs $BROWSER -dump_source -T text/html > $LOC/$FILEN.html
+#Let's simplify this a little bit...
+else printf "$NOCACH\n"; # printf \"$LUCKY$RESULT\" | xargs -0 $BROWSER -dump_source -T text/html > $LOC/$FILEN.html
+#$BROWSER $(echo $LUCKY$RESULT|sed -e 's/ /+/g') -dump_source -T text/html > $LOC/$FILEN.html
+$BROWSERF $(echo "http://www.google.com/search?q=lyrics+${RESULT_FORMATTED}&btnI=${BUTTON}") -dump > $LOC/"$FILEN".txt
+#$BROWSER $(echo $LUCKY|sed -e "s/SEARCHTERMS/$RESULT/g"|sed -e 's/ /+/g') -dump_source -T text/html > $LOC/$FILEN.html
+fi
+#$BROWSER $LOC/$FILEN.html;exit 0
+FILEGZ=`file $LOC/"$FILEN".txt -b | awk '{print $1}' | xargs echo`
+FILEGZB=`printf gzip`
+if [ `printf $FILEGZ` == `printf $FILEGZB` ]
+then cd $LOC ;  mv "$FILEN".txt $LOC/"$FILEN".txt.gz ; gunzip "$FILEN".txt.gz ; $PAGER $LOC/"$FILEN".txt ; exit 0
+else $PAGER $LOC/"$FILEN".txt ; exit 0
+fi
+else 
+	printf "XMMS2 not running, exiting\n";sleep 3s;exit 0
+fi

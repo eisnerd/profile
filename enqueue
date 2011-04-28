@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 #audacious2 -i gtkui -e "$@"
 #if [ ${#*} -gt 0 ]; then for i in "$@"; do echo "$i"; done; else cat; fi| sed 's/^/add\ "/;s/$/"/'|nyxmms2
 

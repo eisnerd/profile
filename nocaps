@@ -1,1 +1,1 @@
-xmodmap -e "clear Lock"
+xmodmap -e "clear Lock" -e "keysym Caps_Lock = Escape"

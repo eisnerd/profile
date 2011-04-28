@@ -1,0 +1,16 @@
+for I; do
+	i=`dirname "$I/snip"`
+	j=`ls -1 "$i"|sed -n s/\\.urls$//p|head -1`
+	if [ -z "$j" ]; then
+		echo Nothing for $i
+	else
+		echo $i -\> $j
+		if echo $i|grep -q ·; then
+			echo "${i%/*}"· "${i#*/}"
+		else
+			echo "${i#*/}"
+		fi > /media/1422-2717/Zork/nax/$j.asp
+		cat "$i/snip" >> /media/1422-2717/Zork/nax/$j.asp
+	fi
+done
+

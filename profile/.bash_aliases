@@ -5,6 +5,9 @@ alias L='ls -vlhH --color'
 alias La='ls -vAlhH --color'
 alias lal='ls -vAlhH --color'
 
+alias xadd='tr \\n \\0|xargs -0 xm add'
+alias xsorted='sort -V|tr \\n \\0|xargs -0 xm add'
+
 which ssed > /dev/null 2>&1 && alias sed=ssed
 alias cdr='cd `realpath .`'
 

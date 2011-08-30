@@ -1,0 +1,2 @@
+#!/bin/bash
+xm playlist switch `xm playlist list -a|sort -n -k2|grep ^\* -B1|head -1`

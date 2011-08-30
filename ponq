@@ -11,12 +11,15 @@ st="`xm status|grep -o ^[^:]*`"
   xm playlist switch pl$x
 }
 fi
-#if [ ${#*} -gt 0 ]; then realpath "$@"; else xargs -d\\n realpath; fi|sed 's_^/media/_/home/tc/eee/_'|xargs -d\\n xm add
-(if [ ${#*} -gt 0 ]; then for i; do realpath "$i"; done; else xargs -d\\n realpath; fi) |
+#addr=$HOSTNAME
+#addr=$(ifdata -pa $(ip -4 link show up|grep ^[0-9]|grep -v lo:|sort -nr|cut -d: -f2))
+addr=$(ip -o -4 addr show up|grep -vw lo|sed s@\ \\+@/@g|cut -d/ -f4)
+#if [ ${#*} -gt 0 ]; then realpath "$@"; else xargs -rd\\n realpath; fi|sed 's_^/media/_/home/tc/eee/_'|xargs -rd\\n xm add
+(if [ ${#*} -gt 0 ]; then for i; do realpath "$i"; done; else xargs -rd\\n realpath; fi) |
 	#sed "s_^/media/_/home/tc/sshfs/$USER@emileee/media/_"|
-	sed '/^\/darkstar\|^\/green/!s_^_/home/tc/sshfs/'"$USER@$HOSTNAME/_"|
-	xargs -d\\n xm add
-#if [ ${#*} -gt 0 ]; then realpath "$@"; else xargs -d\\n realpath; fi|xargs -d\\n xm add
+	sed '/^\/darkstar\/\|^\/green\/\|^\/mnt\//!s_^_/home/tc/sshfs/'"$USER@$addr/_"| sed '/^file:/!s@^@file://@'| tee /dev/stderr|
+	xargs -rd\\n xm add
+#if [ ${#*} -gt 0 ]; then realpath "$@"; else xargs -rd\\n realpath; fi|xargs -rd\\n xm add
 
 [ "$st" != "Playing" ] && xm play
 export -n st pl

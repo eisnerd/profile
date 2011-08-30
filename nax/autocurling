@@ -149,6 +149,7 @@ cookalbum()
   cid=$1
   #cook "http://manchesterlib.naxosmusiclibrary.com/catalogue/item.asp?cid=$cid" > item.asp
   [ -z "$cid" ] && cid=`grep -o cid=[[:alnum:].-]* item.asp|head -1|sed 's/cid=//;s_/_--_g'`
+  cooknew item.asp "$getdisc${cid//--/\/}" &&
   sed -n '/stream\.asp/s/.*staticurl_\([^"]*\)".*/\1/p' item.asp|foreach cooktrack "$cid"
 }
 

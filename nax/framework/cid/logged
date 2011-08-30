@@ -1,0 +1,1 @@
+find -name '.*.log' -print0|xargs -0 egrep -il 'failed writing|bytes remaining|recv failure|connection timed out'|sed 's@/\.@/@;s@log$@mp4@'

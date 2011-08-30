@@ -17,12 +17,14 @@ else
 fi
 while read i <&3
 do 
-	echo "Testing $i" >&2
 	d="`dirname \"$i\"`"; f="`basename \"$i\" .mp4`";
+	[ -e "$d/.$f.decode" ] && echo "Tested $i" >&2 && continue
+	echo "Testing $i" >&2
 	{
 #	mplayer -noconsolecontrols -quiet -ao pcm:fast:file=$wav "$i" 2>&1
 #	sudo nice -20 
-	ln -f "$i" "$tst"
+#	cp "$i" "$tst" #ln -f "$i" "$tst"
+	tst="$i"
 	faad -o $wav "$tst" 2>&1 || echo "Warning: non-zero exit code; possible crash"
 	stat -c%s $wav
 	}|

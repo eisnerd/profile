@@ -11,7 +11,7 @@ cleanup()
 	exit
 }
 
-find -L "$@" -name '*.mp4' -o -name '*.aac' -o -name '*.wma' -o -name '*.flac' -o -name '*.mp3' -o -name '*.html' -o -name '*.pdf' -o -name '*.jpg' -o -name '*.gif' -o -name '*.png'|fgrep -vf <(find $dst -type d|sed s_^${dst%/}/__|grep /|grep -v Extras|sed s%$%/%)|sort -V| while read i; do
+find -L "$@" -name '*.mp4' -o -name '*.aac' -o -name '*.wma' -o -name '*.flac' -o -name '*.mp3' -o -name '*.html' -o -name '*.pdf' -o -name '*.jpg' -o -name '*.gif' -o -name '*.png'|fgrep -vf <(find $dst -type d|sed s@^${dst%/}/@@|grep /|grep -v Extras|sed s%$%/%)|sort -V| while read i; do
 	echo "$i" >&2
 	b=
 	other=
@@ -19,7 +19,7 @@ find -L "$@" -name '*.mp4' -o -name '*.aac' -o -name '*.wma' -o -name '*.flac' -
 	f="`basename \"${i%.*}\"`"
 	e="${i##*.}"
 	tmp=$tmpbase.$((n++))
-	cp "$i" $tmp >&2
+	ln -f "$i" $tmp >&2
 
 	if [ "$f" = "cover" ]; then
 		convert -quiet -antialias -adaptive-resize 450x270\! $e:$tmp $tmp.jpg >&2
